@@ -40,12 +40,12 @@ void checkOwner()
 //计算证书hash
 string HashCertificate(string certificatenumber, string name, string school, string degreetype, string graduationdate, string major)
 {
-    string data=Concat(Concat(Concat(Concat(Concat(certificatenumber,name),school),degreetype),graduationdate),major);
-    return SHA3(data);
+    return SHA3(Concat(Concat(Concat(Concat(Concat(certificatenumber,name),school),degreetype),graduationdate),major));
 }
+
 //存入一个证书信息
 MUTABLE
-void AddCertificate(string school, string name, string idnumber, string degreetype, string major, string graduationdate, string studentnumber, string certificatenumber,string hash)
+void AddCertificate(string school, string name, string idnumber, string degreetype, string major, string graduationdate, string studentnumber, string certificatenumber)
 {
     //检查是否为合约创建人
     checkOwner();
@@ -80,7 +80,7 @@ string ExistCertificate(string name, string studentnumber, string school, string
             string certificateNumber = Certificatenumbers.value;
             //根据证书编号获取证书
             CertificatesMap.key = certificateNumber;
-            certificate data = CertificatesMap.value;
+            KEY certificate data = CertificatesMap.value;
             //符合条件返回证书编号
             if(Equal(data.name, name) && Equal(data.studentnumber, studentnumber) && Equal(data.school ,school )&& Equal(data.idnumber ,idnumber))
             {
@@ -91,33 +91,26 @@ string ExistCertificate(string name, string studentnumber, string school, string
     return "";
 }
 
-//转化证书结构体为字符串
-string certificate2str(certificate data)
-{
-    return Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(data.school,"|"),
-                    data.name),"|"),data.idnumber),"|"),data.degreetype),"|"),data.major),"|"),data.graduationdate),"|"),data.studentnumber),"|"),data.certificatenumber);
-}
-
 //核验证书所有人身份,并查询证书信息
 UNMUTABLE
 string GetCertificate(string certificateNumber, string idnumber)
 {
     checkOwner();
     CertificatesMap.key = certificateNumber;
-    certificate data = CertificatesMap.value;
     //核验身份证号
-    Require(Equal(data.idnumber, idnumber),"idnumber error!");
-    return certificate2str(data);
+    Require(Equal(CertificatesMap.value.idnumber, idnumber),"idnumber error!");
+    return Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(CertificatesMap.value.school,"|"),
+                    CertificatesMap.value.name),"|"),CertificatesMap.value.idnumber),"|"),CertificatesMap.value.degreetype),"|"),CertificatesMap.value.major),"|"),
+                    CertificatesMap.value.graduationdate),"|"),CertificatesMap.value.studentnumber),"|"),CertificatesMap.value.certificatenumber);
 }
 
 //核验证书hash
 UNMUTABLE
-bool CheckCertificate(string certificateNumber ,string certificatenumber, string name, string school, string degreetype, string graduationdate, string major)
+bool CheckCertificate(string certificatenumber, string name, string school, string degreetype, string graduationdate, string major)
 {
     checkOwner();
-    CertificatesMap.key = certificateNumber;
+    CertificatesMap.key = certificatenumber;
+    //首先确保有这个证书,没有直接返回false
     string hash = HashCertificate(certificatenumber,name,school,degreetype,graduationdate,major);
     return Equal(CertificatesMap.value.hash,hash);
 }
-
-

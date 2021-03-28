@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>登录</title>
+<link rel="stylesheet" href="/static/layui/css/layui.css">
+<link href="/static/stylesheets/login.css" rel="stylesheet" type="text/css">
+</head>
+	<section class="navigation-bar">
+		<div class="layui-nav navbar-bgc" lay-filter="">
+			<li class="layui-nav-item"><a></a></li>
+		</div>
+	</section>
+	
+	<section class="main-form">
+		<div class="layui-container">
+			<div class="layui-row layui-col-space20">
+				<div class="layui-col-md7">
+					<img alt="" src="/static/images/login1.png" class="left-img">
+				</div>
+				<div class="layui-col-md5 right-position">
+					<form class="layui-form right-form-bg" action="/login" method="POST">
+						<div class="layui-form-item right-form-title">
+							<label>用户登录</label>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label right-form-label">账号</label>
+							<div class="layui-input-block">
+									<input type="text" name="username" required lay-verify="required" class="layui-input right-form-input" autocomplete="off">
+							</div>
+						</div>						
+						<div class="layui-form-item">
+							<label class="layui-form-label right-form-label">密码</label>
+							<div class="layui-input-block">
+									<input type="password" name="password" required lay-verify="required" class="layui-input right-form-input" autocomplete="off">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label right-form-label">您的身份</label>
+							<div class="layui-input-block right-form-select">
+								<select name="usertype" lay-verify="required">
+									<option value="">请选择</option>
+									<option value="1">学生</option>
+									<option value="2">用人单位</option>
+									<option value="3">学校</option>
+								</select>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-row cue-line">
+								<div class="layui-col-md-offset1 layui-col-md8" style="width: 83%;">
+							
+									<div id="slider"></div>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-row cue-line">
+								<button class="layui-col-md-offset2 layui-col-md8 layui-btn right-form-submit" lay-submit lay-filter="formLogin" >立即登录</button>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-row cue-line">
+								<div class="layui-col-md-offset3 layui-col-md2 gray-line"></div>
+								<a href="/register" class="layui-col-md4 cue-text">立即注册</a>
+								<div class="layui-col-md2 gray-line"></div>
+							</div>
+						</div>
+						<div class="layui-form-item" style="margin: 0 6%;">
+							<label style="color: #7e7e7e;">账号登录时注意事项：</label><br/>
+							<label style="color: #7e7e7e; margin-left: 8%;">学生账号为所在高校院校代码+下划线（_）+学生的学号（例如：xxxx_2000000001）</label>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section class="layui-footer">
+		<div class="layui-row cue-line" style="margin-top: 3%;">
+			<div class="layui-col-md-offset5 layui-col-md2 gray-line"></div>
+			<a href="" class="layui-col-md1 cue-text">学历学位验证系统</a>
+			<div class="layui-col-md2 gray-line"></div>
+		</div>
+	</section>
+	
+	
+	
+<script src="/static/layui/layui.js"></script>
+<!--<script src="sliderValidate/src/sliderVerify/sliderVerify.js"></script>-->
+<!--<script src="https://www.layuicdn.com/layui/layui.js"></script>-->
+<script>
+//一般直接写在一个js文件中
+layui.config({
+	base: '/static/lib/sliderVerify/'
+}).use(['sliderVerify', 'jquery', 'form'], function() {
+	var sliderVerify = layui.sliderVerify,
+		form = layui.form;
+	var slider = sliderVerify.render({
+		elem: '#slider',
+		isAutoVerify: true,
+		bg: 'layui-bg-blue'
+	})
+	form.render();
+  //监听提交
+  form.on('submit(formLogin)', function(data){
+    if(slider.isOk()){//用于表单验证是否已经滑动成功
+	}else{
+	  layer.msg("请先通过滑块验证");
+	  return false;
+	}
+    return true;
+  });
+});
+</script>
+<body>
+</body>
+</html>

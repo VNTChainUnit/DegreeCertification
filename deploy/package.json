@@ -1,0 +1,18 @@
+{
+  "name": "deploycontract",
+  "version": "1.0.0",
+  "description": "deploy the degree.c contract",
+  "main": "deploy-degree.js",
+  "scripts": {
+    "start": "node deploy-degree",
+    "test":  "node ./testSmartContract/test"
+  },
+  "author": "fay",
+  "license": "ISC",
+  "dependencies": {
+    "ethereumjs-account": "^3.0.0",
+    "ethereumjs-tx": "^1.3.7",
+    "vnt": "git+https://gitee.com/laoluoli/vnt.js.git",
+    "vnt-kit": "git+https://gitee.com/laoluoli/vnt-kit.js.git"
+  }
+}

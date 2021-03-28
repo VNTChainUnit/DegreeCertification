@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>注册</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<!-- layUI核心CSS文件 -->
+		<link rel="stylesheet" type="text/css" href="/static/stylesheets/register.css" />
+		<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css" />
+	</head>
+	<body>
+		<div class="head">
+			<div class="layui-row head_title">
+				<div class="img_bobble">
+					<img src="/static/images/bobble.png" style="width: 40px;height: 40px;"/>
+				</div>
+				<div class="layui-row loginanderegister">
+					<a  class="login_a" href="/login">登录</a>
+					<label style="color: #FFFFFF;">|</label>
+					<a  class="login_a" href="#">注册</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="body">
+			<form class="layui-form" action="" >
+				
+				<!-- 注册页 -->
+				<center>
+					  <legend class="register_headtext ">用户注册</legend>
+				</center>
+				
+				
+				<div class="layui-input-inline">
+					<!-- 姓名 -->
+					<div class="layui-form-item">
+						<label class="layui-form-label">学生姓名</label>
+						<div class="layui-input-block">
+						  <input type="text" name="name" lay-verify="name" autocomplete="off" placeholder="请输入您的真实姓名" class="layui-input" style="width: 200px;border-radius: 15px;">
+						</div>	
+					</div>
+					
+					<!-- 学号 -->
+					 <div class="layui-form-item">
+						<label class="layui-form-label">学号</label>
+						<div class="layui-input-block">
+						  <input type="text" name="username" lay-verify="required" lay-reqtext="学号不能为空!" placeholder="请输入您的学号" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+						</div>
+					  </div>
+					
+					  <!-- 密码设置 -->
+					  <div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-inline">
+						  <input type="password" name="password" lay-verify="pass" placeholder="请填写6到12位密码" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+						</div>
+					  </div>
+					  
+					  <!-- 确认密码 -->
+					  <div class="layui-form-item">
+						<label class="layui-form-label">确认密码</label>
+						<div class="layui-input-inline">
+						  <input type="password" name="affirmpassword" lay-verify="pass|confirmPass" placeholder="请确认密码" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+						</div>
+					  </div>
+					  
+				  </div>
+				  <div class="layui-input-inline">
+					  <img src="/static/images/register_right.png" style="width: auto;height: 175px;margin-top: 60px;margin-left: 50px;border-radius: 15px;" />
+				  </div>
+				  
+				  <!-- 学校 -->
+				   <div class="layui-form-item">
+				  	<label class="layui-form-label">学校</label>
+				  	<div class="layui-input-block">
+				  	  <input type="text" name="school" lay-verify="required" lay-reqtext="学校不能为空!" placeholder="请输入您毕业学校" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+				  	</div>
+				    </div>
+				  
+				  <!-- 身份证号码 -->
+				<div class="layui-form-item">
+					<label class="layui-form-label">身份证号</label>
+					<div class="layui-input-inline">
+					  <input type="text" name="idnumber" lay-verify="idnumber|idnumber" placeholder="请输入您的身份证号" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+					</div>
+					<!-- <div class="layui-form-mid layui-word-aux">&nbsp;中国大陆地区永久推荐设置居民身份证</div> -->
+				</div>
+				
+				<!-- 阅读勾选协议选择框	 -->
+				<div class="layui-form-item">
+					<div class="layui-from-checkbox">
+						<input type="checkbox" lay-skin="primary" id="deal" name="deal" lay-verify="deal_agree" title="我已阅读并同意《XX协议》"/>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+				    <div class="layui-input-block">
+				      <button type="submit" class="layui-btn" lay-submit="" lay-filter="register" style="border-radius: 20px;background-color: #3887e5;">立即注册</button>
+				      <button type="reset" class="layui-btn layui-btn-primary" style="border-radius: 20px;">重置</button>
+				    </div>
+				  </div>
+			</form>
+			
+			<div class="register_tail">
+				<a class="register_tail_help">帮助中心</a>
+				<label style="color: #9F9F9F;">|</label>
+				<a class="register_tail_contact">联系我们</a>
+			</div>
+			
+		</div>
+		<!-- JS文件 -->
+		<script src="/static/layui/layui.js" type="text/javascript" charset="UTF-8"></script>
+		<script>
+		layui.use(['form', 'layedit', 'laydate'], function(){
+		  var form = layui.form
+		  ,layer = layui.layer
+		  ,layedit = layui.layedit
+		  ,$=layui.$
+		  ,laydate = layui.laydate;
+		  
+		  //日期
+		  laydate.render({
+		    elem: '#date'
+		  });
+		  laydate.render({
+		    elem: '#date1'
+		  });
+		  
+		  //创建一个编辑器
+		  var editIndex = layedit.build('LAY_demo_editor');
+		 
+		  //自定义验证规则
+		  form.verify({
+		    name: function(value){
+		      if(value.length == 0){
+		        return '姓名不能为空！';
+		      }
+		    }
+			,idnumber:function(value){
+				if(value.length == 0){
+					return '身份证号不能为空！';
+				}
+			}
+		    ,pass: [
+		      /^[\S]{6,12}$/
+		      ,'密码必须6到12位，且不能出现空格'
+		    ]
+			,confirmPass:function(value){
+				if($('input[name=password]').val() !== value)
+					return '提示：两次输入密码不一致！';
+			}
+			,deal_agree:function(value){
+				var check = document.getElementById("deal").checked;
+				console.log(document.getElementById("deal").checked);
+				if(check == false){
+					return '请勾选并阅读协议';
+				}
+			}
+		    ,content: function(value){
+		      layedit.sync(editIndex);
+		    },
+			
+		  });
+		  
+		  //监听表单提交
+		  form.on('submit(register)', function(data){
+			  // 请求
+			$.post('/register',data.field,(res)=>{
+				if(res.code==0){
+					window.location.href=res.data.url;
+				}
+				else layer.alert(res.msg);
+			})
+		    return false;
+		  });
+		 
+		  
+		  //表单取值
+		  layui.$('#LAY-component-form-getval').on('click', function(){
+		    var data = form.val('example');
+		    alert(JSON.stringify(data));
+		  });
+		  
+		});
+		</script>
+		</body>
+</html>

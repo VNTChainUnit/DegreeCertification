@@ -1,0 +1,70 @@
+
+.body{
+	border-radius: 30px;
+	width: 700px;
+	margin: auto;
+	background-color: #f3f6fd;
+	padding-bottom: 40px;
+}
+.reminder{
+	font-size: 10px;
+	color: #C2C2C2;
+	margin-left: 5px;
+}
+.head_title{
+	width: 500px;
+	margin: auto;
+}
+.head{
+	width: 100%;
+	height: 70px;
+	background-color: #3887e5;
+}
+.head_mine{
+	height: 50px;
+	background-color: #3887e5;
+}
+.img_bobble{
+	padding-left: 50px;
+	padding-top: 25px;
+	float: left;
+}
+
+.title_text{
+	padding-top: 20px;
+	text-align: center;
+	align-items: center;
+	color: #FFFFFF;
+	font-size: 25px;
+}
+.register_headtext{
+	font-size: 25px;
+	font-weight: 600;
+	margin-top: 30px;
+	padding-top: 20px;
+	margin-bottom: 25px;
+}
+.loginanderegister{
+	width: 100px;
+	float: right;
+	height: 40px;
+	margin-top: 50px;
+}
+.login_a{
+	color: #FFFFFF;
+	width: 30px;
+}
+.layui-from-checkbox{
+	margin-left: 110px;
+}
+.register_tail{
+	margin-left: 150px;
+}
+.register_tail_help{
+	font-size: 12px;
+	color: #9F9F9F;
+}
+.register_tail_contact{
+	font-size: 12px;
+	color: #9F9F9F;
+}

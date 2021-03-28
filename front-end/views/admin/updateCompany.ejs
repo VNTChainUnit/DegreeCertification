@@ -1,0 +1,73 @@
+<div class="layuimini-main">
+
+    <div class="layui-form layuimini-form">
+        <input type="hidden" name='_id' value='<%= company._id%>'>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">公司名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="公司名称不能为空" placeholder="请输入公司名称" value="<%= company.name%>" class="layui-input">
+                
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required" >账户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" placeholder="请输入用户名" value="<%= company.username%>" class="layui-input" required>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required" >密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" placeholder="保持不变" value="" class="layui-input" required readonly>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="confirm_password" placeholder="保持不变" value="" class="layui-input" required readonly>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            $ = layui.$;
+
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+
+        // 当前弹出层，防止ID被覆盖
+        var parentIndex = layer.index;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.ajax({
+                url:'/admin/api/company',
+                method:'put',
+                data:data.field,
+                success:(res)=>{
+                    if(res.code==0){
+                        layer.msg("修改成功！")
+                        layer.close(parentIndex);
+                    }
+                    else{
+                        layer.msg("修改失败！"+res.msg)
+                    }
+                }
+            })
+            return false;
+        });
+
+    });
+</script>
