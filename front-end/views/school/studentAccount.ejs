@@ -31,7 +31,7 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="resetPassword">修改密码</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="resetPassword">重置密码</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -54,14 +54,14 @@
         ]
         table.render({
             elem: '#currentTableId',
-            data:data1,
+            url:'/school/api/student',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['exports', 'print'],
             cols: [[
                 {field: '_id', hide:true},
                 {field: 'name',width:260, title: '姓名'},
                 {field: 'studentnumber', title: '学号'},
-                {field: 'certificatenumber',  title: '证书编号'},
+                {field: 'certificate_number',  title: '证书编号'},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             text: {
@@ -75,21 +75,16 @@
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
-            var result = JSON.stringify(data.field);
-            layer.alert(result, {
-                title: '最终的搜索信息'
-            });
-
             //执行搜索重载
             table.reload('currentTableId', {
                 page: {
                     curr: 1
                 }
                 , where: {
-                    searchParams: result
+                    name: data.field.name,
+                    studentnumber:data.field.studentnumber
                 }
             }, 'data');
-
             return false;
         });
 
@@ -99,14 +94,39 @@
             if (obj.event === 'resetPassword') {
                 layer.confirm('确定重置'+data.name+"的密码吗?", function (index) {
                     //发请求
-                    layer.close(index);
+                    $.ajax({
+                        url:'/school/api/student',
+                        method:'PUT',
+                        data:{studentnumber:data.studentnumber},
+                        success:(res)=>{
+                            if(res.code==0){
+                                layer.alert("重置密码成功！<br>"+res.msg)
+                            }
+                            else{
+                                layer.msg("重置密码失败！"+res.msg)
+                            }
+                            layer.close(index);
+                        }
+                    })
                 });
                 return false;
             } else if (obj.event === 'delete') {
                 layer.confirm('确认要删除'+data.name+"的账户吗?<br>删除后学生只能重新注册账户", function (index) {
-                    obj.del();
-                    //发请求
-                    layer.close(index);
+                    $.ajax({
+                        url:'/school/api/student',
+                        method:'DELETE',
+                        data:{studentnumber:data.studentnumber},
+                        success:(res)=>{
+                            if(res.code==0){
+                                obj.del();
+                                layer.msg("删除成功！")
+                            }
+                            else{
+                                layer.msg("删除失败！"+res.msg)
+                            }
+                            layer.close(index);
+                        }
+                    })
                 });
             }
         });

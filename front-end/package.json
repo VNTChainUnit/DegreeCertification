@@ -18,6 +18,7 @@
     "md5": "^2.3.0",
     "mongoose": "^5.12.2",
     "morgan": "~1.9.1",
+    "path": "^0.12.7",
     "vnt": "https://gitee.com/laoluoli/vnt.js.git",
     "vnt-kit": "https://gitee.com/laoluoli/vnt-kit.js.git"
   },

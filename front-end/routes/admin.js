@@ -6,14 +6,6 @@ const schoolService=require('../service/schoolService');
 const companyService=require('../service/companyService')
 //身份验证
 router.use(function (req, res, next) {
-  req.session.username="admin"
-  req.session.usertype=4
-
-
-
-
-
-
   if (req.session.username!=null && req.session.usertype==4) {
     next()
   } else {

@@ -1,17 +1,15 @@
-const School=require('../models/school')
+const School=require('../models/school');
+const studentService = require('./studentService');
 const utils=require('./utils')
 
-function login(username,password){
-    School.findOne({username:username},function(err,doc){
-        if(err!=null){
-            if(doc){
-                if(utils.checkPassword(doc.password,password)){
-                    return doc._id;
-                }
-            }
-        }
-            return false;
-    })
+async function login(username,password){
+    let school=await School.findOne({username:username})
+    if(utils.checkPassword(school.password,password)){
+        return true;
+    }
+    else{
+    return false;
+    }
 }
 
 async function getSchoolByName(name){
@@ -60,6 +58,18 @@ function createSchool(name,code,username,password){
 function deleteSchool(name){
     School.deleteMany({name:name},(err)=>{if(err)console.log(err)})
 }
+
+async function getSchoolByUsername(username){
+    return await School.findOne({username:username});
+}
+
+async function removeStudent(school_id,student_id){
+    School.updateOne({_id:school_id},{$pull:{student_ids:student_id}},(err)=>{
+        if(err){
+            console.log(err)
+        }
+    })
+}
 module.exports={
     getSchoolByName:getSchoolByName,
     getSchoolById:getSchoolById,
@@ -68,5 +78,7 @@ module.exports={
     getAllSchool:getAllSchool,
     getSchoolByNameCode:getSchoolByNameCode,
     createSchool:createSchool,
-    deleteSchool:deleteSchool
+    deleteSchool:deleteSchool,
+    getSchoolByUsername:getSchoolByUsername,
+    removeStudent:removeStudent
 }

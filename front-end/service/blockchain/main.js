@@ -2,39 +2,34 @@ var fs = require('fs');
 var Vnt = require("vnt")
 var vntkit = require("vnt-kit")
 var TX= require("ethereumjs-tx")
+const path=require('path')
+const Common=require('./common')
 // 设置连接的节点
 var vnt = new Vnt();
-vnt.setProvider(new vnt.providers.HttpProvider("http://47.111.100.232:8880"));
-var contractAddress = '0x2cb91f8058ec6663170999e82624f5440dcd9be4';
+vnt.setProvider(new vnt.providers.HttpProvider(Common.url));
+var contractAddress = Common.contractAddress;
 
-// var contractAddress = '0x10B05EF130599dB76A8D9bC3E9235D7075415419';
-// vnt.setProvider(new vnt.providers.HttpProvider("http://127.0.0.1:8545"));
 var chainid = 2;
 // 合约部署地址
 
 // 解锁用户
-var ksDir = "/home/lemon/Project/vntchain/test/"
-var kFile1 = "UTC--2021-02-05T23-22-11.465260418Z--46a1a94e8a2572621020428fea1485f854c27b6c"
-var pass1 = ""
+var filePath = path.resolve(__dirname,Common.accountPath)
+var password = Common.accountPassword
 
 function openAccount(file, passwd) {
     var content = fs.readFileSync(file).toString("utf-8")
     return vntkit.account.decrypt(content, passwd, false)
 }
 try{
-    var account = openAccount(ksDir + kFile1, pass1)
-    console.log(account)
+    var account = openAccount(filePath, password)
+    console.log("open account successfully!")
 }catch(err){
     console.log(err.message)
 }
 
-// 准备代码和abi
-var codeFile = "/home/lemon/Project/vntchain/DegreeCertification/contract/output/Degree.compress"
-var abiFile = "/home/lemon/Project/vntchain/DegreeCertification/contract/output/Degree.abi"
-var wasmabi = fs.readFileSync(abiFile)
 //将abi数据解析成json结构
+var wasmabi = fs.readFileSync(path.resolve(__dirname,Common.abifile))
 var abi = JSON.parse(wasmabi.toString("utf-8"))
-
 
 //下面为各个函数
 
@@ -98,30 +93,15 @@ function checkCertificate(certificatenumber, name, school, degreetype, graduatio
     return res.toString();
 }
 
-// function getCertificate(certificateNumber, idnumber){
-//     var contract = vnt.core.contract(abi);
-//     var data = contract.packFunctionData("GetCertificate", [certificateNumber,idnumber]);
-//     var result = vnt.core.call({to:contractAddress,data:data})
-//     console.log(result.toString());
-//     console.log(contract.unPackOutput("GetCertificate", result).toString())
-//     return result.toString();
-// }
-var  school="学校名"
-var name="学生名";
-var idnumber="idcardnumber";
-var degreetype="学士学位"  //master,doctor
-var major="软件工程"
-var graduationdate="2022-06"
-var studentnumber="201831"
-var certificatenumber="1certi"
-//addCertificate(school,name,idnumber,degreetype,major,graduationdate,studentnumber,certificatenumber);
-//getCertificate(certificatenumber+"ss", idnumber)
+// var  school="学校名"
+// var name="学生名";
+// var idnumber="idcardnumber";
+// var degreetype="学士学位"  //master,doctor
+// var major="软件工程"
+// var graduationdate="2022-06"
+// var studentnumber="201831"
+// var certificatenumber="1certi"
 
-
-//existCertificate(name,studentnumber,school,idnumber);
-
-
-//checkCertificate(certificatenumber+"ss",name,school,degreetype,graduationdate,major)
 module.exports={
     addCertificate:addCertificate,
     getCertificate:getCertificate,

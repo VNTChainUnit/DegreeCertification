@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="js/lay-module/step-lay/step.css" media="all">
+<link rel="stylesheet" href="/static/layuimini/js/lay-module/step-lay/step.css" media="all">
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
@@ -12,7 +12,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">证书编号:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写证书编号" name="certificatenumber" class="layui-input" lay-verify="number" required/>
+                                            <input type="text" placeholder="请填写证书编号" name="certificatenumber" class="layui-input"  required/>
 
                                         </div>
                                     </div>
@@ -25,7 +25,7 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">学号:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写学生学号" value="" name="studentnumber" class="layui-input" lay-verify="number" required>
+                                            <input type="text" placeholder="请填写学生学号" value="" name="studentnumber" class="layui-input"  required>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -44,7 +44,7 @@
                                         <label class="layui-form-label">学位类别:</label>
                                         <div class="layui-input-block">
                                             <select lay-verify="required" name="degreetype">
-                                                <option value="学士" selected>本科</option>
+                                                <option value="学士" selected>学士</option>
                                                 <option value="硕士">硕士</option>
                                                 <option value="博士">博士</option>
                                             </select>
@@ -72,7 +72,7 @@
 									<div class="layui-form-item">
 									    <label class="layui-form-label">学校名称:</label>
 									    <div class="layui-input-block">
-									        <div class="layui-form-mid layui-word-aux">学校名</div>
+									        <div class="layui-form-mid layui-word-aux"><%= school.name%></div>
 									    </div>
 									</div>
                                     <div class="layui-form-item">
@@ -128,13 +128,12 @@
                                     <i class="layui-icon layui-circle"
                                        style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
                                     <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
-                                        入款成功
+                                        证书上传成功
                                     </div>
-                                    <div style="font-size: 14px;color: #666;margin-top: 20px;">预计两小时到账</div>
+                                    <div style="font-size: 14px;color: #666;margin-top: 20px;">预计1分钟上传至系统内</div>
                                 </div>
                                 <div style="text-align: center;margin-top: 50px;">
-                                    <button class="layui-btn next">再入一笔</button>
-                                    <button class="layui-btn layui-btn-primary">查看账单</button>
+                                    <button class="layui-btn next">再次添加</button>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +187,6 @@
 			console.log(data.field);
 			// 获得第一个表单的数据
 			Certificate_Information = data.field;
-			console.log(Certificate_Information.graduationdate);
 			
 			// 将每个div中的值赋值
 			$('#serial_number').html(Certificate_Information.certificatenumber);
@@ -204,9 +202,11 @@
 		
 		
         form.on('submit(formStep2)', function (data) {
-            Certificate_Information="";
             //这里执行请求全局变量能够打印出来
-			console.log(Certificate_Information.studentnumber);
+			console.log(Certificate_Information);
+            $.post('/school/api/certificate',Certificate_Information,(res)=>{
+                console.log(res)
+            })
             step.next('#stepForm');
             return false;
         });

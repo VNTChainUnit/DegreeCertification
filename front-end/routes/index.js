@@ -59,11 +59,12 @@ router.post('/login', async function (req, res) {
   }
 })
 
-router.post("/register",function(req,res,next){
-  let school=schoolService.getSchool(req.body.name);
+router.post("/register",async function(req,res,next){
+  let school=await schoolService.getSchoolByName(req.body.school);
+  let data=req.body
   if(school==null){res.json(restful(-1,null,"学校不存在!"))}
-  if(studentService.register(req.body.name,req.body.studentnumber,req.body.username
-    ,req.body.password,school._id,req.body.school,req.body.idnumber)){
+  if(await studentService.register(data.name,data.studentnumber
+    ,data.password,school._id,data.idnumber)){
     res.json(restful(null,{url:"/login"},null));
   }
   else{

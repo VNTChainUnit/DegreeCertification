@@ -5,7 +5,7 @@ var TX= require("ethereumjs-tx")
 // 设置连接的节点
 var vnt = new Vnt();
 vnt.setProvider(new vnt.providers.HttpProvider("http://47.111.100.232:8880"));
-var contractAddress = '0x2cb91f8058ec6663170999e82624f5440dcd9be4';
+var contractAddress = '0x98be785dee077e3ef55b546400db620a6d6fc39c';
 
 // var contractAddress = '0x10B05EF130599dB76A8D9bC3E9235D7075415419';
 // vnt.setProvider(new vnt.providers.HttpProvider("http://127.0.0.1:8545"));

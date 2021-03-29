@@ -29,7 +29,7 @@
 				
 				<!-- 注册页 -->
 				<center>
-					  <legend class="register_headtext ">用户注册</legend>
+					  <legend class="register_headtext ">学生注册</legend>
 				</center>
 				
 				
@@ -46,7 +46,7 @@
 					 <div class="layui-form-item">
 						<label class="layui-form-label">学号</label>
 						<div class="layui-input-block">
-						  <input type="text" name="username" lay-verify="required" lay-reqtext="学号不能为空!" placeholder="请输入您的学号" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+						  <input type="text" name="studentnumber" lay-verify="required" lay-reqtext="学号不能为空!" placeholder="请输入您的学号" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
 						</div>
 					  </div>
 					
@@ -54,7 +54,7 @@
 					  <div class="layui-form-item">
 						<label class="layui-form-label">密码</label>
 						<div class="layui-input-inline">
-						  <input type="password" name="password" lay-verify="pass" placeholder="请填写6到12位密码" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
+						  <input type="password" name="password" lay-verify="pass" placeholder="请填写6到16位密码" autocomplete="off" class="layui-input" style="width: 200px;border-radius: 15px;">
 						</div>
 					  </div>
 					  
@@ -144,8 +144,8 @@
 				}
 			}
 		    ,pass: [
-		      /^[\S]{6,12}$/
-		      ,'密码必须6到12位，且不能出现空格'
+		      /^[\S]{6,16}$/
+		      ,'密码必须6到16位，且不能出现空格'
 		    ]
 			,confirmPass:function(value){
 				if($('input[name=password]').val() !== value)
