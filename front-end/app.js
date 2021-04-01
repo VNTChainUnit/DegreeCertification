@@ -7,7 +7,6 @@ const bodyParser=require('body-parser');
 const session = require('express-session');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var studentRouter = require('./routes/student');
 var companyRouter = require('./routes/company');
 var schoolRouter = require('./routes/school');
@@ -35,7 +34,6 @@ app.use(cookieParser());
 app.use("/static",express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/student', studentRouter);
 app.use('/company', companyRouter);
 app.use('/school', schoolRouter);

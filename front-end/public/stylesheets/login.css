@@ -73,3 +73,6 @@ ul, li{
 #slider{
 	width: 54% !important;
 }
+#input_selectid input{
+	border-radius: 15px;
+}

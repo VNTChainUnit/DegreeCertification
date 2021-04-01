@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>学位学历认证管理系统-用人单位</title>
+<link rel="stylesheet" type="text/css" href="/static/stylesheets/head.css" />
+<link rel="stylesheet" type="text/css" href="/static/stylesheets/register.css" />
+<link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
+<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+<link href="/static/stylesheets/company.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	
+	<%-include("../head.ejs")%>
+	
+	<section class="company-search">
+		<div class="layui-container com_body">
+			<div class="layui-row com_body_row">
+				
+				<form action="" class="layui-form com_body_form">
+					<div class="layui-form-item com_body_item">
+						<img src="/static/images/company_search.png" style="width: 60%; margin: auto;" alt="">
+					</div>
+					<div class="layui-form-item">
+						<label class="com_body_label">证书查询</label>
+					</div>
+					<div class="layui-form-item" >
+						<label class="layui-form-label required" style="font-weight: 600;">证书编号</label>
+						<div class="layui-input-block">
+							<input type="text" name="certificate_number" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label required" style="font-weight: 600;">姓名</label>
+						<div class="layui-input-block">
+							<input type="text" name="name" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label required" style="font-weight: 600;">学校名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="school" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="font-weight: 600;">学位类别</label>
+						<div style="width: 57%; border-radius: 50px !important;" class="layui-input-block"  id="input_selectid">
+							<select lay-verify="required"  name="degreetype" style="border-radius: 15px;" >
+								<option value="学士" selected>学士</option>
+								<option value="硕士">硕士</option>
+								<option value="博士">博士</option>
+							</select>
+							<!-- <input type="text" name="degreetype" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/> -->
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="font-weight: 600;">毕业年月</label>
+						<div class="layui-input-block">
+							<input type="text" id="year-month" name="graduationdate" required lay-verify="required" autocomplete="off" class="layui-input com_body_input" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="font-weight: 600;">专业</label>
+						<div class="layui-input-block">
+							<input type="text" name="major" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<p id="search-true" class="com_body_search_true">查询成功，证书无误！</p>
+					</div>
+					<div class="layui-form-item">
+						<p id="search-false" class="com_body_search_false">查询失败，证书信息不正确！</p>
+					</div>
+					<div class="layui-form-item" style="text-align: center;">
+						<button class="layui-btn com_body_search" lay-submit lay-filter="companySearch">点击查询</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<%-include("../foot.ejs")%>
+
+<script src="/static/layui/layui.js"></script>
+<script>
+//Demo
+layui.use(['form','element','laydate'], function(){
+  var form = layui.form,
+	  element = layui.element, //导航的hover效果、二级菜单等功能，需要依赖element模块
+  	  laydate = layui.laydate,
+  	  $ = layui.jquery,
+	  layer = layui.layer;
+	  
+ //修改密码
+ $("#changePasswordBtn").click(function(){
+		$.get('/changePassword',(res)=>{
+			var index = layer.open({
+		title: '修改密码',
+		type: 1,
+		shade: 0.2,
+		maxmin:true,
+		shadeClose: true,
+		area:['500px','400px'],
+		content:res
+			
+	});
+	$(window).on("resize", function () {
+		layer.full(index);
+	});
+		})
+	
+})
+  //监听提交
+  form.on('submit(companySearch)', function(data){
+	  var index=layer.load(0, {shade:0.2,time: 10*1000})
+	$.ajax({
+		url: '/company/checkCertificate',
+		method:'POST',
+		data:data.field,
+		success:function(res){
+			if(res.code==0){
+				$('#search-true').show();
+				$('#search-false').hide();
+			}
+			else{
+				$('#search-true').hide();
+				$('#search-false').show();
+			}
+		},
+		complete:()=>{layer.close(index)}
+	});
+    return false;
+  });
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+	//console.log(elem)
+	layer.msg(elem.text());
+  });
+  laydate.render({
+		elem: "#year-month",
+		type: "month",
+	});
+	//用户退出
+	$(".login-out").click(function(){
+		layer.confirm("确认退出系统吗？",{icon:3, title: "提示"}, function(index){
+			//关闭询问框
+			layer.close(index);
+			//跳转
+			window.location.href = "/logout";
+		})
+	});
+});
+
+</script>
+</body>
+</html>

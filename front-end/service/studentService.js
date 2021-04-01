@@ -94,6 +94,9 @@ function deleteOne(school_id,studentnumber){
         }
     })
 }
+async function getByUsername(username){
+    return await Student.findOne({username:username})
+}
 module.exports={
     login:login,
     register:register,
@@ -103,5 +106,6 @@ module.exports={
     getAll:getAll,
     getById:getById,
     changePassword:changePassword,
-    deleteOne:deleteOne
+    deleteOne:deleteOne,
+    getByUsername:getByUsername
 }

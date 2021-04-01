@@ -4,6 +4,7 @@ const utils=require('./utils')
 
 async function login(username,password){
     let school=await School.findOne({username:username})
+    if(school==null)return false;
     if(utils.checkPassword(school.password,password)){
         return true;
     }
@@ -70,6 +71,22 @@ async function removeStudent(school_id,student_id){
         }
     })
 }
+
+async function changePassword(username,oldpassword,newpassword){
+    let school = await School.findOne({username:username})
+    //先找到账户
+    if(school){
+        //确认密码正确
+        if(utils.checkPassword(school.password,oldpassword)){
+            school.password=utils.generateSafePassword(newpassword)
+            school.save()
+            return true
+        }
+    }
+    //否则直接修改失败
+    return false
+}
+
 module.exports={
     getSchoolByName:getSchoolByName,
     getSchoolById:getSchoolById,
@@ -80,5 +97,6 @@ module.exports={
     createSchool:createSchool,
     deleteSchool:deleteSchool,
     getSchoolByUsername:getSchoolByUsername,
-    removeStudent:removeStudent
+    removeStudent:removeStudent,
+    changePassword:changePassword
 }

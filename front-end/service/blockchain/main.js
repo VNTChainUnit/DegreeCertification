@@ -90,17 +90,11 @@ function checkCertificate(certificatenumber, name, school, degreetype, graduatio
     var contract = vnt.core.contract(abi).at(contractAddress);
     var res = contract.CheckCertificate.call( certificatenumber, name, school, degreetype, graduationdate, major,  {from:account.address});
     console.log(res.toString());
-    return res.toString();
+    if(res.toString()=="true"){
+        return true
+    }
+    else{return false}
 }
-
-// var  school="学校名"
-// var name="学生名";
-// var idnumber="idcardnumber";
-// var degreetype="学士学位"  //master,doctor
-// var major="软件工程"
-// var graduationdate="2022-06"
-// var studentnumber="201831"
-// var certificatenumber="1certi"
 
 module.exports={
     addCertificate:addCertificate,

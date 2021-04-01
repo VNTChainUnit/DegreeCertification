@@ -1,0 +1,59 @@
+@charset "utf-8";
+body{
+	background-image: url(/static/images/student_bg.png); 
+	background-repeat: repeat; 
+	background-size: 500px auto;
+}
+.user_operation{
+	background-color: #3887e5;
+	width: 200px;
+	height: 40px;
+	float: right;
+}
+.com_body{
+	padding: 20px 0px; 
+	margin-top: 50px; 
+	margin-bottom: 20px;
+}
+.com_body_row{
+	background-color: #f3f6fd; 
+	border-radius: 15px;
+}
+.com_body_form{
+	width: 40%; 
+	border-radius: 15px; 
+	padding: 20px 10px; 
+	text-align: center; 
+	margin: auto;
+}
+.com_body_item{
+	margin: auto; 
+	text-align: center; 
+	padding-bottom: 15px;
+}
+.com_body_label{
+	font-weight: 600; 
+	font-size: 20px; 
+	text-align: center;
+}
+.com_body_input{
+	border-radius: 15px; 
+	width: 75%;
+}
+.com_body_search_true{
+	display: none; 
+	color: green; 
+	font-size: 17px;
+}
+.com_body_search_false{
+	display: none; 
+	color: red; 
+	font-size: 17px;
+}
+.com_body_search{
+	border-radius: 20px;
+	background-color: #3887e5;
+}
+#input_selectid input{
+	border-radius: 15px;
+}

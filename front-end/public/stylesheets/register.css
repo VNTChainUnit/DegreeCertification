@@ -1,10 +1,15 @@
-
+body{
+	background-image: url(/static/images/register_bg.png);
+	background-repeat: repeat; 
+	background-size: 1000px auto;
+}
 .body{
 	border-radius: 30px;
 	width: 80%;
 	margin: auto;
+	margin-top: 40px;
 	background-color: #f3f6fd;
-	padding-bottom: 40px;
+	padding-bottom: 60px;
 }
 .reminder{
 	font-size: 10px;
@@ -12,22 +17,55 @@
 	margin-left: 5px;
 }
 .head_title{
-	width: 500px;
+	width: 70%;
 	margin: auto;
+	color: #FFFFFF;
+	align-items: center;
+}
+.register_form{
+	margin-left: 18%;
 }
 .head{
 	width: 100%;
-	height: 70px;
+	height: 100px;
 	background-color: #3887e5;
 }
 .head_mine{
-	height: 50px;
+	/* height: 80px; */
 	background-color: #3887e5;
 }
+.head_logo{
+	width: 40px;
+	height: auto;
+	padding-right: 5px;
+	margin: auto;
+	text-align: center;
+}
+.head_box{
+	margin: auto;
+	text-align: center;
+	width: 35%;
+}
 .img_bobble{
-	padding-left: 50px;
-	padding-top: 25px;
+	/* padding-left: 5%; */
+	/* padding-top: 25px; */
+	/* float: right; */
 	float: left;
+}
+.systen_eng{
+	margin: 0px;
+	padding: 0px;
+	font-size: 11px;
+	font-weight: 600;
+}
+.label_bobble{
+
+	float: left;
+}
+.system_chinese{
+	font-weight: 600;
+	margin: 0;
+	padding: 0;
 }
 
 .title_text{
@@ -38,17 +76,21 @@
 	font-size: 25px;
 }
 .register_headtext{
-	font-size: 25px;
+	font-size: 45px;
 	font-weight: 600;
-	margin-top: 30px;
+	color: #007DDB;
+	font-family: "楷体";
 	padding-top: 20px;
 	margin-bottom: 25px;
 }
 .loginanderegister{
+	
 	width: 100px;
-	float: right;
-	height: 40px;
-	margin-top: 50px;
+	/* float: right; */
+	height: 50px;
+	/* margin-right: 10%; */
+	margin-top: 70px;
+	margin-bottom: 10px;
 }
 .login_a{
 	color: #FFFFFF;
@@ -67,4 +109,24 @@
 .register_tail_contact{
 	font-size: 12px;
 	color: #9F9F9F;
+}
+.register_img{
+	width: 400px;
+	height: auto;
+	margin-top: 60px;
+	margin-left: 50px;
+	border-radius: 15px;
+}
+.register_input{
+	width: 200px;
+	border-radius: 15px;
+}
+.register_btn{
+	margin-right: 25px;
+}
+.system_name_title{
+	font-size: 28px;
+	padding-top: 20px;
+	margin: auto;
+	text-align: center;
 }

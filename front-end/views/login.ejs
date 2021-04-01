@@ -4,13 +4,29 @@
 <meta charset="utf-8">
 <title>登录</title>
 <link rel="stylesheet" href="/static/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/static/stylesheets/register.css" />
 <link href="/static/stylesheets/login.css" rel="stylesheet" type="text/css">
 </head>
-	<section class="navigation-bar">
-		<div class="layui-nav navbar-bgc" lay-filter="">
-			<li class="layui-nav-item"><a></a></li>
+<section>
+	<div class="head">
+		<div class=" head_title ">
+
+			<!-- logo和标题 -->
+			<div class="system_name_title ">
+				<div class="head_box">
+					<div class="img_bobble ">
+						<img src="/static/images/white_logo.png"  class="head_logo"/>
+					</div>
+					<div class="label_bobble">
+						<div class="system_chinese">学位学历认证管理系统</div>
+						<div class="systen_eng">Degree and diploma certification system</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</section>
+	</div>
+</section>
 	
 	<section class="main-form">
 		<div class="layui-container">
@@ -37,12 +53,12 @@
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label right-form-label">您的身份</label>
-							<div class="layui-input-block right-form-select">
+							<div class="layui-input-block right-form-select" id="input_selectid">
 								<select name="usertype" lay-verify="required">
 									<option value="">请选择</option>
 									<option value="1">学生</option>
 									<option value="2">用人单位</option>
-									<option value="3">学校</option>
+									<option value="3">高校</option>
 								</select>
 							</div>
 						</div>
@@ -77,10 +93,14 @@
 	</section>
 	
 	<section class="layui-footer">
-		<div class="layui-row cue-line" style="margin-top: 3%;">
-			<div class="layui-col-md-offset5 layui-col-md2 gray-line"></div>
-			<a href="" class="layui-col-md1 cue-text">学历学位验证系统</a>
-			<div class="layui-col-md2 gray-line"></div>
+			<div class="layui-container">
+				<center>
+					<div class="layui-row cue-line" style="margin-top: 3%;">
+						<div class="layui-col-md-offset3 layui-col-md2 gray-line"></div>
+						<div class="layui-col-md3 cue-text">学位学历认证管理系统<a href="/admin/" style="margin-left:20px;">后台管理</a></div>
+						<div class="layui-col-md2 gray-line"></div>
+					</div>
+				</center>
 		</div>
 	</section>
 	

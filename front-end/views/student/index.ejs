@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>学位学历认证管理系统-学生</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/head.css" />
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/student.css" />
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/register.css" />
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
+	<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">  
+</head>
+ 
+<body>
+	<%-include("../head.ejs")%>
+	
+	<!-- 主体部分 -->
+	<section class="student-search">
+		<div class="layui-container" style="width: 70%;margin: auto;">
+			
+			<div>
+				<div class="layui-row">
+
+					<!-- 学生填写身份证号 -->
+						<div name="filloutform" id="filloutform">
+							<form action="" class="layui-form student_fillout_form">
+								<!-- 插画 -->
+								<div class="layui-form-item student_form2_img_div">
+									<img src="/static/images/student_search.png" style="width: 300px; margin: auto;" alt="">
+								</div>	
+
+								<!-- 表单填写 -->
+								<div class="layui-form-item">
+									<label class="student_fillout_label">证书获取</label>
+								</div>
+								<div class="layui-form-item">
+									<label class="layui-form-label identity">证件号码</label>
+									<div class="layui-input-block">
+										<input type="text" name="idnumber" required lay-verify="required" autocomplete="off" class="layui-input"  style="border-radius: 15px; width: 88%;"/>
+									</div>
+								</div>
+									
+								<!-- 按钮 -->
+								<div class="layui-form-item" style="text-align: center;">
+									<button class="layui-btn" style="border-radius: 20px;background-color: #3887e5;" lay-submit lay-filter="formStep">点击查询</button>
+								</div>
+							</form>
+						</div>
+					
+					<!-- 学生获取成功后的 -->
+						<div class="searchbackinfor" id="forminfo" name="forminfo">
+							<div class="layui-input-inline">
+								<form class="layui-form student_forminfo_form" action="" >
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label">证书编号:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="serial_number"></div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">学校名称:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="school_name">学校名</div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">姓名:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="student_name"></div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">学号:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="student_number"></div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">身份证号:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux"id="ID_number">
+											</div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">专业名称:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="profession"></div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">学位类别:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="sort"></div>
+										</div>
+									</div>
+									<div class="layui-form-item">
+										<label class="layui-form-label">毕业日期:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="graduation_date"></div>
+										</div>
+									</div>
+								</form>
+							</div>
+							
+							<!-- 按钮 -->
+							<div class="layui-input-inline student_fillout_item">
+								<img src="/static/images/student_search.png" style="width: 65%; margin: auto;" alt="">
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<%-include("../foot.ejs")%>
+
+	<script src="/static/layui/layui.js"></script>
+
+	<script>
+		
+		layui.use(['form','laydate','element'], function(){
+		  var $ = layui.jquery,
+			  form = layui.form,
+			  $ = layui.$,
+			  laydate = layui.laydate,
+			  step = layui.step,
+			  element = layui.element//导航的hover效果、二级菜单等功能，需要依赖element模块
+			  ;
+			  //修改密码
+			  $("#changePasswordBtn").click(function(){
+				  $.get('/changePassword',(res)=>{
+					  var index = layer.open({
+                    title: '修改密码',
+                    type: 1,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+					area:['500px','400px'],
+                    content:res
+						
+                });
+				$(window).on("resize", function () {
+                    layer.full(index);
+                });
+				  })
+				
+			})
+		  
+		  //监听提交
+		  form.on('submit(formStep)', function(data){
+			// layer.msg(JSON.stringify(data.field));
+			
+			$.ajax({
+				url:'/student/getCertificate',
+				method:'POST',
+				data:data.field,
+				success:function(res){
+					if(res.code==0){
+						let certificate=res.data
+						console.log(certificate);
+						// 将每个div中的值赋值
+						$('#serial_number').html(certificate.certificatenumber);
+						$('#school_name').html(certificate.school);
+						$('#student_name').html(certificate.name);
+						$('#student_number').html(certificate.studentnumber);
+						$('#ID_number').html(certificate.idnumber);
+						$('#profession').html(certificate.major);
+						$('#sort').html(certificate.degreetype);
+						$('#graduation_date').html(certificate.graduationdate);
+
+						$("#forminfo").show();
+						$("#filloutform").hide();
+					}
+					else{
+						$("#forminfo").hide();
+						$("#filloutform").show();
+						layer.alert("查询失败！"+res.msg);
+					}
+					
+				}
+			});
+			
+
+			
+			return false;
+		  });
+		  
+		  //监听导航点击
+		  element.on('nav(demo)', function(elem){
+		  			//console.log(elem)
+		  			layer.msg(elem.text());
+		  });
+		  
+		  //用户退出
+		  	$(".login-out").click(function(){
+		  		layer.confirm("确认退出系统吗？",{
+					icon:3, title: "提示",
+					}, 
+					function(index){
+						//关闭询问框
+						layer.close(index);
+						//跳转
+						window.location.href = "/logout";
+		  		})
+		  	});
+		});
+		
+	</script>
+</body>
+</html>

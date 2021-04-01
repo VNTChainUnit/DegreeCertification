@@ -1,0 +1,54 @@
+body{
+	background-image: url(/static/images/student_bg.png); background-repeat: repeat; background-size: 900px auto;
+}
+.student_nav{
+	width: 100px;
+	height: 20px;
+	float: right;
+}
+.student_fillout_form{
+	width: 100%; 
+	border-radius: 15px; 
+	padding: 20px 10px; 
+	text-align: center; 
+	margin-top:50px; 
+	background-color: #f3f6fd;
+}
+.student_fillout_item{
+	margin: auto; 
+	text-align: center; 
+	padding-bottom: 15px;
+}
+.student_fillout_label{
+	font-weight: 600; 
+	font-size: 28px; 
+	text-align: center;
+}
+.identity{
+	font-weight: 600;
+	font-size: 20px;
+}
+.searchbackinfor{
+	display:none; 
+	margin-top: 50px; 
+	border-radius: 15px; 
+	background-color: #f3f6fd; 
+	padding: 10px 0px;
+	padding-bottom: 20px;
+	width: 100%;
+}
+.student_forminfo_form{
+	padding-top: 60px;
+	padding-bottom: 50px;
+	padding-left: 30%;
+	width: 400px;
+	font-size: 18px;
+}
+.student_form2_img_div{
+	margin: auto; 
+	text-align: center; 
+	padding-bottom: 15px;
+}
+#filloutform{
+	margin-bottom: 80px;
+}

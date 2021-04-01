@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>网站名-学位学历认证系统</title>
+    <title>网站名-学位学历认证管理系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -59,10 +59,10 @@
                     <a href="javascript:;">系统管理员</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="row_page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                            <a href="javascript:;" layuimini-content-href="/changePassword" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
                         </dd>
                         <dd>
-                            <a href="/logout" class="login-out">退出登录</a>
+                            <a href="javascript:;" class="login-out">退出登录</a>
                         </dd>
                     </dl>
                 </li>
@@ -127,7 +127,7 @@
 
         $('.login-out').on("click", function () {
             layer.msg('退出登录成功', function () {
-                window.location = 'page/login-3.html';
+                window.location = '/logout';
             });
         });
     });

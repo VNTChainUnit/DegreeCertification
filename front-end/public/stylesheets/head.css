@@ -1,0 +1,25 @@
+.head_title{
+	width: 500px;
+	margin: auto;
+}
+.head{
+	width: 100%;
+	background-color: #3887e5;
+}
+.head_mine{ 
+	/* height: 50px; */
+	background-color: #3887e5;
+}
+.head_box1{
+	margin: auto;
+	text-align: center;
+	width: 52%;
+	align-items: center;
+}
+.head_logo{
+	width: 40px;
+	height: auto;
+	padding-right: 5px;
+	margin: auto;
+	text-align: center;
+}
