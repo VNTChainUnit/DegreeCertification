@@ -97,11 +97,15 @@ string GetCertificate(string certificateNumber, string idnumber)
 {
     checkOwner();
     CertificatesMap.key = certificateNumber;
-    //核验身份证号
-    Require(Equal(CertificatesMap.value.idnumber, idnumber),"idnumber error!");
-    return Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(CertificatesMap.value.school,"|"),
+    //核验身份证号,如果身份证号不对，返回""
+    if(Equal(CertificatesMap.value.idnumber, idnumber)){
+	    return Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(Concat(CertificatesMap.value.school,"|"),
                     CertificatesMap.value.name),"|"),CertificatesMap.value.idnumber),"|"),CertificatesMap.value.degreetype),"|"),CertificatesMap.value.major),"|"),
                     CertificatesMap.value.graduationdate),"|"),CertificatesMap.value.studentnumber),"|"),CertificatesMap.value.certificatenumber);
+    }
+    else{
+        return "";
+    }
 }
 
 //核验证书hash

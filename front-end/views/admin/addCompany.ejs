@@ -4,26 +4,26 @@
         <div class="layui-form-item">
             <label class="layui-form-label required">公司名称</label>
             <div class="layui-input-block">
-                <input type="text" name="name" lay-verify="required" lay-reqtext="学校名称不能为空" placeholder="请输入学校名称" value="" class="layui-input">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="公司名称不能为空" placeholder="请输入公司名称" value="" class="layui-input">
                 
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required" >账户名</label>
             <div class="layui-input-block">
-                <input type="text" name="username" placeholder="请输入用户名" value="" class="layui-input" required>
+                <input type="text" name="username" placeholder="请输入用户名" value="" class="layui-input"   lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required" >密码</label>
             <div class="layui-input-block">
-                <input type="password" name="password" placeholder="请输入密码" value="" class="layui-input" required>
+                <input type="password" name="password" placeholder="请输入密码" value="" lay-verify="required"  class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required">确认密码</label>
             <div class="layui-input-block">
-                <input type="password" name="confirm_password" placeholder="请输入密码" value="" class="layui-input" required>
+                <input type="password" name="confirm_password" placeholder="请输入密码"  lay-verify="required|confirmPass"  value="" class="layui-input" required>
             </div>
         </div>
 
@@ -48,6 +48,13 @@
 
         // 当前弹出层，防止ID被覆盖
         var parentIndex = layer.index;
+
+        form.verify({
+            confirmPass:function(value){
+				if($('input[name=password]').val() !== value)
+					return '提示：两次输入密码不一致！';
+			}
+        });
 
         //监听提交
         form.on('submit(saveBtn)', function (data) {

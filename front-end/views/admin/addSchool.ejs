@@ -18,19 +18,19 @@
         <div class="layui-form-item">
             <label class="layui-form-label required" >账户名</label>
             <div class="layui-input-block">
-                <input type="text" name="username" placeholder="请输入用户名" value="" class="layui-input" required>
+                <input type="text" name="username" placeholder="请输入用户名" value="" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required" >密码</label>
             <div class="layui-input-block">
-                <input type="password" name="password" placeholder="请输入密码" value="" class="layui-input" required>
+                <input type="password" name="password" placeholder="请输入密码" value="" class="layui-input"  lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label required">确认密码</label>
             <div class="layui-input-block">
-                <input type="password" name="confirm_password" placeholder="请输入密码" value="" class="layui-input" required>
+                <input type="password" name="confirm_password" placeholder="请输入密码" value="" class="layui-input"  lay-verify="required|confirmPass">
             </div>
         </div>
 
@@ -53,6 +53,13 @@
          */
         form.render();
 
+        form.verify({
+            confirmPass:function(value){
+				if($('input[name=password]').val() !== value)
+					return '提示：两次输入密码不一致！';
+			}
+        });
+        
         // 当前弹出层，防止ID被覆盖
         var parentIndex = layer.index;
 

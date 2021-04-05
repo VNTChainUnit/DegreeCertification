@@ -34,6 +34,7 @@ router.post('/login',async (req,res,next)=>{
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
+
   res.render('admin/index', { title: 'Express' });
 });
 

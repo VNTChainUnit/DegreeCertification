@@ -1,5 +1,7 @@
 body{
-	background-image: url(/static/images/student_bg.png); background-repeat: repeat; background-size: 900px auto;
+	background-image: url(/static/images/student_bg.png); 
+	background-repeat: repeat; 
+	background-size: 900px auto;
 }
 .student_nav{
 	width: 100px;
@@ -9,9 +11,12 @@ body{
 .student_fillout_form{
 	width: 100%; 
 	border-radius: 15px; 
-	padding: 20px 10px; 
+	/* padding: 20px 10px;  */
 	text-align: center; 
-	margin-top:50px; 
+	/* padding-left: 40px; */
+	padding-top: 30px;
+	padding-bottom: 30px;
+	margin-top:30px; 
 	background-color: #f3f6fd;
 }
 .student_fillout_item{
@@ -30,7 +35,7 @@ body{
 }
 .searchbackinfor{
 	display:none; 
-	margin-top: 50px; 
+	margin-top: 30px; 
 	border-radius: 15px; 
 	background-color: #f3f6fd; 
 	padding: 10px 0px;
@@ -51,4 +56,14 @@ body{
 }
 #filloutform{
 	margin-bottom: 80px;
+}
+.student_head_img{
+	width: 100%;
+	height: auto;
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+.student_headimg_div{
+	width: 100%;
+	margin: auto;
 }
