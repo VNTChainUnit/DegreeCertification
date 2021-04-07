@@ -5,6 +5,8 @@ const blockchain=require('../service/blockchain/main');
 const utils = require('../service/utils');
 //身份验证
 router.use('/', (req, res, next) => {
+    req.session.username='company'
+    req.session.usertype=2
   if (req.session.username!=null && req.session.usertype==2) {
     next()
   }

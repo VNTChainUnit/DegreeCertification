@@ -19,62 +19,66 @@
 			<div class="layui-row com_body_row">
 				
 				<form action="" class="layui-form com_body_form">
-					<div class="layui-form-item com_body_item">
-						<img src="/static/images/company_search.png" style="width: 60%; margin: auto;" alt="">
-					</div>
-					<div class="layui-form-item">
-						<label class="com_body_label">证书验证</label>
-					</div>
-					<div class="layui-form-item" >
-						<label class="layui-form-label required" style="font-weight: 600;">证书编号</label>
-						<div class="layui-input-block">
-							<input type="text" name="certificate_number" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+					<div class="layui-col-md7">
+						<div class="layui-form-item">
+							<label class="com_body_label">证书验证</label>
+						</div>
+						<div class="layui-form-item" >
+							<label class="layui-form-label required" style="font-weight: 600;">证书编号</label>
+							<div class="layui-input-block">
+								<input type="text" name="certificate_number" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label required" style="font-weight: 600;">姓名</label>
+							<div class="layui-input-block">
+								<input type="text" name="name" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label required" style="font-weight: 600;">学校名称</label>
+							<div class="layui-input-block">
+								<input type="text" name="school" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="font-weight: 600;">学位类别</label>
+							<div style="width: 61%; border-radius: 50px !important;" class="layui-input-block"  id="input_selectid">
+								<select lay-verify="required"  name="degreetype" style="border-radius: 15px;" >
+									<option value="学士" selected>学士</option>
+									<option value="硕士">硕士</option>
+									<option value="博士">博士</option>
+								</select>
+								<!-- <input type="text" name="degreetype" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/> -->
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="font-weight: 600;">毕业年月</label>
+							<div class="layui-input-block">
+								<input type="text" id="year-month" name="graduationdate" required lay-verify="required" autocomplete="off" class="layui-input com_body_input" />
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="font-weight: 600;">专业</label>
+							<div class="layui-input-block">
+								<input type="text" name="major" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<p id="search-true" class="com_body_search_true">查询成功，证书无误！</p>
+						</div>
+						<div class="layui-form-item">
+							<p id="search-false" class="com_body_search_false">查询失败，证书信息不正确！</p>
+						</div>
+						<div class="layui-form-item" style="text-align: center;">
+							<button class="layui-btn com_body_search" lay-submit lay-filter="companySearch">点击查询</button>
 						</div>
 					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label required" style="font-weight: 600;">姓名</label>
-						<div class="layui-input-block">
-							<input type="text" name="name" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
-						</div>
+					<div class="layui-col-md5 com_body_image">
+							<img src="/static/images/company_search.png" style="width:100%; margin: auto; line-height: 430px; text-align: center;" alt="">
 					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label required" style="font-weight: 600;">学校名称</label>
-						<div class="layui-input-block">
-							<input type="text" name="school" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-weight: 600;">学位类别</label>
-						<div style="width: 57%; border-radius: 50px !important;" class="layui-input-block"  id="input_selectid">
-							<select lay-verify="required"  name="degreetype" style="border-radius: 15px;" >
-								<option value="学士" selected>学士</option>
-								<option value="硕士">硕士</option>
-								<option value="博士">博士</option>
-							</select>
-							<!-- <input type="text" name="degreetype" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/> -->
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-weight: 600;">毕业年月</label>
-						<div class="layui-input-block">
-							<input type="text" id="year-month" name="graduationdate" required lay-verify="required" autocomplete="off" class="layui-input com_body_input" />
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<label class="layui-form-label" style="font-weight: 600;">专业</label>
-						<div class="layui-input-block">
-							<input type="text" name="major" required lay-verify="required" autocomplete="off" class="layui-input com_body_input"/>
-						</div>
-					</div>
-					<div class="layui-form-item">
-						<p id="search-true" class="com_body_search_true">查询成功，证书无误！</p>
-					</div>
-					<div class="layui-form-item">
-						<p id="search-false" class="com_body_search_false">查询失败，证书信息不正确！</p>
-					</div>
-					<div class="layui-form-item" style="text-align: center;">
-						<button class="layui-btn com_body_search" lay-submit lay-filter="companySearch">点击查询</button>
-					</div>
+					
+					
 				</form>
 			</div>
 		</div>

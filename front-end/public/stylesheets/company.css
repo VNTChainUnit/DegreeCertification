@@ -2,7 +2,7 @@
 body{
 	background-image: url(/static/images/student_bg.png); 
 	background-repeat: repeat; 
-	background-size: 500px auto;
+	background-size: 130px auto;
 }
 .user_operation{
 	background-color: #3887e5;
@@ -20,7 +20,7 @@ body{
 	border-radius: 15px;
 }
 .com_body_form{
-	width: 40%; 
+	width:90%; 
 	border-radius: 15px; 
 	padding: 20px 10px; 
 	text-align: center; 
@@ -53,7 +53,17 @@ body{
 .com_body_search{
 	border-radius: 20px;
 	background-color: #3887e5;
+	width: 250px;
+	margin-bottom: 10px;
+	font-weight: 700;
 }
 #input_selectid input{
 	border-radius: 15px;
+}
+
+.com_body_image{
+	margin: auto; 
+	height: 430px; 
+	line-height: 430px; 
+	text-align: center;
 }
