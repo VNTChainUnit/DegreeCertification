@@ -3,8 +3,10 @@ const studentService = require('../service/studentService');
 const schoolService= require('../service/schoolService');
 const companyService=require('../service/companyService');
 const adminService = require('../service/adminService');
+const mainService = require('../service/main')
 var router = express.Router();
 const utils=require('../service/utils');
+
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
@@ -141,6 +143,17 @@ router.post('/changePassword',async (req,res,next)=>{
   else{
     res.json(utils.restful(-1,null,"您还没有登录"))
   }
+})
+
+router.post('/companyapply',(req,res,next)=>{
+   let data=req.data;
+   const result=mainService.addCompanyApply(data.name,data.creditcode,data.email,data.password)
+   if(result){
+      res.json(utils.restful(null,null,null))
+   }
+   else{
+      res.json(utils.restful(-1,null,"注册失败"))
+   }
 })
 
 module.exports = router;

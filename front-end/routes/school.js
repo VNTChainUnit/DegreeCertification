@@ -7,12 +7,6 @@ const student = require('../models/student');
 const blockchain = require('../service/blockchain/main')
 //身份验证
 router.use('/', (req, res, next) => {
-req.session.username="zjnu"
-req.session.usertype=3
-
-
-
-
   if (req.session.username!=null && req.session.usertype==3) {
     next()
   }
@@ -79,6 +73,7 @@ router.post('/api/certificate',async(req,res,next)=>{
   let school=await schoolService.getSchoolByUsername(req.session.username)
   blockchain.addCertificate(school.name,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
+  console.log(result)
   res.json(utils.restful(null,null,null))
 })
 module.exports = router;

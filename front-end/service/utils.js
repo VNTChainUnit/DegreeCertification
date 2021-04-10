@@ -1,5 +1,21 @@
 const md5=require('md5')
 const secret="GgX5jYPe"
+const crypto = require('crypto');
+
+
+function aesEncrypt(data) {
+    const cipher = crypto.createCipher('aes192', secret);
+    var crypted = cipher.update(data, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
+}
+ 
+function aesDecrypt(encrypted) {
+    const decipher = crypto.createDecipher('aes192', secret);
+    var decrypted = decipher.update(encrypted, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+}
 
 //两层加密的md5
 function generateSafePassword(oldpassword){
@@ -33,5 +49,6 @@ module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
     checkPassword:checkPassword,
-
+    aesEncrypt:aesEncrypt,
+    aesDecrypt:aesDecrypt
 }

@@ -29,15 +29,16 @@ router.post('/getCertificate',async (req,res,next)=>{
   }
   else{
     let dataarr=certificateres.split("|")
+    //对每个自端解密
     let datadict={
-      "school":dataarr[0],
-      "name":dataarr[1],
-      "idnumber":dataarr[2],
-      "degreetype":dataarr[3],
-      "major":dataarr[4],
-      "graduationdate":dataarr[5],
-      "studentnumber":dataarr[6],
-      "certificatenumber":dataarr[7]
+      "school":utils.aesDecrypt(dataarr[0]),
+      "name":utils.aesDecrypt(dataarr[1]),
+      "idnumber":utils.aesDecrypt(dataarr[2]),
+      "degreetype":utils.aesDecrypt(dataarr[3]),
+      "major":utils.aesDecrypt(dataarr[4]),
+      "graduationdate":utils.aesDecrypt(dataarr[5]),
+      "studentnumber":utils.aesDecrypt(dataarr[6]),
+      "certificatenumber":utils.aesDecrypt(dataarr[7])
     }
     res.json(utils.restful(null,datadict,null))
   }

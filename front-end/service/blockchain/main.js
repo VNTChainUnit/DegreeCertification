@@ -4,6 +4,9 @@ var vntkit = require("vnt-kit")
 var TX= require("ethereumjs-tx")
 const path=require('path')
 const Common=require('./common')
+const aesDecrypt = require('../utils').aesDecrypt
+const aesEncrypt = require('../utils').aesEncrypt
+
 // 设置连接的节点
 var vnt = new Vnt();
 vnt.setProvider(new vnt.providers.HttpProvider(Common.url));
@@ -35,6 +38,7 @@ var abi = JSON.parse(wasmabi.toString("utf-8"))
 
 function sendRawTransaction(account, to, data, value) {
     var nonce = vnt.core.getTransactionCount(account.address);
+    console.log("nonce is "+nonce);
     var options = {
         nonce: nonce,
         to: to,
@@ -64,6 +68,16 @@ function sendRawTransaction(account, to, data, value) {
 
 //存入一个证书
 function addCertificate(school, name, idnumber, degreetype, major, graduationdate, studentnumber, certificatenumber){
+    //存入时加密
+    school=aesEncrypt(school)
+    name = aesEncrypt(name)
+    idnumber = aesEncrypt(idnumber)
+    degreetype = aesEncrypt(degreetype)
+    major = aesEncrypt(major)
+    graduationdate = aesEncrypt(graduationdate)
+    studentnumber = aesEncrypt(studentnumber)
+    certificatenumber = aesEncrypt(certificatenumber)
+
     var contract = vnt.core.contract(abi);
     var data = contract.packFunctionData("AddCertificate", [school, name, idnumber, degreetype, major, graduationdate, studentnumber, certificatenumber]);
     sendRawTransaction(account, contractAddress, data, vnt.toHex(0));
@@ -71,22 +85,39 @@ function addCertificate(school, name, idnumber, degreetype, major, graduationdat
 
 //获取证书信息
 function getCertificate(certificateNumber, idnumber){
+    //加密参数
+    certificateNumber = aesEncrypt(certificateNumber)
+    idnumber = aesEncrypt(idnumber)
     var contract = vnt.core.contract(abi).at(contractAddress);
     var res = contract.GetCertificate.call(certificateNumber,idnumber,{from:account.address});
-    console.log(res.toString());
+    //返回原始的，之后再解密
     return res.toString();
 }
 
 //学生注册,返回证书编号
 function existCertificate(name, studentnumber, school, idnumber){
+    //加密参数
+    name = aesEncrypt(name)
+    studentnumber = aesEncrypt(studentnumber)
+    school = aesEncrypt(school)
+    idnumber = aesEncrypt(idnumber)
     var contract = vnt.core.contract(abi).at(contractAddress);
     var res = contract.ExistCertificate.call(name, studentnumber, school, idnumber, {from:account.address});
+    //解密返回值
+    res=aesDecrypt(res)
     console.log(res.toString());
     return res.toString();
 }
 
 //核验证书
 function checkCertificate(certificatenumber, name, school, degreetype, graduationdate, major){
+    //加密参数
+    certificatenumber=aesEncrypt(certificatenumber)
+    name=aesEncrypt(name)
+    school=aesEncrypt(school)
+    degreetype=aesEncrypt(degreetype)
+    graduationdate=aesEncrypt(graduationdate)
+    major=aesEncrypt(major)
     var contract = vnt.core.contract(abi).at(contractAddress);
     var res = contract.CheckCertificate.call( certificatenumber, name, school, degreetype, graduationdate, major,  {from:account.address});
     console.log(res.toString());
