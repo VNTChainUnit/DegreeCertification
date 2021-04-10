@@ -1,0 +1,68 @@
+.com_res_form_label{
+	width: 130px;
+	float: left;
+}
+.com_res_form_input{
+	width: 400px;
+	float: left;
+	margin-left: 0px;
+}
+/* 验证码样式 */
+#canvas {
+	float: right;
+	display: inline-block;
+	cursor: pointer;
+}
+/* 第一个表单的长度样式 */
+.from1_from{
+	margin: 0 auto;
+	max-width: 560px;
+	padding-top: 40px;
+}
+.layui-upload-drag{
+	padding: 15px!important;
+}
+#upload_btn{
+	float: left;
+	margin-right: 10px;
+	height: 120px;
+	width: 200px;
+}
+.license_img{
+	float: left;
+	height: 120px;
+	width: 200px;
+	height: auto;
+	padding: 7px;
+	border: 1px dashed #e2e2e2;
+}
+.Submit_audit_label{
+	font-size: 24px;
+	color: #333;
+	font-weight: 500;
+	margin-top: 30px;
+}
+.Submit_audit_label_wait{
+	font-size: 14px;
+	color: #666;
+	margin-top: 20px;
+}
+.Submit_audit_btn{
+	text-align: center;
+	margin-top: 50px;
+}
+.layui_icon_defined{
+	color: white;
+	font-size:30px;
+	font-weight:bold;
+	background: #3887e5;
+	padding: 20px;
+	line-height: 80px;
+}
+.reminder_register_company{
+	font-size: 18px;
+}
+.matters_need_attention{
+	width: 70%;
+	margin: auto;
+}

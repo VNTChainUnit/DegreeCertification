@@ -31,7 +31,7 @@
 }
 
 .step-item-tail .step-item-tail-done {
-    background: #009688;
+    background: #3887e5;
 }
 
 .step-item-head {
@@ -41,14 +41,14 @@
     width: 26px;
     text-align: center;
     vertical-align: top;
-    color: #009688;
-    border: 1px solid #009688;
+    color: #3887e5;
+    border: 1px solid #3887e5;
     border-radius: 50%;
     background: #ffffff;
 }
 
 .step-item-head.step-item-head-active {
-    background: #009688;
+    background: #3887e5;
     color: #ffffff;
 }
 

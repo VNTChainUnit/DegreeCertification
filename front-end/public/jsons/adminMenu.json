@@ -26,6 +26,12 @@
             "href": "/admin/company",
             "icon": "fa fa-gears",
             "target": "_self"
+          },
+          {
+            "title": "用人单位注册审核",
+            "href": "/admin/companyApply",
+            "icon": "fa fa-gears",
+            "target": "_self"
           }
         ]
       }

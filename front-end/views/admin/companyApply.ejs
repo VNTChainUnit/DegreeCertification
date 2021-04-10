@@ -1,0 +1,68 @@
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="checkyes">审核通过</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="checkno">审核不通过</a>
+        </script>
+		
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table','miniPage','element'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            miniPage = layui.miniPage;
+            
+        table.render({
+            elem: '#currentTableId',
+            url:'/admin/api/companyApply',
+            cols: [[
+                {type: 'numbers',title: '序号', width:40},
+				{field: 'name', title: '单位全称'},
+                {field: 'creditcode', title: '统一社会信用代码'},
+                {title:"附件",templet:function(e){return '<u>点击下载</u>' }},
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 5,
+            page: true,
+            skin: 'line'
+        });
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'checkyes') {
+                    var index=layer.confirm("您确定要审核通过吗",function(){
+                        $.post('/admin/api/checkCompany',
+                            {_id:data._id,checkcode:1},
+                            function(res){
+                                if(res.code==0){
+                                    layer.msg("审核完成！")
+                                }
+                                layer.close(index)
+                                table.reload('currentTableId')
+                            }
+                        )
+                    })
+            }
+            else if(obj.event=='checkno'){
+                var index=layer.confirm("您确定要审核不通过吗",function(){
+                    $.post('/admin/api/checkCompany',
+                            {_id:data._id,checkcode:0},
+                            function(res){
+                                if(res.code==0){
+                                    layer.msg("审核完成！")
+                                }
+                                layer.close(index)
+                                table.reload('currentTableId')
+                            }
+                        )
+                    })
+            }
+        })
+
+    });
+</script>

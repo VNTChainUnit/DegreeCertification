@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用人单位注册</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
+    <link href="/static/layui/css/layui.css" rel="stylesheet"/>
+	<link href="/static/stylesheets/bottom.css" rel="stylesheet"/>
+	<link href="/static/stylesheets/head.css" rel="stylesheet"/>
+	<link href="/static/stylesheets/company_register.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/static/layuimini/js/lay-module/step-lay/step.css">
+	
+</head>
+<body>
+	<section>
+	    <div class="register_head">
+	    	<div class="register_head_title layui-row">
+	    		<div class="register_system_name_title layui-col-md11">
+	    			<div class="head_box">
+	    				<div class="img_bobble ">
+	    					<img src="/static/images/white_logo.png"  class="head_logo"/>
+	    				</div>
+	    				<div class="label_bobble">
+	    					<div class="system_chinese">学位学历认证管理系统</div>
+	    					<div class="systen_eng">Degree and diploma certification system</div>
+	    				</div>
+	    			</div>
+	    		</div>
+				
+	    		<div class="loginanderegister layui-col-md1">
+	    			<a  class="login_a" href="/login">登录</a>
+	    			<label style="color: #FFFFFF;">|</label>
+	    			<a  class="login_a" href="javascript:;">注册</a>
+	    		</div>
+	    	</div>
+	    </div>
+	<section>
+	
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body" style="padding-top: 40px;">
+                <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                    <div carousel-item>
+						
+						<!-- 第一个表 -->
+						<div>
+								<form class="layui-form from1_from">
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">
+											<label style="color: #CC0000;">* </label>
+											单位全称:
+										</label>
+										<div class="layui-input-block com_res_form_input">
+											<input type="text" name="name" placeholder="请填写单位全称" class="layui-input" lay-verify="" required />
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">
+											<label style="color: #CC0000;">*</label>
+										统一社会信用代码:</label>
+										<div class="layui-input-block com_res_form_input">
+											<input type="text" name="creditcode" placeholder="请填写统一社会信用代码" value="" class="layui-input" lay-verify="" required>
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">
+											<label style="color: #CC0000;">* </label>单位注册邮箱:</label>
+										<div class="layui-input-block com_res_form_input">
+											<input type="email" name="email" placeholder="请填写单位注册邮箱" value="" class="layui-input" lay-verify="email" required>
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">
+											<label style="color: #CC0000;">* </label>密码:</label>
+										<div class="layui-input-block com_res_form_input">
+											<input type="password" name="password" placeholder="请设置账户密码" value="" class="layui-input" lay-verify="pass" required>
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">
+											<label style="color: #CC0000;">* </label>确认密码:</label>
+										<div class="layui-input-block com_res_form_input">
+											<input type="password" name="confirm_password" placeholder="请确认密码" value="" class="layui-input" lay-verify="pass|confirmPass" required>
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">验证码:</label>
+										<div class="layui-input-block com_res_form_input layui-row">
+											<div class="layui-col-md8">
+												<input type="text" class="layui-input input-val" value="" placeholder="请输入验证码（不区分大小写）">
+											</div>
+											<div class="layui-col-md4">
+												<canvas id="canvas" width="100" height="43" class="admin-captcha"></canvas>
+											</div>
+											
+										</div>
+									</div>
+									
+									<!-- 下一步按钮 -->
+									<div class="layui-form-item">
+										<div class="layui-input-block">
+											<button class="layui-btn" style="background-color: #3887e5;" lay-submit lay-filter="formStep">
+												&emsp;下一步&emsp;
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						
+						<!-- 第二个表 -->
+						<div>
+								<form class="layui-form from1_from" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">单位全称:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="confirm_name"></div>
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">统一社会信用代码:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="confirm_creditcode"></div>
+										</div>
+									</div>
+									
+									<div class="layui-form-item">
+										<label class="layui-form-label com_res_form_label">单位注册邮箱:</label>
+										<div class="layui-input-block">
+											<div class="layui-form-mid layui-word-aux" id="confirm_email">
+											</div>
+										</div>
+									</div>
+									
+									<section>
+										<div style="height: 190px;">
+											<div class="layui-upload-drag" id="upload_btn">
+											  <div class="upload_show" style="margin-top: 10px;">
+												  <i class="layui-icon"></i>
+												  <p>点击上传，或将文件拖拽到此处</p>
+												  <hr>
+											  </div>
+											  
+											  <div class="layui-hide" id="uploadView">
+												<img src="" alt="上传成功后渲染" style="max-width: 200px; max-height: 120px;">
+												<p id="prompt_text"></p>
+											  </div>
+											</div>
+												
+											<div>
+												<img src="/static/images/license.png" alt="" class="license_img">
+											</div>
+										</div>
+									</section>
+									
+									<div class="layui-form-item">
+										<div class="layui-input-block">
+											<button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+											<button class="layui-btn"  style="background-color: #3887e5;" lay-submit lay-filter="formStep2">
+												&emsp;提交审核&emsp;
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+						<!-- 等待审核 -->
+						<div>
+								<div style="text-align: center;margin-top: 90px;">
+									<i class="layui-icon layui-circle layui_icon_defined"
+									   >&#xe605;</i>
+									<div class="Submit_audit_label">
+										提交审核成功
+									</div>
+									<div class="Submit_audit_label_wait">请耐心等待审核</div>
+								</div>
+							</div>
+						
+                    </div>
+                </div>
+				
+				<!-- 注意事项 -->
+				<div style="color: #666;margin-top: 30px;margin-bottom: 40px;padding-left: 30px;">
+				    <div class="matters_need_attention">
+				    	<b class="reminder_register_company">注册须知：</b>
+				    	<p>1、注册资料准备：加盖公章的营业执照复印件、单位logo图片（仅支持jpg，png，gif，jpeg格式的图片），请提前准备。</p>
+				    	<p>2、无营业执照的单位请上传其他相关证件，如工商登记证、组织机构代码证、事业单位法人证书、社会团体法人证书、办学许可证、民办非企业单位登记证书、司法鉴定许可证等其他包含单位名称与相关代码的证件。</p>
+				    	<p>3、单位全称是单位登录系统的账户名，必须和营业执照上的单位全称一致，否则无法注册成功。</p>
+				    	<p>4、单位名称和统一社会信用代码必须正确，系统会与全国统一社会信用代码库校验，不一致则无法注册。</p>
+				    	
+				    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+	
+    
+	<%-include("foot.ejs")%>
+	
+	<script src="/static/layui/layui.js"></script>
+    <script>
+		var corporate_Information = '';
+        layui.config({
+            base:'/static/layuimini/js/lay-module/step-lay/'
+        }).use([ 'form', 'step','upload'], function () {
+            var $ = layui.$
+                , form = layui.form
+                , step = layui.step
+				, layer = layui.layer
+				,upload = layui.upload
+				;
+
+            step.render({
+                elem: '#stepForm',
+                filter: 'stepForm',
+                width: '100%', //设置容器宽度
+                stepWidth: '750px',
+                height: '500px',
+                stepItems: [{
+                    title: '填写账号信息'
+                }, {
+                    title: '提交认证材料'
+                }, {
+                    title: '等待审核'
+                }]
+            });
+			
+			form.verify({
+				pass: [
+				  /^[\S]{6,16}$/
+				  ,'密码必须6到16位，且不能出现空格'
+				],
+				confirmPass:function(value){
+					if($('input[name=password]').val() !== value)
+						return '提示：两次输入密码不一致！';
+				},
+				});
+			
+			var show_num = [];
+			draw(show_num);
+						 
+			$("#canvas").on('click',function(){
+			    draw(show_num);
+			});
+			
+
+            form.on('submit(formStep)', function (data) {
+				var val = $(".input-val").val().toLowerCase();
+				var num = show_num.join("");
+				
+				// 判断验证码是否正确
+				if(val==''){
+					layer.alert('验证码不能为空', {
+						skin: '#3887e5' //样式类名
+						,closeBtn: 0,
+						title:"提示信息",
+					});
+					// 相等时跳转
+				}else if(val == num){
+				    console.log(show_num);
+					step.next('#stepForm');
+							 
+				}else{
+					// 错误则重新输入
+					layer.alert('验证码错误！请重新输入！', {
+						skin: '#3887e5' //样式类名
+						,closeBtn: 0,
+						title:"提示信息",
+					});
+					// 赋初值为空
+				    $(".input-val").val('');
+				    draw(show_num);
+				}
+				console.log(data.field);
+				// 得到表单一的输入值
+				corporate_Information = data.field;
+				
+				// 页面赋值表单2
+				$('#confirm_name').html(corporate_Information.name);//公司名字
+				$('#confirm_creditcode').html(corporate_Information.creditcode);//公司代码18位
+				$('#confirm_email').html(corporate_Information.email);//公司邮箱
+				
+                return false;
+            });
+
+			// 表单2按钮
+            form.on('submit(formStep2)', function (data) {
+				//请求
+				$.post('/companyapply',corporate_Information,function(res){
+					if(res.code==0){
+						step.next('#stepForm');
+					}
+					else{
+						layer.msg("上传失败！")
+					}
+				})
+                return false;
+            });
+
+            $('.pre').click(function () {
+                step.pre('#stepForm');
+            });
+
+            $('.next').click(function () {
+                step.next('#stepForm');
+            });
+			 
+			 upload.render({
+			 	elem: '#upload_btn'
+			 	,url: 'https://httpbin.org/post' //改成您自己的上传接口
+			 	,done: function(res){
+			 	  layer.msg('上传成功');
+			 	  layui.$('#uploadView').removeClass('layui-hide').find('img').attr('src', res.files.file);
+			 	  layui.$('.upload_show').hide();
+			 	  console.log(res)
+			 	}
+			 	,error: function(){
+			 	  //失败重传
+			 	  var prompt_text = $('#prompt_text');
+			 	  prompt_text.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs image-reload">重试</a>');
+			 	  prompt_text.find('.image-reload').on('click', function(){
+			 		uploadInst.upload();
+			 	  });
+			 	}
+			   });
+			 
+			 // 获取验证码图片
+			function draw(show_num) {
+				var canvas_width=$('#canvas').width();
+				var canvas_height=$('#canvas').height();
+				var canvas = document.getElementById("canvas");//获取到canvas的对象，演员
+				var context = canvas.getContext("2d");//获取到canvas画图的环境，演员表演的舞台
+				canvas.width = canvas_width;
+				canvas.height = canvas_height;
+				var sCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
+				var aCode = sCode.split(",");
+				var aLength = aCode.length;//获取到数组的长度
+				
+				for (var i = 0; i <= 3; i++) {
+					var j = Math.floor(Math.random() * aLength);//获取到随机的索引值
+					var deg = Math.random() * 30 * Math.PI / 180;//产生0~30之间的随机弧度
+					var txt = aCode[j];//得到随机的一个内容
+					show_num[i] = txt.toLowerCase();
+					var x = 10 + i * 20;//文字在canvas上的x坐标
+					var y = 20 + Math.random() * 8;//文字在canvas上的y坐标
+					context.font = "bold 23px 微软雅黑";
+		 
+					context.translate(x, y);
+					context.rotate(deg);
+		 
+					context.fillStyle = randomColor();
+					context.fillText(txt, 0, 0);
+		 
+					context.rotate(-deg);
+					context.translate(-x, -y);
+				}
+				for (var i = 0; i <= 5; i++) { //验证码上显示线条
+					context.strokeStyle = randomColor();
+					context.beginPath();
+					context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);
+					context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);
+					context.stroke();
+				}
+				for (var i = 0; i <= 30; i++) { //验证码上显示小点
+					context.strokeStyle = randomColor();
+					context.beginPath();
+					var x = Math.random() * canvas_width;
+					var y = Math.random() * canvas_height;
+					context.moveTo(x, y);
+					context.lineTo(x + 1, y + 1);
+					context.stroke();
+				}
+			}
+			
+			// 获取验证码的背景颜色
+			function randomColor() {//得到随机的颜色值
+				var r = Math.floor(Math.random() * 256);
+				var g = Math.floor(Math.random() * 256);
+				var b = Math.floor(Math.random() * 256);
+				return "rgb(" + r + "," + g + "," + b + ")";
+			}
+        })
+    </script>
+</body>
+</html>

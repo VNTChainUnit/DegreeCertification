@@ -3,7 +3,8 @@ var router = express.Router();
 const utils=require('../service/utils');
 const adminService= require('../service/adminService')
 const schoolService=require('../service/schoolService');
-const companyService=require('../service/companyService')
+const companyService=require('../service/companyService');
+const companyApplyService=require('../service/companyApplyService')
 //身份验证
 router.use(function (req, res, next) {
   if (req.session.username!=null && req.session.usertype==4) {
@@ -63,6 +64,36 @@ router.get('/updateSchool',async function(req,res,next){
   let name=req.query.name
   let school=await schoolService.getSchoolByName(name); 
   res.render('admin/updateSchool',{school:school});
+})
+
+router.get('/companyApply',async function(req,res,next){
+  res.render('admin/companyApply')
+})
+
+//获取未审核列表
+router.get('/api/companyApply',async (req,res,next)=>{
+  let data=await companyApplyService.getUncheckedApply()
+  res.json(utils.restful(null,data,null))
+})
+
+router.post('/api/checkCompany',async(req,res,next)=>{
+  let id=req.body._id
+  if(req.body.checkcode=='1'){
+    //审核记录修改
+    companyApplyService.checkCompany(id,true)
+    //公司注册
+    let apply=await companyApplyService.findById(id)
+    //邮箱为账户
+    companyService.createOne(apply.name,apply.email,apply.password)
+  }
+else if(req.body.checkcode=='0'){
+    companyApplyService.checkCompany(id,false)
+  }
+  else{
+    res.json(utils.restful(-1,null,"数据有误"))
+    return ;
+  }
+  res.json(utils.restful(null,null,null))
 })
 
 router.get('/api/school',async (req,res,next)=>{

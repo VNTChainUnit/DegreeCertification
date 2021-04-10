@@ -3,9 +3,9 @@ const studentService = require('../service/studentService');
 const schoolService= require('../service/schoolService');
 const companyService=require('../service/companyService');
 const adminService = require('../service/adminService');
-const mainService = require('../service/main')
 var router = express.Router();
 const utils=require('../service/utils');
+const companyApplyService = require('../service/companyApplyService');
 
 /* GET home page. */
 
@@ -146,14 +146,18 @@ router.post('/changePassword',async (req,res,next)=>{
 })
 
 router.post('/companyapply',(req,res,next)=>{
-   let data=req.data;
-   const result=mainService.addCompanyApply(data.name,data.creditcode,data.email,data.password)
+   let data=req.body;
+   const result=companyApplyService.addCompanyApply(data.name,data.creditcode,data.email,data.password)
    if(result){
       res.json(utils.restful(null,null,null))
    }
    else{
       res.json(utils.restful(-1,null,"注册失败"))
    }
+})
+
+router.get('/companyapply',(req,res,next)=>{
+  res.render('companyRegister')
 })
 
 module.exports = router;
