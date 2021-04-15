@@ -12,32 +12,32 @@
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">证书编号:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写证书编号" name="certificatenumber" class="layui-input"  required/>
+                                            <input type="text" placeholder="请填写证书编号" name="certificatenumber" class="layui-input"  lay-verify="required" />
 
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">姓名:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写学生姓名" value="" name="name" class="layui-input"  required>
+                                            <input type="text" placeholder="请填写学生姓名" value="" name="name" class="layui-input"  lay-verify="required">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">学号:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写学生学号" value="" name="studentnumber" class="layui-input"  required>
+                                            <input type="text" placeholder="请填写学生学号" value="" name="studentnumber" class="layui-input"  lay-verify="required">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">身份证号:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写学生身份证号" value="" name="idnumber" class="layui-input"  required>
+                                            <input type="text" placeholder="请填写学生身份证号" value="" name="idnumber" class="layui-input"  lay-verify="required">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">专业名称:</label>
                                         <div class="layui-input-block">
-                                            <input type="text" placeholder="请填写专业名称" value="" name="major" class="layui-input"  required>
+                                            <input type="text" placeholder="请填写专业名称" value="" name="major" class="layui-input"  lay-verify="required">
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -54,7 +54,7 @@
                                         <label class="layui-form-label">毕业日期:</label>
                                         <div class="layui-input-block">
                                             <div class="layui-input-inline">
-                                                <input type="text" class="layui-input" id="laydateid" name="graduationdate" placeholder="请选择毕业年月" required>
+                                                <input type="text" class="layui-input" id="laydateid" name="graduationdate" placeholder="请选择毕业年月" lay-verify="required">
                                               </div>
                                         </div>
                                     </div>
@@ -204,9 +204,9 @@
         form.on('submit(formStep2)', function (data) {
             //这里执行请求全局变量能够打印出来
 			console.log(Certificate_Information);
-            $.post('/school/api/certificate',Certificate_Information,(res)=>{
-                console.log(res)
-            })
+            // $.post('/school/api/certificate',Certificate_Information,(res)=>{
+            //     console.log(res)
+            // })
             step.next('#stepForm');
             return false;
         });

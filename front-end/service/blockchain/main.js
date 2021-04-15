@@ -36,9 +36,8 @@ var abi = JSON.parse(wasmabi.toString("utf-8"))
 
 //下面为各个函数
 
-function sendRawTransaction(account, to, data, value) {
+async function sendRawTransaction(account, to, data, value) {
     var nonce = vnt.core.getTransactionCount(account.address);
-    console.log("nonce is "+nonce);
     var options = {
         nonce: nonce,
         to: to,
@@ -55,19 +54,19 @@ function sendRawTransaction(account, to, data, value) {
         ),
         'hex'));
     var serializedTx = tx.serialize();
-    vnt.core.sendRawTransaction(
-        '0x' + serializedTx.toString('hex'), function (err, txHash) {
-            if (err) {
-                console.log('err happened: ', err);
-                console.log('transaction hash: ', txHash);
-            } else {
-                console.log('transaction hash: ', txHash);
-            }
-        });
+    var txHash=""
+    try{
+        txHash= await vnt.core.sendRawTransaction(
+        '0x' + serializedTx.toString('hex'));
+    }
+    catch(err){
+        txHash=null
+    }
+        return txHash
 }
 
-//存入一个证书
-function addCertificate(school, name, idnumber, degreetype, major, graduationdate, studentnumber, certificatenumber){
+//存入一个证书,返回交易信息
+async function addCertificate(school, name, idnumber, degreetype, major, graduationdate, studentnumber, certificatenumber){
     //存入时加密
     school=aesEncrypt(school)
     name = aesEncrypt(name)
@@ -80,7 +79,14 @@ function addCertificate(school, name, idnumber, degreetype, major, graduationdat
 
     var contract = vnt.core.contract(abi);
     var data = contract.packFunctionData("AddCertificate", [school, name, idnumber, degreetype, major, graduationdate, studentnumber, certificatenumber]);
-    sendRawTransaction(account, contractAddress, data, vnt.toHex(0));
+    //获取交易hash
+    let txHash= await sendRawTransaction(account, contractAddress, data, vnt.toHex(0));
+    //获取交易数据并返回，如果没有返回false
+    if(txHash){
+        let transaction=vnt.core.getTransaction(txHash)
+        return transaction?transaction:false
+    }
+    else return false;
 }
 
 //获取证书信息

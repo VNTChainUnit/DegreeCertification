@@ -71,9 +71,17 @@ router.put('/api/student',async(req,res,next)=>{
 router.post('/api/certificate',async(req,res,next)=>{
   let data=req.body
   let school=await schoolService.getSchoolByUsername(req.session.username)
-  blockchain.addCertificate(school.name,data.name,data.idnumber,
+  let transaction=await blockchain.addCertificate(school.name,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
-  console.log(result)
-  res.json(utils.restful(null,null,null))
+  let resdata={
+    hash:transaction.hash,
+    blockNumber:transaction.blockNumber
+  }
+  if(transaction){
+  res.json(utils.restful(null,resdata,null))
+  }
+  else{
+    res.json(utils.restful(-1,null,"上传失败，请稍后再试！"))
+  }
 })
 module.exports = router;

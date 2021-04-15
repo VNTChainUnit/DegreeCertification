@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">    
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/head.css" />
-	<link rel="stylesheet" type="text/css" href="/static/stylesheets/student.css" />
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
 	<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">  
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/student.css" />
 </head>
  
 <body>
@@ -19,7 +19,8 @@
 	<section class="student-search">
 		<div class="layui-container" style="width: 70%;margin: auto;">
 			
-			<div class="student_headimg_div">
+			<!-- 头部的大图 -->
+			<div class="student_headimg_div" id="student_head_bigimg">
 				<div>
 					<img src="/static/images/student_head.png"  class="student_head_img"/>
 				</div>
@@ -115,11 +116,119 @@
 								<img src="/static/images/student_search.png" style="width: 65%; margin: auto;" alt="">
 							</div>
 
-							<input type="button" onclick="aa()" value="打印"/>
+							<input type="button" onclick="check_certificate()" value="查看"/>
 						</div>
 				</div>
 			</div>
 		</div>
+	</section>
+
+
+	<!-- 学生证书区块链证书存证 -->
+	<section>
+		<div class="layui-container" id="certificate" style="display: none;">
+			<div class="layui-row">
+				<input type="button" onclick="print_certificate()" value="打印" />
+				<div class="" style="padding: 20px;" id="print_certificateinfor">
+					<table class="layui-table cer_table" cellspacing="0" cellpadding="0">
+					  <colgroup>
+						  <col width="50">
+						  <col width="50">
+						  <col width="200">
+						  <col width="50">
+					  </colgroup>
+					  <tbody >
+						<tr>
+						  <td colspan="4"></td>
+						</tr>
+						<tr>
+						  <td colspan="4" style="text-align: center;">&nbsp;</td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td colspan="2"><h1 class="cer_table_title">学士学位区块链存证证书</h1></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td colspan="2">本证书表明毕业生学位证书数据已采用VNT Chain区块链技术转换为不可篡改的特征值，并上传至区块链进行存证。已存证的相关电子数据如需查验，可通过信诣学位学历认证管理系统进行。</td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">存证方：</td>
+						  <td>信诣学位学历认证管理系统</td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">姓名：</td>
+						  <td><div id="name"></div></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">学校名称：</td>
+						  <td><div id="schoolname"></div></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">学位类别：</td>
+						  <td><div id="degreetype"></div></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">毕业年月：</td>
+						  <td><div id="graduationdate"></div></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">专业：</td>
+						  <td><div id="major"></div></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">证书编号：</td>
+						  <td><div id="certificatenumber"></div></td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td class="cer_table_td_title">
+							  <p style="text-align: center;	">扫码查验</p>
+							  <div class="cer_table_QRcode">
+								<img src="/static/images/QRcode.png" style="height: 60px;" />
+							  </div>
+							</td>
+						  <td>
+							  <div style="float: right;">
+								  <img src="/static/images/redSignet.png" />
+							  </div>
+						  </td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td></td>
+						  <td colspan="2">此证书对应存证内容已加盖可信时间戳，并在信诣学位学历认证管理系统及杭州维特链科技有限公司提供的维特链上同步存证。</td>
+						  <td></td>
+						</tr>
+						<tr>
+						  <td colspan="4"></td>
+						</tr>
+						<tr>
+						  <td colspan="4"></td>
+						</tr>
+					  </tbody>
+					</table>
+	
+				</div>
+			</div>
+		</div>
+		
 	</section>
 
 	<%-include("../foot.ejs")%>
@@ -128,9 +237,18 @@
 	<script language="javascript" src="/static/lib/jqprint/jquery-1.4.4.min.js"></script>
 	<script language="javascript" src="/static/lib/jqprint/jquery.jqprint-0.3.js"></script>
 	<script>
-		function aa(){
-		$("#forminfo").jqprint();
+		// 打印存证证书
+		function print_certificate(){
+		$("#print_certificateinfor").jqprint();
 }
+// 浏览存证证书界面
+	function check_certificate(){
+		$("#certificate").show();
+		$("#forminfo").hide();
+		$("#student_head_bigimg").hide();
+		$("#filloutform").hide();
+
+	}
 	</script>
 	<script>
 		
@@ -186,10 +304,12 @@
 
 						$("#forminfo").show();
 						$("#filloutform").hide();
+						$("#certificate").hide();
 					}
 					else{
 						$("#forminfo").hide();
 						$("#filloutform").show();
+						$("#certificate").hide();
 						layer.alert("查询失败！"+res.msg);
 					}
 					
