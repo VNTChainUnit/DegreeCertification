@@ -75,7 +75,9 @@ router.post('/api/certificate',async(req,res,next)=>{
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
   let resdata={
     hash:transaction.hash,
-    blockNumber:transaction.blockNumber
+    blockNumber:transaction.blockNumber,
+    blockHash:transaction.blockHash,
+    gas:transaction.gas
   }
   if(transaction){
   res.json(utils.restful(null,resdata,null))

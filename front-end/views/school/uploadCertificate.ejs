@@ -1,4 +1,16 @@
 <link rel="stylesheet" href="/static/layuimini/js/lay-module/step-lay/step.css" media="all">
+<style>
+    .com_res_form_label{
+	width:40%;
+    float: left;
+}
+.com_res_form_text{
+    width: 60%;
+    word-wrap: break-word;
+    height: auto;
+    float: right;
+}
+</style>
 <div class="layuimini-container layuimini-page-anim">
     <div class="layuimini-main">
 
@@ -7,6 +19,8 @@
                 <div class="layui-card-body" style="padding-top: 40px;">
                     <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
                         <div carousel-item>
+
+                            <!-- 表单1 -->
                             <div>
                                 <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
                                     <div class="layui-form-item">
@@ -67,6 +81,8 @@
                                     </div>
                                 </form>
                             </div>
+
+                            <!-- 表单第二项确认 -->
                            <div>
                                 <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;" lay-filter="confirm_form2">
 									<div class="layui-form-item">
@@ -123,25 +139,74 @@
                                 </form>
                             </div>
 							
-							<div>
-                                <div style="text-align: center;margin-top: 90px;">
-                                    <i class="layui-icon layui-circle"
-                                       style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
-                                    <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
-                                        证书上传成功
+                            <!-- 第三个界面 -->
+                            <section>
+                                <div>
+                                    <div style="text-align: center;margin-top: 10px;" id="laoding_icon">
+                                        <i class=" layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
+                                           style="color: rgb(150, 150, 150);font-size:30px;font-weight:bold;background: #ffffff;padding: 10px;line-height: 60px;"></i>
+                                           <div style="font-size: 20px;color: #333;font-weight: 500;margin-top: 10px;">
+                                            上传中...
+                                        </div>
                                     </div>
-                                    <div style="font-size: 14px;color: #666;margin-top: 20px;">预计1分钟上传至系统内</div>
+
+                                    <div style="text-align: center;margin-top: 10px;display: none;" id="success_icon">
+                                        <i class="layui-icon layui-circle"
+                                           style="color: white;font-size:30px;font-weight:bold;background: #3887e5;padding: 10px;line-height: 60px;">&#xe605;</i>
+                                        <div style="font-size: 20px;color: #333;font-weight: 500;margin-top: 10px;">
+                                            证书上传成功
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <form class="layui-form" style="margin: 0 auto;max-width: 600px;padding-top: 40px;" >
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label com_res_form_label">交易Hash值:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="hash"></div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label com_res_form_label">汽油费:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="gasoline"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label com_res_form_label">交易区块编号:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="blockNumber"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label com_res_form_label">交易区块Hash值:</label>
+                                                <div class="layui-input-block">
+                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="blockHash"></div>
+                                                </div>
+                                            </div>
+
+                                          
+                                        </form>
+                                    </div>
+
                                 </div>
-                                <div style="text-align: center;margin-top: 50px;">
+                                 <!-- 再次添加按钮 -->
+                                <div style="text-align: center;margin-top: 10px;margin-bottom: 20px;">
                                     <button class="layui-btn next">再次添加</button>
                                 </div>
-                            </div>
+                            </section>
+
                         </div>
                     </div>
-                    <hr>
-                    <div style="color: #666;margin-top: 30px;margin-bottom: 40px;padding-left: 30px;">
-                        <h3>说明</h3><br>
-                        <p>学位证书对学生十分重要,请学校认证上传,并仔细确认。</p>
+
+                     <div style="margin-top: 30px;">
+                        <hr>
+                        <div style="color: #666;margin-top: 30px;margin-bottom: 40px;padding-left: 30px;">
+                            <h3>说明</h3><br>
+                            <p>学位证书对学生十分重要,请学校认证上传,并仔细确认。</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,11 +217,12 @@
 	
 	// 第一个表单的存取数据
 	var Certificate_Information = '';
-    layui.use(['form', 'step','laydate'], function () {
+    layui.use(['form', 'step','laydate','layer'], function () {
         var $ = layui.$,
             form = layui.form,
             laydate=layui.laydate,
-            step = layui.step
+            step = layui.step,
+            layer=layui.layer
 			;
 
         /**
@@ -181,13 +247,9 @@
                 title: '完成'
             }]
         });
-
-
         form.on('submit(formStep)', function (data) {
-			console.log(data.field);
 			// 获得第一个表单的数据
 			Certificate_Information = data.field;
-			
 			// 将每个div中的值赋值
 			$('#serial_number').html(Certificate_Information.certificatenumber);
 			$('#student_number').html(Certificate_Information.studentnumber);
@@ -202,14 +264,34 @@
 		
 		
         form.on('submit(formStep2)', function (data) {
-            //这里执行请求全局变量能够打印出来
-			console.log(Certificate_Information);
-            // $.post('/school/api/certificate',Certificate_Information,(res)=>{
-            //     console.log(res)
-            // })
+            $("#laoding_icon").show();
+            $("#success_icon").hide();
             step.next('#stepForm');
+            // var index= layer.load(1,{shade:[0.1,'#eee']})
+            $.post('/school/api/certificate',Certificate_Information,(res)=>{
+                console.log(res)
+                if(res.code==0){
+                // if(true){
+                    $("#laoding_icon").hide();
+                    $("#success_icon").show();
+                    $('#hash').html(res.data.hash);//交易hash值
+                    $('#gasoline').html(res.data.gas);//汽油费
+                    $('#blockNumber').html(res.data.blockNumber); // 交易区块编号
+                    $('#blockHash').html(res.data.blockHash);// 交易区块Hash值
+
+                    // $('#hash').html("res.data.hash");//交易hash值
+                    // $('#gasoline').html("res.data.gas");//汽油费
+                    // $('#blockNumber').html("res.data.blockNumber"); // 交易区块编号
+                    // $('#blockHash').html("res.data.blockHash");// 交易区块Hash值
+                    // layer.close(index)
+                }
+                else{
+                    layer.alert("上链失败！")
+                }
+            })
             return false;
         });
+
 
         $('.pre').click(function () {
             step.pre('#stepForm');

@@ -83,12 +83,25 @@ async function addCertificate(school, name, idnumber, degreetype, major, graduat
     let txHash= await sendRawTransaction(account, contractAddress, data, vnt.toHex(0));
     //获取交易数据并返回，如果没有返回false
     if(txHash){
-        let transaction=vnt.core.getTransaction(txHash)
-        return transaction?transaction:false
+        var result=await getTransaction(txHash)
+        return result
     }
     else return false;
 }
 
+//请求100次
+async function getTransaction(transactionhash){
+    var result=""
+    let trytime=100
+    while(trytime-->=0){
+        result=vnt.core.getTransaction(transactionhash)
+        if(result && result.blockNumber){
+            console.log(trytime);
+            break;
+        }
+    }
+    return result
+}
 //获取证书信息
 function getCertificate(certificateNumber, idnumber){
     //加密参数
@@ -138,4 +151,5 @@ module.exports={
     getCertificate:getCertificate,
     existCertificate:existCertificate,
     checkCertificate:checkCertificate,
+    getTransaction:getTransaction
 }
