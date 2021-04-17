@@ -9,10 +9,15 @@
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/head.css" />
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
 	<link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">  
-	<link rel="stylesheet" type="text/css" href="/static/stylesheets/student.css" />
+	<link rel="stylesheet" type="text/css" href="/static/stylesheets/certificate.css" />
+	<style>
+		body{
+			background:none
+		}
+	</style>
 </head>
  
-<body style="background:none">
+<body>
 	<%-include("../head.ejs")%>
 
 
@@ -20,7 +25,6 @@
 	<section>
 		<div class="layui-container" id="certificate" >
 			<div class="layui-row">
-				<input type="button" onclick="print_certificate()" value="打印" />
 				<div class="" style="padding: 20px;" id="print_certificateinfor">
 					<table class="layui-table cer_table" cellspacing="0" cellpadding="0">
 					  <colgroup>
@@ -98,7 +102,7 @@
 							</td>
 						  <td>
 							  <div style="float: right;">
-								  <img src="/static/images/redSignet.png" />
+								  <img src="/static/images/seal.png"  width="200" height="100" />
 							  </div>
 						  </td>
 						  <td></td>
@@ -118,6 +122,19 @@
 					</table>
 	
 				</div>
+
+				<div class="">
+					<div style="text-align: center;width: 100%;">
+						<button class="layui-btn layui-btn-fluid" style="border-radius: 20px;background-color: #3887e5;width: 200px;" onclick="window.history.go(-1)">
+						上一页
+						</button>
+						<button class="layui-btn layui-btn-fluid" style="border-radius: 20px;background-color: #3887e5;width: 200px;" onclick="print_certificate()">
+						打印
+						</button>
+					</div>
+				</div>
+				
+		
 			</div>
 		</div>
 		

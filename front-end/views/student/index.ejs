@@ -55,69 +55,79 @@
 							</form>
 						</div>
 					
-					<!-- 学生获取成功后的 -->
+					<!-- 学生获取成功后的信息显示 -->
 						<div class="searchbackinfor" id="forminfo" name="forminfo">
-							<div class="layui-input-inline">
-								<form class="layui-form student_forminfo_form" action="" >
-									
-									<div class="layui-form-item">
-										<label class="layui-form-label">证书编号:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="serial_number"></div>
-										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">学校名称:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="school_name">学校名</div>
-										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">姓名:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="student_name"></div>
-										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">学号:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="student_number"></div>
-										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">身份证号:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux"id="ID_number">
+
+							<div>
+								<div class="layui-input-inline">
+									<form class="layui-form student_forminfo_form" action="" >
+										
+										<div class="layui-form-item">
+											<label class="layui-form-label">证书编号:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="serial_number"></div>
 											</div>
 										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">专业名称:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="profession"></div>
+										<div class="layui-form-item">
+											<label class="layui-form-label">学校名称:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="school_name">学校名</div>
+											</div>
 										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">学位类别:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="sort"></div>
+										<div class="layui-form-item">
+											<label class="layui-form-label">姓名:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="student_name"></div>
+											</div>
 										</div>
-									</div>
-									<div class="layui-form-item">
-										<label class="layui-form-label">毕业日期:</label>
-										<div class="layui-input-block">
-											<div class="layui-form-mid layui-word-aux" id="graduation_date"></div>
+										<div class="layui-form-item">
+											<label class="layui-form-label">学号:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="student_number"></div>
+											</div>
 										</div>
-									</div>
-								</form>
+										<div class="layui-form-item">
+											<label class="layui-form-label">身份证号:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux"id="ID_number">
+												</div>
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label class="layui-form-label">专业名称:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="profession"></div>
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label class="layui-form-label">学位类别:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="sort"></div>
+											</div>
+										</div>
+										<div class="layui-form-item">
+											<label class="layui-form-label">毕业日期:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux" id="graduation_date"></div>
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<div class="layui-input-inline student_fillout_item">
+									<img src="/static/images/student_search.png" style="width: 65%; margin: auto;" alt="">
+								</div>
 							</div>
 
-							<div class="layui-input-inline student_fillout_item">
-								<img src="/static/images/student_search.png" style="width: 65%; margin: auto;" alt="">
+							<!-- 证书生成按钮 -->
+							<div style="text-align: center;">
+								<button class="layui-btn layui-btn-fluid" style="border-radius: 20px;background-color: #3887e5;width: 300px;" onclick="location.href='/student/certificate'">
+								证书生成
+								</button>
 							</div>
 
-							<a href="/student/certificate">查看</a>
 						</div>
+						
 				</div>
 			</div>
 		</div>

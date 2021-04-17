@@ -67,38 +67,3 @@ body{
 	width: 100%;
 	margin: auto;
 }
-.layui-table tbody tr:hover{
-	background-color: rgba(255,255,255,0.00)!important;
-}
-.cer_table{
-background-image: url(/static/images/certificate.png);
-background-repeat: no-repeat;
-background-size: 100% 100%;
-width: 700px;
-height: 900px;
-margin: auto;
-margin-bottom: 0;
-}
-.cer_table_title{
-	text-align: center;
-	font-weight: 700;
-	color: black;
-}
-.layui-table td{
-	/* border: hidden!important; */
-	height: 30px;
-}
-.cer_table_td_title{
-	font-weight: 600;
-	color: black;
-	text-align: right;
-}
-.cer_table_QRcode{
-	/* background-image: url("/static/images/QRcode.png");
-	background-repeat: no-repeat;
-	background-size: 100% 100%; */
-	padding: 20px;
-	width: auto;
-	text-align: center;
-	height: 50px;
-}
