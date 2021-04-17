@@ -20,6 +20,29 @@ router.get('/', async function(req, res, next) {
   res.render('student/index',{name:student.name});
 });
 
+router.get('/certificate',async(req,res,next)=>{
+  if(req.session.idnumber){
+    let student=await studentService.getByUsername(req.session.username)
+    let certificateres = blockchain.getCertificate(student.certificate_number,req.session.idnumber)
+    let dataarr=certificateres.split("|")
+     //对每个自端解密
+     let certificate={
+      "school":utils.aesDecrypt(dataarr[0]),
+      "name":utils.aesDecrypt(dataarr[1]),
+      "idnumber":utils.aesDecrypt(dataarr[2]),
+      "degreetype":utils.aesDecrypt(dataarr[3]),
+      "major":utils.aesDecrypt(dataarr[4]),
+      "graduationdate":utils.aesDecrypt(dataarr[5]),
+      "studentnumber":utils.aesDecrypt(dataarr[6]),
+      "certificatenumber":utils.aesDecrypt(dataarr[7])
+    }
+    res.render('student/certificate',{certificate:certificate,name:student.name})
+  }
+  else{
+    res.redirect('/student/')
+  }
+})
+
 router.post('/getCertificate',async (req,res,next)=>{
   let student=await studentService.getByUsername(req.session.username)
   let certificateres = blockchain.getCertificate(student.certificate_number,req.body.idnumber)
@@ -28,6 +51,8 @@ router.post('/getCertificate',async (req,res,next)=>{
     res.json(utils.restful(-1,null,"证件号码有误！"))
   }
   else{
+    //把身份证号存进去
+    req.session.idnumber=req.body.idnumber
     let dataarr=certificateres.split("|")
     //对每个自端解密
     let datadict={

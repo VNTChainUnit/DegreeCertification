@@ -85,13 +85,13 @@ margin-bottom: 0;
 	color: black;
 }
 .layui-table td{
-	border: hidden!important;
+	/* border: hidden!important; */
 	height: 30px;
 }
 .cer_table_td_title{
 	font-weight: 600;
 	color: black;
-	float: right;
+	text-align: right;
 }
 .cer_table_QRcode{
 	/* background-image: url("/static/images/QRcode.png");
@@ -99,5 +99,6 @@ margin-bottom: 0;
 	background-size: 100% 100%; */
 	padding: 20px;
 	width: auto;
+	text-align: center;
 	height: 50px;
 }
