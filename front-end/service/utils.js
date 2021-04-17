@@ -20,7 +20,7 @@ function aesDecrypt(encrypted) {
 //两层加密的md5
 function generateSafePassword(oldpassword){
     if(oldpassword==null || oldpassword=="")return null;
-    else return md5(md5(oldpassword+secret));
+    else return md5(md5(oldpassword)+secret);
 }
 
 function checkPassword(savepassword,checkpassword){

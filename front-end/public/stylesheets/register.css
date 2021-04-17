@@ -78,8 +78,8 @@ body{
 .register_headtext{
 	font-size: 45px;
 	font-weight: 600;
-	color: #007DDB;
-	font-family: "楷体";
+	color: #000000;
+	/* font-family: "楷体"; */
 	padding-top: 20px;
 	margin-bottom: 25px;
 }

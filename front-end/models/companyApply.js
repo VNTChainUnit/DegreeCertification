@@ -17,4 +17,4 @@ const CompanyApplySchema = new Schema({
     {timestamps: true}
 );
 
-module.exports = mongoose.model('companyApply ',CompanyApplySchema);
+module.exports = mongoose.model('companyApply ',CompanyApplySchema,"companyapplies");

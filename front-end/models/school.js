@@ -15,4 +15,4 @@ const SchoolSchema = new Schema({
     {timestamps: true}
 );
 
-module.exports = mongoose.model('School',SchoolSchema);
+module.exports = mongoose.model('School',SchoolSchema,"schools");
