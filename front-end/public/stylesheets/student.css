@@ -67,3 +67,10 @@ body{
 	width: 100%;
 	margin: auto;
 }
+.student_form_labe{
+	font-weight:bold;
+}
+.layui_btn_generation{
+	text-align: center;
+	padding-bottom: 20px;
+}

@@ -39,7 +39,7 @@
 				</div>
 				<div class="layui-col-md5 right-position">
 					<form class="layui-form right-form-bg" action="/login" method="POST">
-						<div class="layui-form-item right-form-title">
+						<div class="layui-form-item right-form-title" style="font-size: 25px;">
 							<label>用户登录</label>
 						</div>
 						<div class="layui-form-item">
@@ -75,19 +75,26 @@
 						</div>
 						<div class="layui-form-item">
 							<div class="layui-row cue-line">
-								<button class="layui-col-md-offset2 layui-col-md8 layui-btn right-form-submit" lay-submit lay-filter="formLogin" >立即登录</button>
+								<button class="layui-col-md-offset2 layui-col-md8 layui-btn right-form-submit" lay-submit lay-filter="formLogin"  style="font-size: 18px;">立即登录</button>
 							</div>
 						</div>
-						<div class="layui-form-item" style="padding-top: 5px;padding-bottom: 5px;">
+						<div class="layui-form-item" style="padding-top: 15px;padding-bottom: 5px;">
 							<div class="layui-row cue-line">
-								<div class="layui-col-md-offset3 layui-col-md2 ">
-									<div class="gray-line" style="width: 20px;"></div>
+
+								<!-- 学生注册按钮链接 -->
+								<div style="padding-bottom: 5px;">
+									<div class="layui-col-md-offset3 layui-col-md2 ">
+										<div class="gray-line" style="width: 20px;"></div>
+									</div>
+									<a href="/register" class="layui-col-md2 cue-text">学生注册</a>
+									<div class="layui-col-md2 ">
+										<div class="gray-line" style="width: 20px; float: right;"></div>
+									</div>
 								</div>
-								<a href="/register" class="layui-col-md2 cue-text">学生注册</a>
-								<div class="layui-col-md2 ">
-									<div class="gray-line" style="width: 20px; float: right;"></div>
-								</div>
+								
 								<br />
+
+								<!-- 单位注册跳转 -->
 								<div style="padding-top: 5px;">
 									<div class="layui-col-md-offset3 layui-col-md2">
 										<div class="gray-line" style="width: 20px;"></div>
