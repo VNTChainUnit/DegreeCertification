@@ -11,6 +11,7 @@ const CompanyApplySchema = new Schema({
         //注册邮箱，将来当作登录用户名
         email:{type:String},
         password: {type: String},
+        fileurl:{type:String},
         //申请状态，0未审核，<0审核不通过，1审核通过
         status:{type:Number}
     },

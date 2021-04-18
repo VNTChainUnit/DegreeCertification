@@ -65,57 +65,74 @@
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">证书编号:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="serial_number"></div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="serial_number"></div>
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">学校名称:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="school_name">学校名</div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="school_name">学校名</div>
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">姓名:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="student_name"></div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="student_name"></div>
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">学号:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="student_number"></div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="student_number"></div>
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">身份证号:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux"id="ID_number">
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label"id="ID_number">
 												</div>
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">专业名称:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="profession"></div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="profession"></div>
 											</div>
 										</div>
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">学位类别:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="sort"></div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="sort"></div>
 											</div>
 										</div>
+
+										<!-- 毕业日期 -->
 										<div class="layui-form-item">
 											<label class="layui-form-label student_form_labe">毕业日期:</label>
 											<div class="layui-input-block">
-												<div class="layui-form-mid layui-word-aux" id="graduation_date"></div>
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="graduation_date"></div>
 											</div>
 										</div>
+
+										<div class="layui-form-item">
+											<label class="layui-form-label student_form_labe">区块高度:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux student_form_txhash_label" id="blockNumber"></div>
+											</div>
+										</div>
+
+										<div class="layui-form-item">
+											<label class="layui-form-label student_form_labe">交易Hash值:</label>
+											<div class="layui-input-block">
+												<div class="layui-form-mid layui-word-aux  student_form_txhash_label"  id="txhash"></div>
+											</div>
+										</div>
+
 									</form>
 								</div>
 
 								<div class="layui-input-inline student_fillout_item">
-									<img src="/static/images/student_search.png" style="width: 65%; margin: auto;" alt="">
+									<img src="/static/images/student_search.png" style="width: 45%; margin: auto;" alt="">
 								</div>
 							</div>
 
@@ -181,14 +198,16 @@
 						let certificate=res.data
 						console.log(certificate);
 						// 将每个div中的值赋值
-						$('#serial_number').html(certificate.certificatenumber);
+						$('#serial_number').html(certificate.certificatenumber);//证书编号
 						$('#school_name').html(certificate.school);
 						$('#student_name').html(certificate.name);
 						$('#student_number').html(certificate.studentnumber);
 						$('#ID_number').html(certificate.idnumber);
 						$('#profession').html(certificate.major);
-						$('#sort').html(certificate.degreetype);
-						$('#graduation_date').html(certificate.graduationdate);
+						$('#sort').html(certificate.degreetype);//毕业年月
+						$('#graduation_date').html(certificate.graduationdate);//学位
+						$('#blockNumber').html(certificate.blockNumber);//区块高度
+						$('#txhash').html(certificate.txhash);//交易Hash值
 
 						$("#forminfo").show();
 						$("#filloutform").hide();

@@ -89,7 +89,7 @@ async function addCertificate(school, name, idnumber, degreetype, major, graduat
     else return false;
 }
 
-//请求100次
+//根据交易hash获取交易，默认请求100次
 async function getTransaction(transactionhash){
     var result=""
     let trytime=100
@@ -102,6 +102,7 @@ async function getTransaction(transactionhash){
     }
     return result
 }
+
 //获取证书信息
 function getCertificate(certificateNumber, idnumber){
     //加密参数

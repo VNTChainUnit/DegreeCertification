@@ -45,8 +45,9 @@ body{
 .student_forminfo_form{
 	padding-top: 60px;
 	padding-bottom: 50px;
-	padding-left: 30%;
+	margin-left: 30%;
 	width: 400px;
+	/* max-width: 600px; */
 	font-size: 18px;
 }
 .student_form2_img_div{
@@ -69,8 +70,13 @@ body{
 }
 .student_form_labe{
 	font-weight:bold;
+	width: 120px;
 }
 .layui_btn_generation{
 	text-align: center;
 	padding-bottom: 20px;
+}
+.student_form_txhash_label{
+	word-wrap: break-word;
+	width: 220px;
 }

@@ -107,16 +107,33 @@
 						  </td>
 						  <td></td>
 						</tr>
+
+						<!-- 说明 -->
 						<tr>
-						  <td></td>
-						  <td colspan="2">此证书对应存证内容已加盖可信时间戳，并在信诣学位学历认证管理系统及杭州维特链科技有限公司提供的维特链上同步存证。</td>
+							<td></td>
+							<td colspan="2">此证书对应存证内容已加盖可信时间戳，并在信诣学位学历认证管理系统及杭州维特链科技有限公司提供的维特链上同步存证。</td>
+							<td></td>
+						  </tr>
+
+						<!-- 区块链值 -->
+						<tr>
+							<td></td>
+						  <td colspan="2">
+							  <div  style="font-size: 12px;">
+								<div>区块高度：<%= certificate.blockNumber %></div>
+								  <div style="">
+								<label>交易Hash值：</label>
+								<span><%= certificate.txhash %></span>
+								</div>
+							  </div>
+							
+						  </td>
 						  <td></td>
 						</tr>
+
 						<tr>
-						  <td colspan="4"></td>
-						</tr>
-						<tr>
-						  <td colspan="4"></td>
+						  <td colspan="4">
+						  </td>
 						</tr>
 					  </tbody>
 					</table>

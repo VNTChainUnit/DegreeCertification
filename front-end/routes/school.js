@@ -5,6 +5,7 @@ const utils=require('../service/utils')
 const studentService= require('../service/studentService');
 const student = require('../models/student');
 const blockchain = require('../service/blockchain/main')
+const certificateService=require('../service/certificateService')
 //身份验证
 router.use('/', (req, res, next) => {
   if (req.session.username!=null && req.session.usertype==3) {
@@ -71,16 +72,11 @@ router.put('/api/student',async(req,res,next)=>{
 router.post('/api/certificate',async(req,res,next)=>{
   let data=req.body
   let school=await schoolService.getSchoolByUsername(req.session.username)
-  let transaction=await blockchain.addCertificate(school.name,data.name,data.idnumber,
+  let result=await certificateService.addCertificate(school.name,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
-  let resdata={
-    hash:transaction.hash,
-    blockNumber:transaction.blockNumber,
-    blockHash:transaction.blockHash,
-    gas:transaction.gas
-  }
-  if(transaction){
-  res.json(utils.restful(null,resdata,null))
+  if(result){
+    
+  res.json(utils.restful(null,result,null))
   }
   else{
     res.json(utils.restful(-1,null,"上传失败，请稍后再试！"))
