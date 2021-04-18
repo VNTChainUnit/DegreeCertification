@@ -126,9 +126,11 @@
 
 
         $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
+            let index=layer.msg('退出登录成功')
+            setTimeout(() => {
+                layer.close(index)
                 window.location = '/logout';
-            });
+            }, 1500);
         });
     });
 </script>

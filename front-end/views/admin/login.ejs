@@ -75,7 +75,9 @@
                     <input type="password" name="password" lay-verify="required"  placeholder="请输入密码" maxlength="20">
                     <span class="bind-password icon icon-4"></span>
                 </div>
-                 <div id="slider"></div>
+                <% if(message){ %>
+                    <div style="text-align: center;color: red;font-size: 15px;margin-bottom: 5px;"><%=message %></div>
+                    <% } %>
             </div>
             
             <div class="layui-form-item" style="text-align:center; width:100%;height:100%;margin:0px;">
@@ -84,21 +86,18 @@
         </form>
     </div>
 </div>
-<!-- <div class="footer">
-    ©版权所有 <span class="padding-5">|</span><a target="_blank" href="#">备案号</a>
-</div> -->
+<div class="footer">
+    ©版权所有 <span class="padding-5">|</span>信诣团队</a>
+</div>
 <script src="/static/layuimini/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="/static/layuimini/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
 <script>
-    layui.use(['form','jquery','sliderVerify'], function () {
+    layui.use(['form','jquery'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            layer = layui.layer,
-            sliderVerify = layui.sliderVerify;
+            layer = layui.layer;
 
-            var slider = sliderVerify.render({
-                elem: '#slider'
-            })
+            
         
         $('.bind-password').on('click', function () {
             if ($(this).hasClass('icon-5')) {
@@ -120,10 +119,6 @@
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
-            if(!slider.isOk()){
-                layer.msg("请先通过滑块验证");
-                return false;
-            }
             data = data.field;
             if (data.username == '') {
                 layer.msg('用户名不能为空');
@@ -133,20 +128,6 @@
                 layer.msg('密码不能为空');
                 return false;
             }
-            // if (data.captcha == '') {
-            //     layer.msg('验证码不能为空');
-            //     return false;
-            // }
-        //     $.post("/admin/login",{"username":data.username,"password":data.password},
-		// 		function(res){
-		// 		    console.log(res);
-		// 			if(res.code==0){
-		// 				window.location.href=res.data.url;
-		// 			}
-		// 			else layer.msg(res.msg);
-		// 		});
-        //     return false;
-        // });
         return true;
         });
     });

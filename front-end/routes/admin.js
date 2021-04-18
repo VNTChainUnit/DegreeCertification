@@ -11,7 +11,10 @@ router.use(function (req, res, next) {
     next()
   } else {
     //排除登录
-    if (req.originalUrl === '/admin/login') {
+    //排除参数
+    let parampos=req.originalUrl.indexOf('?')
+    let originalUrl=parampos==-1?req.originalUrl:req.originalUrl.substring(0,parampos)
+    if (originalUrl === '/admin/login') {
       next()
     } else {
       res.redirect('/admin/login')
@@ -20,7 +23,16 @@ router.use(function (req, res, next) {
 })
 
 router.get('/login',(req,res,next)=>{
-  res.render('admin/login')
+  let message=""
+  if(req.query.error){
+    if(req.query.error==1){
+      message="账户名或者密码错误！"
+    }
+    else if(req.query.error==2){
+      message="系统错误！"
+    }
+  }
+  res.render('admin/login',{message:message})
 })
 
 //登录

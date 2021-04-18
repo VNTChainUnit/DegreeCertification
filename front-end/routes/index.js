@@ -14,7 +14,16 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/login', function (req, res, next) {
-  res.render('login')
+  let message=""
+  if(req.query.error){
+    if(req.query.error==1){
+      message="账户名或者密码错误！"
+    }
+    else if(req.query.error==2){
+      message="系统错误！"
+    }
+  }
+  res.render('login',{message:message})
 })
 
 router.get('/register', function (req, res, next) {
@@ -54,11 +63,11 @@ router.post('/login', async function (req, res) {
       res.redirect("/school/")
     }
     else {
-      res.redirect('/login')
+      res.redirect('/login?error=2')
     }
   }
   else {
-    res.redirect("/login")
+    res.redirect("/login?error=1")
   }
 })
 

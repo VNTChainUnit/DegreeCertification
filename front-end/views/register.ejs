@@ -195,10 +195,14 @@
 		  
 		  //监听表单提交
 		  form.on('submit(register)', function(data){
-			  // 请求
+			//   请求
 			$.post('/register',data.field,(res)=>{
 				if(res.code==0){
-					window.location.href=res.data.url;
+					const index= layer.msg("注册成功，正在为您跳转...")
+					setTimeout(() => {
+						layer.close(index);
+						window.location.href=res.data.url;
+					}, 2000);
 				}
 				else layer.alert(res.msg);
 			})

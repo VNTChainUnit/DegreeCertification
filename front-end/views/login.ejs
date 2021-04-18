@@ -65,6 +65,11 @@
 								</select>
 							</div>
 						</div>
+
+						<% if(message){ %>
+							<div style="text-align: center;color: red;font-size: 13px;margin-bottom: 5px;"><%=message %></div>
+							<% } %>
+
 						<div class="layui-form-item">
 							<div class="layui-row cue-line">
 								<div class="layui-col-md-offset1 layui-col-md8" style="width: 83%;">
@@ -78,9 +83,9 @@
 								<button class="layui-col-md-offset2 layui-col-md8 layui-btn right-form-submit" lay-submit lay-filter="formLogin"  style="font-size: 18px;">立即登录</button>
 							</div>
 						</div>
+
 						<div class="layui-form-item" style="padding-top: 15px;padding-bottom: 5px;">
 							<div class="layui-row cue-line">
-
 								<!-- 学生注册按钮链接 -->
 								<div style="padding-bottom: 5px;">
 									<div class="layui-col-md-offset3 layui-col-md2 ">
