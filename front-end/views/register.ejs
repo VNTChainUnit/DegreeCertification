@@ -103,7 +103,7 @@
 					  <div class="layui-form-item">
 					  	<div class="layui-from-checkbox">
 					  		<input type="checkbox" lay-skin="primary" id="deal" name="deal" lay-verify="deal_agree" title=""/>
-							  <span class="read_xieyi">我已阅读并同意<a href="#">《用户协议》</a></span>
+							  <span class="read_xieyi">我已阅读并同意<a href="javascript:void(0)" id="useraggrement">《用户协议》</a></span>
 					  	</div>
 					  </div>
 					  
@@ -115,12 +115,7 @@
 					      </div>
 					  </div>
 					  
-					  <!-- 帮助中心 -->
-					  <div class="register_tail">
-					  	<a class="register_tail_help">帮助中心</a>
-					  	<label style="color: #9F9F9F;">|</label>
-					  	<a class="register_tail_contact">联系我们</a>
-					  </div>
+					  <br>
 					  
 				  </div>
 				  
@@ -130,7 +125,7 @@
 				  </div>
 		
 			</form>
-
+			
 		</div>
 
 		<%-include("foot.ejs")%>
@@ -152,7 +147,16 @@
 		  laydate.render({
 		    elem: '#date1'
 		  });
-		  
+		  $("#useraggrement").click(()=>{
+			  layer.open({
+				type:1,
+				content:$('#useraggrementtext'),
+				area:["350px","500px"],
+				title:"信诣系统用户协议",
+				shadeClose:true,
+				offset: '100px'
+			})
+		  })
 		  //创建一个编辑器
 		  var editIndex = layedit.build('LAY_demo_editor');
 		 
@@ -211,4 +215,19 @@
 		});
 		</script>
 		</body>
+		<div id="useraggrementtext" style="display:none;padding: 20px;">
+			<p>欢迎您使用信诣学位学历认证管理系统（以下简称信诣系统、我们或本系统）。
+			您应当仔细阅读、充分理解《用户协议》（简称本协议）的全部内容。</p>
+			<p>一、协议的确认</p>
+			<p>您访问信诣系统、注册成为信诣系统用户或使用信诣系统的任何产品或服务，即视为您已阅读、了解并完全同意本协议中的各项内容，
+					包括本系统对条款内容所作的任何修改。同时也代表您同意我们的《隐私政策》，其内容涵盖了我们如何收集、使用、披露、存储和保护您的个人信息。
+					若您不同意本协议，请不要注册、访问或以其他方式使用信诣系统提供的任何产品或服务。</p>
+			<p>二、账号的管理和使用</p>
+			<p>1．您需要按照信诣系统要求的注册步骤进行注册，获得信诣系统账号和密码，登录信诣系统。您在信诣系统的账号、密码等是您在本系统的唯一身份权证。
+				您通过账号和密码使用本系统的行为，均视为您本人行为，您应当承担由此导致的相关后果和责任。</p>
+			<p>2．您应当妥善保管您的账号和密码，避免使用过于简单的密码。不得将您的账号和密码出租、出借、转让或者以其他方式提供给他人使用。
+				您可以根据本系统规定更改密码。如果您发现自己的信息泄露，尤其是本系统账号和密码发生泄露，请立即联系我们或者高校管理员。</p>
+			<p>3．您在使用具体产品或服务时，我们可能会要求您进一步提供本人身份信息及资料，以完成身份信息核验，
+				您应保证提供的身份信息及资料为本人真实、准确的信息。</p>
+		</div>
 </html>
