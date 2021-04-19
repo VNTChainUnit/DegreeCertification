@@ -7,7 +7,9 @@ const emailConfig={
 	pass:"auth code",
 	webname:"xinyi"
 }
+const donainname="http://192.168.0.25"
 module.exports={
 	databaseUrl:databaseUrl,
-	emailConfig:emailConfig
+	emailConfig:emailConfig,
+	donainname:donainname
 }

@@ -19,8 +19,6 @@
  
 <body>
 	<%-include("../head.ejs")%>
-
-
 	<!-- 学生证书区块链证书存证 -->
 	<section>
 		<div class="layui-container" id="certificate" >
@@ -97,7 +95,7 @@
 						  <td class="cer_table_td_title">
 							  <p style="text-align: center;	">扫码查验</p>
 							  <div class="cer_table_QRcode">
-								<img src="/static/images/QRcode.png" style="height: 60px;" />
+								<img src="/student/qrcode" style="height: 90px;" />
 							  </div>
 							</td>
 						  <td>
@@ -121,7 +119,7 @@
 						  <td colspan="2">
 							  <div  style="font-size: 12px;">
 								<div>区块高度：<%= certificate.blockNumber %></div>
-								  <div style="">
+								  <div >
 								<label>交易Hash值：</label>
 								<span><%= certificate.txhash %></span>
 								</div>

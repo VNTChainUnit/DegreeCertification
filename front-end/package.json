@@ -20,6 +20,7 @@
     "morgan": "~1.9.1",
     "nodemailer": "^6.5.0",
     "path": "^0.12.7",
+    "qr-image": "^3.2.0",
     "vnt": "https://gitee.com/laoluoli/vnt.js.git",
     "vnt-kit": "https://gitee.com/laoluoli/vnt-kit.js.git"
   },

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
+const qr=require('qr-image');
 const utils=require('../service/utils')
+const Config=require('../config')
 const studentService=require('../service/studentService')
 const blockchain=require('../service/blockchain/main')
 const certificateService=require('../service/certificateService')
@@ -43,6 +45,24 @@ router.post('/getCertificate',async (req,res,next)=>{
   }
   else{
     res.json(utils.restful(-1,null,"请检查证件号是否有误！"))
+  }
+})
+
+router.get('/qrcode', async(req, res, next)=> {
+  let student=await studentService.getByUsername(req.session.username)
+  let certificatenumber=student.certificate_number
+  let idnumber=req.session.idnumber
+  const baseurl=Config.donainname+":3000/check/"
+  var code=idnumber+"|"+certificatenumber
+  var encryptcode=utils.aesEncrypt(code)
+  var text = baseurl+encryptcode
+  try {
+    var img = qr.image(text,{size :10});
+    res.writeHead(200, {'Content-Type': 'image/png'});
+    img.pipe(res);
+  } catch (e) {
+    res.writeHead(414, {'Content-Type': 'text/html'});
+    res.end('<h1>Error</h1>');
   }
 })
 

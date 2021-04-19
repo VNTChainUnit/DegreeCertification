@@ -6,7 +6,7 @@ const adminService = require('../service/adminService');
 var router = express.Router();
 const utils=require('../service/utils');
 const companyApplyService = require('../service/companyApplyService');
-
+const certificateService=require('../service/certificateService')
 /* GET home page. */
 
 router.get('/', function (req, res, next) {
@@ -167,6 +167,21 @@ router.post('/companyapply',(req,res,next)=>{
 
 router.get('/companyapply',(req,res,next)=>{
   res.render('companyRegister')
+})
+
+router.get('/check/:code',async (req,res,next)=>{
+  let encryptcode =req.params['code']
+  let code=utils.aesDecrypt(encryptcode)
+  let codearr=code.split('|')
+  let idnumber=codearr[0]
+  let certificatenumber=codearr[1]
+  let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
+  if(certificate){
+    res.render('certificate',{certificate,certificate})
+  }
+  else{
+    res.send("证书校验失败，证书可能已被篡改！")
+  }
 })
 
 module.exports = router;
