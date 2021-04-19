@@ -204,17 +204,22 @@ router.get('/companyapply',(req,res,next)=>{
 })
 
 router.get('/check/:code',async (req,res,next)=>{
-  let encryptcode =req.params['code']
-  let code=utils.aesDecrypt(encryptcode)
-  let codearr=code.split('|')
-  let idnumber=codearr[0]
-  let certificatenumber=codearr[1]
-  let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
-  if(certificate){
-    res.render('certificate',{certificate,certificate})
+  try{
+    let encryptcode =req.params['code']
+    let code=utils.aesDecrypt(encryptcode)
+    let codearr=code.split('|')
+    let idnumber=codearr[0]
+    let certificatenumber=codearr[1]
+    let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
+    if(certificate){
+      res.render('certificate',{certificate,certificate})
+    }
+    else{
+      res.send("证书校验失败，证书可能已被篡改！")
+    }
   }
-  else{
-    res.send("证书校验失败，证书可能已被篡改！")
+  catch(e){
+    res.send("二维码已被篡改！")
   }
 })
 

@@ -1,3 +1,32 @@
-<div>
-    <%= certificate.name%>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    body{
+        font-size: large;
+    }
+    span{
+        font-weight: bold;
+        font-size: larger;
+    }
+    span::after{
+        content: "  ";
+    }
+</style>
+</head>
+<body>
+        <p>经信诣学位学历认证管理系统认证，结果如下：</p>
+<div style="font-size: large;border-style: solid;margin: 5px;padding: 10px;">
+    <p>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <span><%= certificate.name %></span>在<%= certificate.graduationdate %>月完成了
+        <span><%= certificate.school %></span>的学业计划，现已毕业，已获得
+        <span><%= certificate.major %></span>专业的
+        <span><%= certificate.degreetype %></span>学位证书，该证书编号为<%= certificate.certificatenumber%>。
+    </p>
 </div>
+        <p>
+            此证书现已存于VNT Chain区块链中，区块高度为 <%= certificate.blockNumber %>，交易Hash值为 <%= certificate.txhash %>
+        </p>
+</body>
+</html>
