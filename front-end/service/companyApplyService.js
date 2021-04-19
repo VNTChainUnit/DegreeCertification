@@ -1,7 +1,7 @@
 const company = require('../models/company');
 const CompanyApply=require('../models/companyApply')
 const emailService = require('../service/email')
-function addCompanyApply(name,creditcode,email,password){
+function addCompanyApply(name,creditcode,email,password,fileurl){
     //核验统一信用代码和姓名
     //if () return false
     //这里不做核验
@@ -10,7 +10,8 @@ function addCompanyApply(name,creditcode,email,password){
         creditcode:creditcode,
         email:email,
         password:password,
-        status:0
+        status:0,
+        fileurl:fileurl
     })
     companyApply.save()
     return true;

@@ -1,4 +1,6 @@
 var express = require('express');
+var multer  = require('multer')
+var fs = require('fs');
 const studentService = require('../service/studentService');
 const schoolService= require('../service/schoolService');
 const companyService=require('../service/companyService');
@@ -8,6 +10,38 @@ const utils=require('../service/utils');
 const companyApplyService = require('../service/companyApplyService');
 const certificateService=require('../service/certificateService')
 /* GET home page. */
+
+//***********文件上传配置begin
+var createFolder = function(folder){
+  try{
+      fs.accessSync(folder); 
+  }catch(e){
+      fs.mkdirSync(folder);
+  }  
+};
+
+var uploadFolder = './upload/';
+
+createFolder(uploadFolder);
+// 通过 filename 属性定制
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, uploadFolder);    // 保存的路径，备注：需要自己创建
+  },
+  filename: function (req, file, cb) {
+      // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
+      cb(null, Date.now()+"."+"jpg");  
+  }
+});
+
+var upload = multer({ storage: storage });
+//***********文件上传配置end
+router.post('/companyapply/uploadfile', upload.single('file'), function(req, res, next){
+  var file = req.file;
+  let url="/uploads/"+file.filename
+  res.json(utils.restful(null,{src:url},null))
+});
+
 
 router.get('/', function (req, res, next) {
   res.redirect("/login");
@@ -156,7 +190,7 @@ router.post('/changePassword',async (req,res,next)=>{
 
 router.post('/companyapply',(req,res,next)=>{
    let data=req.body;
-   const result=companyApplyService.addCompanyApply(data.name,data.creditcode,data.email,data.password)
+   const result=companyApplyService.addCompanyApply(data.name,data.creditcode,data.email,data.password,data.fileurl)
    if(result){
       res.json(utils.restful(null,null,null))
    }
@@ -183,5 +217,6 @@ router.get('/check/:code',async (req,res,next)=>{
     res.send("证书校验失败，证书可能已被篡改！")
   }
 })
+
 
 module.exports = router;

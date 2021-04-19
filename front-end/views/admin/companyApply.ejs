@@ -8,7 +8,9 @@
 		
     </div>
 </div>
-
+<script type="text/html" id="imgTpl">
+    <a href={{d.fileurl}} target="_blank" ><img src={{d.fileurl}}  height="35px" width="auto"/></a>
+  </script>
 <script>
     layui.use(['form', 'table','miniPage','element'], function () {
         var $ = layui.jquery,
@@ -23,7 +25,7 @@
                 {type: 'numbers',title: '序号', width:40},
 				{field: 'name', title: '单位全称'},
                 {field: 'creditcode', title: '统一社会信用代码'},
-                {title:"附件",templet:function(e){return '<u>点击下载</u>' }},
+                {title:"附件",templet:'#imgTpl'},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],

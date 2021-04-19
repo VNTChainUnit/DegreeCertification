@@ -302,6 +302,8 @@
 
 			// 表单2按钮
             form.on('submit(formStep2)', function (data) {
+				//请求前加上图片url
+				corporate_Information.fileurl=$('#uploadView').removeClass('layui-hide').find('img').attr('src');
 				//请求
 				$.post('/companyapply',corporate_Information,function(res){
 					if(res.code==0){
@@ -324,10 +326,13 @@
 			 
 			 upload.render({
 			 	elem: '#upload_btn'
-			 	,url: 'https://httpbin.org/post' //改成您自己的上传接口
+			 	,url: '/companyapply/uploadfile' //改成您自己的上传接口
+				 ,accept:'images'
+				 ,acceptMime :"images"
 			 	,done: function(res){
 			 	  layer.msg('上传成功');
-			 	  layui.$('#uploadView').removeClass('layui-hide').find('img').attr('src', res.files.file);
+				   //略缩图显示
+			 	  layui.$('#uploadView').removeClass('layui-hide').find('img').attr('src', res.data.src);
 			 	  layui.$('.upload_show').hide();
 			 	  console.log(res)
 			 	}
