@@ -13,6 +13,7 @@ var schoolRouter = require('./routes/school');
 var adminRouter = require('./routes/admin');
 
 var app = express();
+app.set('env', 'production');
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(session({
   secret : 'gouyixia', // sign
