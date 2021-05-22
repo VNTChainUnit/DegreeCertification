@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const WxaccountSchema = new Schema({
         openid:{type:String},
         user_id: {type:Schema.Types.ObjectId},
-        usertype:{type:int}
+        usertype:{type:Number}
     },
     {timestamps: true}
 );
