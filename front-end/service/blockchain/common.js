@@ -1,8 +1,9 @@
+const privateinfo=require("../../private")
 const abifile="Degree.abi"
-const contractAddress="0xe9907f03ba3751d77213f671ff00211c0212bbf3"
+const contractAddress=privateinfo.vnt_contractAddress
 const url="http://47.111.100.232:8880"
 const accountPath="./owneraccount"
-const accountPassword="Your password"
+const accountPassword=privateinfo.vnt_accountpwd
 module.exports={
     abifile:abifile,
     url:url,

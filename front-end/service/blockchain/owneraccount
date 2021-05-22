@@ -1,1 +1,1 @@
-Your own account place here
+{"address":"46a1a94e8a2572621020428fea1485f854c27b6c","crypto":{"cipher":"aes-128-ctr","ciphertext":"3853c2ec2a931a98ee1ebd7e0ec2bfec7697ea10dcf36357d3c10aabca546f0b","cipherparams":{"iv":"71cc7a3be0e828234b4905bace455da7"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"0ce775cd7421cdf2ba844a4d3008f8c0800235a2fc233a46de89715b000446e9"},"mac":"2d0e583b7f336c5484cbfe0f341524258ed8e279e5368f48808bf792f92e73fe"},"id":"679e9e2e-d077-46a7-947b-2f0276ac0e28","version":3}
