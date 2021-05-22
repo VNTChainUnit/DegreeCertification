@@ -4,9 +4,9 @@ var user = emailConfig.email
   , pass = emailConfig.pass
   ;
 var smtpTransport = nodemailer.createTransport( {
-
-      service: "qq"
-    , port: 465
+      host:emailConfig.host,
+      secure: true,
+     port: emailConfig.port
 
     , auth: {
         user: user,

@@ -92,7 +92,7 @@ router.post('/api/checkCompany',async(req,res,next)=>{
   let id=req.body._id
   if(req.body.checkcode=='1'){
     //审核记录修改
-    companyApplyService.checkCompany(id,true)
+    await companyApplyService.checkCompany(id,true)
     //公司注册
     let apply=await companyApplyService.findById(id)
     //邮箱为账户

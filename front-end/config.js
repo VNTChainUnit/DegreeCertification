@@ -2,10 +2,11 @@
 const databaseUrl = "mongodb+srv://xinyi:xinyi@degree.6b0qs.mongodb.net/Degree?retryWrites=true&w=majority";
 const emailConfig={
 	service:"qq",
-	email:"emailexalple@qq.com",
+	email:"xinyiteam2021@126.com",
+	host:"smtp.126.com",
 	port:465,
-	pass:"auth code",
-	webname:"xinyi"
+	pass:"GZRMGDVYAPCWPLCH",
+	webname:"信诣团队"
 }
 const donainname="http://192.168.0.25"
 module.exports={

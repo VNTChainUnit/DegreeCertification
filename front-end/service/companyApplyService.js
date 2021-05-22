@@ -23,7 +23,8 @@ async function getUncheckedApply(){
 }
 
 //申请id和bool变量表示状态
-function checkCompany(id,checktype){
+async function checkCompany(id,checktype){
+    let cpn=await CompanyApply.findById(id)
     //审核通过
     if(checktype){
         CompanyApply.updateOne({_id:id},{status:1},(err,result)=>{
@@ -32,8 +33,8 @@ function checkCompany(id,checktype){
             }
             else{
                 //发送邮件
-                // emailService.sendEmail(result.email,"审核结果",
-                // result.name+"，您好。恭喜您的注册通过审核，请您使用您的邮箱和注册时的密码进行登录。<br>信诣团队")
+                emailService.sendEmail(cpn.email,"审核结果",
+                cpn.name+"，您好。恭喜您的注册通过审核，请您使用您的邮箱和注册时的密码进行登录。<br>信诣团队")
             }
         })
     }
@@ -45,8 +46,8 @@ function checkCompany(id,checktype){
             }
             else{
                  //发送邮件
-                //  emailService.sendEmail(result.email,"审核结果"
-                //  ,result.name+"，您好。您的审核没有通过。请您检查材料是否符合条件后，再次提交审核。<br>信诣团队")
+                 emailService.sendEmail(cpn.email,"审核结果"
+                 ,cpn.name+"，您好。您的审核没有通过。请您检查材料是否符合条件后，再次提交审核。<br>信诣团队")
             }
         })
     }
