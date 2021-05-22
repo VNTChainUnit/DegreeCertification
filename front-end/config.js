@@ -7,7 +7,7 @@ const emailConfig={
 	pass:privateinfo.email_pass,
 	webname:"信诣团队"
 }
-const donainname="http://192.168.0.25"
+const donainname="https://xinyi.laoluoli.com"
 module.exports={
 	databaseUrl:databaseUrl,
 	emailConfig:emailConfig,
