@@ -11,6 +11,7 @@ var studentRouter = require('./routes/student');
 var companyRouter = require('./routes/company');
 var schoolRouter = require('./routes/school');
 var adminRouter = require('./routes/admin');
+var apiRouter = require('./routes/api');
 
 var app = express();
 app.set('env', 'production');
@@ -40,6 +41,7 @@ app.use('/student', studentRouter);
 app.use('/company', companyRouter);
 app.use('/school', schoolRouter);
 app.use('/admin', adminRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
