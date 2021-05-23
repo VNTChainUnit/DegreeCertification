@@ -20,5 +20,5 @@ async function findStudentByOpenid(openid){
 
 module.exports={
     bindStudent:bindStudent,
-    findStudentByOpenid:this.findStudentByOpenid
+    findStudentByOpenid:findStudentByOpenid
 }

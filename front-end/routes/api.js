@@ -15,16 +15,16 @@ router.get('/student/login/:code',async (req,res,next)=>{
         method: 'GET',
         uri: url,
       };
-    var wxret=await Request(options);
-    if(wxret.errcode!=0){
+    var wxret=JSON.parse(await Request(options));
+    if(wxret.errcode&&wxret.errcode!=0){
         res.json(utils.restful(-5,null,"系统繁忙"))
         return;
     }
-    var student=wxaccountService.findStudentByOpenid(wxret.openid);
+    var student=await wxaccountService.findStudentByOpenid(wxret.openid);
     if(student==null){
-        res.json(utils.restful(-1,null,"请绑定身份信息！"))
+        res.json(utils.restful(-1,{openid:wxret.openid},"请绑定身份信息！"))
     }
-    else res.json(utils.restful(-1,{studentid:student._id},null))
+    else res.json(utils.restful(0,{studentid:student._id},null))
 })
 
 router.post('/student/bind',async(req,res,next)=>{
