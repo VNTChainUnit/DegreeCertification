@@ -1,4 +1,4 @@
-/* models/school.js */
+/* models/wxaccount.js */
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

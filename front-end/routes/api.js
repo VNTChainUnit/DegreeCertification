@@ -30,8 +30,9 @@ router.get('/student/login/:code',async (req,res,next)=>{
 router.post('/student/bind',async(req,res,next)=>{
     var data=req.body;
     if(await studentService.login(data.username,data.password)){
-        var student=await studentService.getByUsername(username);
+        var student=await studentService.getByUsername(data.username);
         wxaccountService.bindStudent(data.openid,student.id);
+        res.json(utils.restful(0,{studentid:student._id},null));
     }
     else  {
         res.json(utils.restful(-1,null,"账号或密码错误！"))
