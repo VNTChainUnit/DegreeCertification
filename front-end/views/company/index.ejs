@@ -132,7 +132,7 @@ layui.use(['form','element','laydate'], function(){
   form.on('submit(companySearch)', function(data){
 	  var index=layer.load(0, {shade:0.2,time: 10*1000})
 	$.ajax({
-		url: '/company/checkCertificate',
+		url: '/company/api/checkCertificate',
 		method:'POST',
 		data:data.field,
 		success:function(res){

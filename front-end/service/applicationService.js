@@ -34,6 +34,10 @@ function openApplication(applicationid){
     Application.updateOne({_id:applicationid},{status:1});
 }
 
+async function getApplication(companyid){
+    return await Application.find({company_id:companyid})
+}
+
 async function getRecord(applicationid){
     return await CallRecord.find({application_id:applicationid});
 }
@@ -99,5 +103,6 @@ module.exports={
     getRecord:getRecord,
     getApplicationId:getApplicationId,
     loginApplication:loginApplication,
-    callAPI:callAPI
+    callAPI:callAPI,
+    getApplication:getApplication
 }
