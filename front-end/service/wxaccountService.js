@@ -19,6 +19,7 @@ function bindStudent(openid,moduleid){
 
 async function findStudentByOpenid(openid){
     var account=await Wxaccount.findOne({openid:openid}); 
+    if(account==null)return null;
     return await studentService.getById(account.user_id);
 }
 

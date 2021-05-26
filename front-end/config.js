@@ -7,9 +7,14 @@ const emailConfig={
 	pass:privateinfo.email_pass,
 	webname:"信诣团队"
 }
+const redisConfig={
+	url:privateinfo.redis_url,
+	port:privateinfo.redis_port
+}
 const donainname="https://xinyi.laoluoli.com"
 module.exports={
 	databaseUrl:databaseUrl,
 	emailConfig:emailConfig,
-	donainname:donainname
+	donainname:donainname,
+	redisConfig:redisConfig
 }
