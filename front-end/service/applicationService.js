@@ -5,12 +5,13 @@ const random=require("string-random");
 const Redis=require('./redisService')
 
 async function createSecret(){
-    const secret=random(16);
-    while((await Application.findOne({secret:secret}))==null){
+    let secret=random(16);
+    while((await Application.findOne({secret:secret}))!=null){
         secret=random(16);
     }
     return secret;
 }
+
 
 async function createApplication(companyid,name,comment){
     const secret=await createSecret()
@@ -26,12 +27,16 @@ async function createApplication(companyid,name,comment){
     return secret;
 }
 
-function stopApplication(applicationid){
-    Application.updateOne({_id:applicationid},{status:0});
+async function stopApplication(applicationid){
+   Application.findByIdAndUpdate(applicationid,{$set:{status:0}},(err)=>{
+       if(err)console.log(err)
+   });
 }
 
 function openApplication(applicationid){
-    Application.updateOne({_id:applicationid},{status:1});
+    Application.findByIdAndUpdate(applicationid,{$set:{status:1}},(err)=>{
+        if(err)console.log(err)
+    });
 }
 
 async function getApplication(companyid){
@@ -40,6 +45,16 @@ async function getApplication(companyid){
 
 async function getRecord(applicationid){
     return await CallRecord.find({application_id:applicationid});
+}
+
+async function get7daysRecord(applicationid){
+    let lastweek=new Date();
+    lastweek.setDate(lastweek.getDate()-6);
+    let result=await Application.aggregate([
+        {$match:{application_id:applicationid,"createdAt":{$gte:lastweek}}},
+        {$group:{_id:{createdAt:"$createdAt"},count:{$sum:1}}}
+    ])
+    return result;
 }
 
 async function checkApplication(applicationid,secret){
@@ -96,6 +111,7 @@ async function callAPI(applicationid,ip){
    else return false;
 }
 
+
 module.exports={
     createApplication:createApplication,
     stopApplication:stopApplication,
@@ -104,5 +120,6 @@ module.exports={
     getApplicationId:getApplicationId,
     loginApplication:loginApplication,
     callAPI:callAPI,
-    getApplication:getApplication
+    getApplication:getApplication,
+    get7daysRecord:get7daysRecord
 }

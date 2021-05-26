@@ -61,7 +61,15 @@ body{
 #input_selectid input{
 	border-radius: 15px;
 }
-
+.com_navigation_div a{
+	color: #FFFFFF;
+	font-size: 22px;
+}
+.com_navigation{
+	height: 50px;
+	padding-left: 10%;
+	background-color: #008000;
+}
 .com_body_image{
 	margin: auto; 
 	height: 430px; 
@@ -75,3 +83,50 @@ body{
 .company_seach_label_div{
 	margin-bottom: 20px;
 }
+.com_body_table{
+	padding-top: 40px;
+	/* padding-left: 50px; */
+}
+.layui-laypage .layui-laypage-curr .layui-laypage-em{
+		background-color: #1E9FFF;
+	}
+	.api_table_box{
+		margin: 50px 100px;
+		padding: 10px;
+		background-color: white;
+	}
+	.api_table_title{
+		font-size: 17px;
+		padding: 5px;
+		border-bottom: 1px solid gainsboro;
+	}
+	
+	
+.addNav_bgc{
+/*		background-color:rgba(170,170,174,1.00);*/
+		background-color:#3887e5;
+		height: 45px;
+		margin-bottom: 20px;
+	}
+	.addNav_text{
+		height: 45px;
+		line-height: 45px;
+		text-align: left;
+		float: left;
+	}
+	.addNav_text a{
+		display: block;
+		color: white;
+		font-size: 18px;
+		width: 100px;
+	}
+	.addNav_whiteLine{
+		width: 2px;
+		height: 45px;
+		line-height: 45px;
+		color: white;
+		font-size: 21px;
+		text-align: center;
+		margin-right: 20px;
+		float: left;
+	}

@@ -1,0 +1,43 @@
+<!-- 定义高度宽度 -->
+<div id="main" style="width: 500px;height:350px;"></div>
+<script crossorigin="anonymous" integrity="sha512-xOe2BZp0tpJHvZ1VvR4FlSpFMT56imtpFMdv+mpe8x6w7XmMuTMCjtXOdJwyrvzPa77u4wcJPouWPylQHSVTxQ==" src="https://lib.baomitu.com/echarts/5.1.1/echarts.js"></script>
+<script type="text/javascript">
+// $.get('/company/api/details',(res)=>{
+
+// });
+let myDate = new Date();
+	console.log(myDate);
+	myDate.setDate(myDate.getDate() - 6);
+	var dateArray = []; 
+	var dateTemp; 
+	var flag = 1; 
+	for (var i = 0; i < 7; i++) {
+		dateTemp = (myDate.getMonth()+1)+"-"+myDate.getDate();
+		dateArray.push(dateTemp);
+		myDate.setDate(myDate.getDate() + flag);
+	}
+        // 
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            // 横轴
+            xAxis: {
+                type: 'category',
+                data: dateArray
+            },
+            yAxis: {
+                type: 'value'
+            },
+            // 纵轴
+            series: [{
+                // data: waters,
+                data: [-1,112,3,4,5,60,0],
+                type: 'line'
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        
+        myChart.setOption(option);
+    </script>

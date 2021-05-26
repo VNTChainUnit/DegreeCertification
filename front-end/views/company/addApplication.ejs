@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>应用列表</title>
+  <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+<style>
+	.com_api_addapi{
+		width: 570px;
+		padding: 40px;
+		margin: auto;
+		/* background-color: #009E94; */
+	}
+	.com_api_addapi_form{
+		width: 100%;
+		align-items: center;
+        
+	}
+
+</style>
+
+
+</head>
+<body>
+
+    <div class=" com_api_addapi">
+        <div class="layui-form  com_api_addapi_form">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">应用名称</label>
+                <div class="layui-input-block">
+                    <input type="text"  name="name"  lay-verify="required"  lay-reqtext="应用名称不能为空"  placeholder="请输入应用名称" value="" class="layui-input">
+                    
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-top: 20px;">
+                <label class="layui-form-label required" >应用备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="comment" placeholder="请输入应用备注" value=""  class="layui-input" >
+                </div>
+            </div>
+            
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/layui/layui.js"></script>
+    <script>
+        layui.use(['form', 'table','layer'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                table = layui.table,
+                layer=layui.layer,
+                $ = layui.$;
+
+            /**
+             * 初始化表单，要加上，不然刷新部分组件可能会不加载
+             */
+            form.render();
+
+            // 当前弹出层，防止ID被覆盖
+            var parentIndex = layer.index;
+
+            //监听表单提交
+            form.on('submit(saveBtn)', function (data) {
+                console.log(data.field);
+                $.post('/company/api/application',data.field,(res)=>{
+                    console.log(res);
+                    if(res.code==0){
+                        layer.msg("添加成功！");
+                        layer.close(parentIndex);
+                    }
+                    else {
+                        layer.alert(res.msg)
+                    }
+                })
+                return false;
+            });
+
+        });
+    </script>
+
+
+</body>
+</html>

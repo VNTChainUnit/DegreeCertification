@@ -6,6 +6,8 @@ const utils = require('../service/utils');
 const applicationService=require('../service/applicationService')
 //身份验证
 router.use('/', (req, res, next) => {
+  req.session.username="company";
+  req.session.usertype=2;
   if (req.session.username!=null && req.session.usertype==2) {
     next()
   }
@@ -20,8 +22,13 @@ router.get('/', async function(req, res, next) {
   res.render('company/index.ejs',{name:company.name})
 });
 
-router.get('/application',(req,res,next)=>{
-  res.render('company/application.ejs')
+router.get('/application',async (req,res,next)=>{
+  let company=await companyService.getByUsername(req.session.username)
+  res.render('company/application.ejs',{name:company.name})
+})
+
+router.get('/addApplication',async (req,res,next)=>{
+  res.render('company/addApplication.ejs')
 })
 
 router.get('/application/detail/:applicationid',(req,res,next)=>{
@@ -58,8 +65,8 @@ router.post('/api/application',async(req,res,next)=>{
   let company=await companyService.getByUsername(req.session.username)
   let data=req.body;
   if(data.name!=null&&data.comment!=null){
-    applicationService.createApplication(company._id,body.name,body.comment);
-    res.json(utils.restful(-0,null,null));
+    applicationService.createApplication(company._id,data.name,data.comment);
+    res.json(utils.restful(0,null,null));
   }
   else res.json(utils.restful(-1,null,"parameters missing"));
 })
@@ -67,10 +74,10 @@ router.post('/api/application',async(req,res,next)=>{
 //switch the status
 router.post('/api/application/status',(req,res,next)=>{
     if(req.body.status==0){
-      applicationService.stopApplication(req.body.applicaitonid);
+      applicationService.stopApplication(req.body.applicationid);
     }
     else {
-      applicationService.openApplication(req.body.applicaitonid);
+      applicationService.openApplication(req.body.applicationid);
     }
     res.json(utils.restful(null,null,null))
 })

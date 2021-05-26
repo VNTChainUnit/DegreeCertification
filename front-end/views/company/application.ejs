@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>应用列表</title>
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/head.css" />
+  <link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
+  <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
+  <link href="/static/stylesheets/company.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+ <!-- 头 -->
+ <%-include("../head.ejs")%>
+
+ <section class="addNavBar">
+    <div class="addNav_bgc">
+        <div class="layui-container">
+            <div class="addNav_text"><a href="/company/">证书核验</a></div>
+            <div class="addNav_whiteLine">|</div>
+            <div class="addNav_text"><a href="/company/application">API&nbsp;管理</a></div>
+        </div>
+    </div>
+</section>
+ 
+ <section>
+ 	<div class="layui-container com_body">
+ 		<div class="layui-row com_body_row">
+ 			<div class="com_body_table">
+				
+				<div class="api_table_box">
+					<div class="api_table_title">应用列表</div>
+					<table class="layui-hide" id="APITable" lay-filter="currentTableFilter"></table>
+				</div>
+				
+			</div>
+				
+				<script type="text/html" id="toolbarDemo">
+				  <div class="layui-btn-container">
+				    <button class="layui-btn layui-btn-normal" lay-event="add">创建应用<tton>
+				  </div>
+				</script>
+
+ 				<script type="text/html" id="currentTableBar">
+					<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="records">调用记录</a>
+ 				</script>
+ 				 
+ 				  <!-- 选择是否开启 -->
+ 				<script type="text/html" id="switchTpl">
+ 				  <input type="checkbox" name="sex" value="{{d._id}}" lay-skin="switch" lay-text="开|关" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
+ 				</script>
+ 				
+                 <script type="text/html" id="showAndHideTpl">
+					<div lay-event="show" id="showLink">
+						<span>***</span>
+						<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" style="float:right;">显示</a>
+					</div>
+					<div lay-event="hide" id="hideLink" style="display: none;">
+						<span>{{d.secret}}</span>
+						<a class="layui-btn layui-btn-xs" style="float:right;">隐藏</a>
+					</div>
+				</script>
+
+				<script type="text/html" id="recordsTpl">
+				  // 调用记录
+				  
+				</script>
+				<button></button>
+ 			
+ 		</div>
+ 	</div>
+ </section>
+ 
+ <%-include("../foot.ejs")%>
+
+ 
+<script src="/static/layui/layui.js"></script>
+<!-- <script src="/static/layuimini/js/lay-module/echarts/echarts.js"></script> -->
+<script crossorigin="anonymous" integrity="sha512-xOe2BZp0tpJHvZ1VvR4FlSpFMT56imtpFMdv+mpe8x6w7XmMuTMCjtXOdJwyrvzPa77u4wcJPouWPylQHSVTxQ==" src="https://lib.baomitu.com/echarts/5.1.1/echarts.js"></script>
+<script>
+layui.use(['form', 'table','element'], function(){
+  var table = layui.table
+  ,form = layui.form
+  ,$ = layui.jquery;
+  
+  
+  table.render({
+    elem: '#APITable'
+   ,url:'/company/api/application'
+	,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+    ,cellMinWidth: 105
+    ,cols: [[
+	  ,{field:"_id",hide:true}
+      ,{title:"序号",type:'numbers'}
+      ,{field:'name', title:'应用名称', sort: true}
+      ,{field:'comment', title:'应用备注'}
+      ,{field:'createdAt', title:'创建时间',sort: true}
+      ,{field:'secret', title: '密钥',templet:'#showAndHideTpl'}
+      ,{field:'remainder', title:'剩余次数', sort: true,} 
+      ,{field:'status', title:'状态', templet: '#switchTpl'},
+	  {title: '详情', toolbar: '#currentTableBar'}
+    ]]
+	  ,even: true
+    ,page: true
+  });
+  
+  //监听状态操作
+  form.on('switch(status)', function(obj){
+        $.post('/company/api/application/status',{
+            applicationid:obj.value,
+            status:obj.elem.checked?1:0
+        })
+  });
+  
+  		  // 监听添加操作
+  table.on('toolbar(currentTableFilter)', function (obj) {
+      if (obj.event === 'add') {   
+        layer.open({
+			  type: 2
+			  , title: '添加应用'
+			  , area: ['700px', '400px'] //宽高
+			  , shadeClose: false
+			  , scrollbar: false // 父页面 滚动条 禁止
+			  , content: ['/company/addApplication','no']
+			  , cancel: function () {
+				  //右上角关闭回调
+			  }
+		  })
+
+      } 
+  });
+  
+  //监听行工具事件
+    table.on('tool(currentTableFilter)', function(obj){
+      var data = obj.data;
+       if(obj.event === 'records'){
+		  //弹出调用记录的折线图
+		  
+		  // 参考管理员管理公司和学校情况
+		  layer.open({
+			  type: 2
+			  , title: '调用记录'
+			  , area: ['530px', '450px'] //宽高
+			  , shadeClose: false
+			  , scrollbar: false // 父页面 滚动条 禁止
+			  , content: ['/company/application/detail/'+data._id,'no']
+			  , cancel: function () {
+				  //右上角关闭回调
+			  }
+		  })
+	  }
+      else  if(obj.event === 'show'){
+		  $("#showLink").hide();
+		  $("#hideLink").show();
+	 } 
+	  else if(obj.event === 'hide'){
+		  $("#showLink").show();
+		  $("#hideLink").hide();
+	  }
+    });
+  
+  
+});
+</script>
+</body>
+</html>
