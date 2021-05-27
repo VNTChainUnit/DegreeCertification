@@ -84,14 +84,40 @@ layui.use(['form', 'table','element'], function(){
   ,form = layui.form
   ,$ = layui.jquery;
   
-  
+  let data1= [{
+	  // "id":"1"
+      "name": "10001扫地僧人好多个2dsdfdfegrefsap111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111odsjjjjjjjjjjjjjjjjjjjjjjjjjjwoooajdishsjkd"
+      ,"comment": "杜甫法尔范仍然同还sap111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111odsjjjjjjjjjjjjjjjjjjjjjjjjjjwoo挺划算"
+      ,"time": "xianxisap111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111odsjjjjjjjjjjjjjjjjjjjjjjjjjjwoon@layui.com"
+      ,"secret": "男"
+      ,"records": "浙江杭州"
+      ,"remainder": "人生恰似一场fdffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff修行"
+      ,"status": "1"
+	  ,"ip": "192.168.0.8"
+      ,"logins": "108"
+      ,"joinTime": "2016-10-14"
+    },
+	{
+	  // "id":"2"
+	  "name": "10002"
+	  ,"comment": "杜甫"
+	  ,"time": "xianwdewergwedqwwwwwww111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxin@layui.com"
+	  ,"secret": "男"
+	  ,"records": "浙江杭州"
+	  ,"remainder": "人生恰似一场修行答非所问德维尔发热女"
+	  ,"status": "1"
+	  ,"ip": "192.168.0.8"
+	  ,"logins": "108"
+	  ,"joinTime": "2016-10-14"
+	}]
   table.render({
     elem: '#APITable'
    ,url:'/company/api/application'
 	,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+    ,cellMinWidth:105
     ,cols: [[
-      ,{title:"序号",type:'numbers'}
-	  ,{field:"_id",title:"APPID",width:"100px"}
+      ,{title:"序号",type:'numbers',width:"30px"}
+	  ,{field:"_id",title:"APPID"}
       ,{field:'name', title:'应用名称', sort: true}
       ,{field:'comment', title:'应用备注'}
       ,{field:'createdAt', title:'创建时间',sort: true}
@@ -100,6 +126,7 @@ layui.use(['form', 'table','element'], function(){
       ,{field:'status', title:'状态', templet: '#switchTpl'},
 	  {title: '详情', toolbar: '#currentTableBar'}
     ]]
+    // ,data:data1
     ,page: true
   });
   

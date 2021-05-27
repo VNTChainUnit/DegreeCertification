@@ -1,24 +1,28 @@
-<!-- 定义高度宽度 -->
-<div id="main" style="width: 500px;height:350px;"></div>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+        <div id="main" style="width: 500px;height:350px;"></div>
 <script crossorigin="anonymous" integrity="sha512-xOe2BZp0tpJHvZ1VvR4FlSpFMT56imtpFMdv+mpe8x6w7XmMuTMCjtXOdJwyrvzPa77u4wcJPouWPylQHSVTxQ==" src="https://lib.baomitu.com/echarts/5.1.1/echarts.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/javascript">
-// $.get('/company/api/details',(res)=>{
-
-// });
-let myDate = new Date();
-	console.log(myDate);
+    let url=document.location.href;
+    const applicationid=url.substring(url.lastIndexOf('/')+1,url.length);
+    $.get('/company/api/callrecord?applicationid='+applicationid,(res)=>{
+       if(res.code==0){
+        let myDate = new Date();
 	myDate.setDate(myDate.getDate() - 6);
 	var dateArray = []; 
 	var dateTemp; 
-	var flag = 1; 
 	for (var i = 0; i < 7; i++) {
 		dateTemp = (myDate.getMonth()+1)+"-"+myDate.getDate();
 		dateArray.push(dateTemp);
-		myDate.setDate(myDate.getDate() + flag);
+		myDate.setDate(myDate.getDate() + 1);
 	}
-        // 
         var myChart = echarts.init(document.getElementById('main'));
-
         // 指定图表的配置项和数据
         var option = {
             // 横轴
@@ -32,12 +36,15 @@ let myDate = new Date();
             // 纵轴
             series: [{
                 // data: waters,
-                data: [-1,112,3,4,5,60,0],
+                data:res.data,
                 type: 'line'
             }]
         };
-
         // 使用刚指定的配置项和数据显示图表。
-        
         myChart.setOption(option);
+       }
+    });
+    
     </script>
+	</body>
+    </html>

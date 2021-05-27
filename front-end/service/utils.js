@@ -52,11 +52,22 @@ function getClientIP(req) {
         req.connection.socket.remoteAddress;
 }
 
+function getDateStr(date){
+    function pad(n) {return n<10 ? "0"+n : n}
+    d=date
+    dash="-"
+    colon=":"
+    return d.getFullYear()+dash+
+    pad(d.getMonth()+1)+dash+
+    pad(d.getDate());
+  }
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
     checkPassword:checkPassword,
     aesEncrypt:aesEncrypt,
     aesDecrypt:aesDecrypt,
-    getClientIP:getClientIP
+    getClientIP:getClientIP,
+    getDateStr:getDateStr
 }

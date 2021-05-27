@@ -3,6 +3,7 @@ const Application=require('../models/application')
 const CallRecord=require('../models/callRecord')
 const random=require("string-random");
 const Redis=require('./redisService')
+const mongoose=require('mongoose')
 
 async function createSecret(){
     let secret=random(16);
@@ -47,14 +48,35 @@ async function getRecord(applicationid){
     return await CallRecord.find({application_id:applicationid});
 }
 
+function sortByDate(a, b)
+{
+return a._id > b._id;
+}
+
 async function get7daysRecord(applicationid){
     let lastweek=new Date();
+    lastweek.setHours(0);
+    lastweek.setMinutes(0);
+    lastweek.setSeconds(0);
+    lastweek.setMilliseconds(0);
     lastweek.setDate(lastweek.getDate()-6);
-    let result=await Application.aggregate([
-        {$match:{application_id:applicationid,"createdAt":{$gte:lastweek}}},
-        {$group:{_id:{createdAt:"$createdAt"},count:{$sum:1}}}
+    let result=await CallRecord.aggregate([
+        {"$match":{application_id:mongoose.Types.ObjectId(applicationid),createdAt:{$gte:lastweek}}},
+        {"$project" : { day : {$substr: ["$createdAt", 0, 10] }}},
+        {"$group":{_id:"$day",count:{$sum:1}}}
     ])
-    return result;
+    result.sort(sortByDate);
+    let res=[0,0,0,0,0,0,0]
+    let th=0;
+    let nowdate=lastweek;
+    for(let i=0;i<7&&th<result.length;i++){
+        const datestr=utils.getDateStr(nowdate)
+        if(datestr==result[th]._id){
+            res[i]=result[th++].count;
+        }
+        nowdate.setDate(nowdate.getDate()+1);
+    }
+    return res;
 }
 
 async function checkApplication(applicationid,secret){
