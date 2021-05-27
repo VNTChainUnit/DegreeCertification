@@ -53,7 +53,7 @@
  				  <input type="checkbox" name="sex" value="{{d._id}}" lay-skin="switch" lay-text="开|关" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
  				</script>
  				
-                 <script type="text/html" id="showAndHideTpl">
+                 <script type="text/html" id="showAndHideTpl" >
                     <div id="showLink{{d._id}}">
                         <span>***</span>
                         <input type="submit" class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show{{d._id}}" value="显示" name="{{d._id}}" style="float:right;" lay-filter="showBtn" id="showbutton{{d._id}}"/>
@@ -141,11 +141,10 @@ layui.use(['form', 'table','element'], function(){
     table.on('tool(currentTableFilter)', function(obj){
       var data = obj.data;
       var event = obj.event;
-	  var valueShow = document.getElementById("showbutton"+data._id).name;
-	  var valueHide = document.getElementById("hidebutton"+data._id).name;
-	
-	//   console.log(document.getElementById("showbutton"+data._id));
-		if(valueShow==data._id || valueHide==data._id){
+        if(event.startsWith('show')||event.startsWith('hide')){
+        var valueShow = document.getElementById("showbutton"+data._id).name;
+        var valueHide = document.getElementById("hidebutton"+data._id).name;
+            if(valueShow==data._id || valueHide==data._id){
 			switch(event){
 			case "show"+data._id:
 				$("#showLink"+data._id).hide();
@@ -159,8 +158,10 @@ layui.use(['form', 'table','element'], function(){
 				valueShow = "";
 				valueHide = "";
 				break;
-			}
-		}
+			    }
+		    }
+        }
+		
         else if(obj.event === 'records'){
 		  //弹出调用记录的折线图
 		  
@@ -177,14 +178,7 @@ layui.use(['form', 'table','element'], function(){
 			  }
 		  })
 	  }
-      else  if(obj.event === 'show'){
-		  $("#showLink").hide();
-		  $("#hideLink").show();
-	 } 
-	  else if(obj.event === 'hide'){
-		  $("#showLink").show();
-		  $("#hideLink").hide();
-	  }
+      
     });
   
   

@@ -4,6 +4,8 @@ module.exports={
     vnt_contractAddress:"",//set your contract address here
     mongodb_url:"", //set your mongodb url here
     miniprogram_appid:"",//your appid in mini-program
-    miniprogram_secret:"",//your secret in mini-program
+    miniprogram_secret:"",//your secret in mini-program,
+    redis_port:,//your redise server port
+    redis_url:""//your redis server
 }
 //after this your should chanege this file to "private.js"
