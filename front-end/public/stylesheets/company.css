@@ -91,9 +91,9 @@ body{
 		background-color: #1E9FFF;
 	}
 	.api_table_box{
-		margin: 50px 100px;
+		margin: 0px 10px;
 		padding: 10px;
-		background-color: white;
+		/* background-color: white; */
 	}
 	.api_table_title{
 		font-size: 17px;
@@ -129,4 +129,18 @@ body{
 		text-align: center;
 		margin-right: 20px;
 		float: left;
+	}
+
+
+	.com_body_image1{
+		width: 100%;
+		height: 250px;
+		line-height: 250px;
+		/* align-items: center; */
+		text-align: center;
+		margin: auto;
+		
+	}
+	.com_body_image1 img{
+		width: 400px;
 	}
