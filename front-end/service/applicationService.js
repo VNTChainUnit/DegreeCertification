@@ -15,7 +15,7 @@ async function createSecret(){
 
 async function createApplication(companyid,name,comment){
     const secret=await createSecret()
-    var applicaton=new Application({
+    let applicaton=new Application({
         name:name,
         company_id:companyid,
         comment:comment,
@@ -87,10 +87,10 @@ async function loginApplication(applicationid,secret){
         return null;
     }
     var session=random()
-    while(Redis.get(session)!=null){
+    while(await Redis.get(session)!=null){
         session=random()
     }
-    Redis.set(session,applicationid);
+    await Redis.set(session,applicationid);
     Redis.expire(session,3600);
     return session;
 }
@@ -99,7 +99,7 @@ async function callAPI(applicationid,ip){
    var application=await  Application.findById(applicationid);
    if(application.remainder>0){
         application.remainder--;
-        var record=new CallRecord({
+        let record=new CallRecord({
             application_id:applicationid,
             ip:ip,
             type:"核验调用"

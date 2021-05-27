@@ -46,6 +46,7 @@ router.post('/api/checkCertificate',(req,res,next)=>{
     res.json(utils.restful(-1,null,"证书不正确"))
   }
 })
+
 //get lsit
 router.get('/api/application',async(req,res,next)=>{
   let company=await companyService.getByUsername(req.session.username)
@@ -54,9 +55,10 @@ router.get('/api/application',async(req,res,next)=>{
 })
 
 //get callrecords
-router.get('api/callrecord',(req,res,next)=>{
+router.get('/api/callrecord',async (req,res,next)=>{
   let applicaitonid=req.query.applicationid
-  if(applicaitonid) res.json(utils.restful(0,applicationService.getRecord(applicaitonid),null));
+  let data=await applicationService.get7daysRecord(applicaitonid)
+  if(applicaitonid) res.json(utils.restful(0,data ,null));
   else res.json(utils.restful(-1,null,"applicationid missing"));
 })
 

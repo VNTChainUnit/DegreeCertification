@@ -89,10 +89,9 @@ layui.use(['form', 'table','element'], function(){
     elem: '#APITable'
    ,url:'/company/api/application'
 	,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-    ,cellMinWidth: 105
     ,cols: [[
-	  ,{field:"_id",hide:true}
       ,{title:"序号",type:'numbers'}
+	  ,{field:"_id",title:"APPID",width:"100px"}
       ,{field:'name', title:'应用名称', sort: true}
       ,{field:'comment', title:'应用备注'}
       ,{field:'createdAt', title:'创建时间',sort: true}
@@ -101,7 +100,6 @@ layui.use(['form', 'table','element'], function(){
       ,{field:'status', title:'状态', templet: '#switchTpl'},
 	  {title: '详情', toolbar: '#currentTableBar'}
     ]]
-	  ,even: true
     ,page: true
   });
   
