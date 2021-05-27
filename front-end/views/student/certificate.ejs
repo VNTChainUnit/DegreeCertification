@@ -27,7 +27,7 @@
 					<table class="layui-table cer_table" cellspacing="0" cellpadding="0">
 					  <colgroup>
 						  <col width="50">
-						  <col width="50">
+						  <col width="120">
 						  <col width="200">
 						  <col width="50">
 					  </colgroup>
@@ -90,33 +90,41 @@
 						  <td><%= certificate.certificatenumber %></td>
 						  <td></td>
 						</tr>
-						<tr>
-						  <td></td>
-						  <td class="cer_table_td_title">
-							  <p style="text-align: center;	">扫码查验</p>
-							  <div class="cer_table_QRcode">
-								<img src="/student/qrcode" style="height: 90px;" />
-							  </div>
-							</td>
-						  <td>
-							  <div style="float: right;">
-								  <img src="/static/images/seal.png"  width="200" height="100" />
-							  </div>
-						  </td>
-						  <td></td>
-						</tr>
 
 						<!-- 说明 -->
 						<tr>
 							<td></td>
-							<td colspan="2">此证书对应存证内容已加盖可信时间戳，并在信诣学位学历认证管理系统及杭州维特链科技有限公司提供的维特链上同步存证。</td>
+							<td colspan="2">此证书对应存证内容已加盖可信时间戳，并在信诣学位学历认证管理系统及杭州维特链科技有限公司提供的维特链上同步存证。 <div style="float: right;">
+							  	<!-- <img src="./img/seal.png"  width="200" height="100" /> -->
+								<div class="seal-result seal-result-fail ">
+									<canvas id="canvas" width="140" height="140"></canvas>
+								</div>
+							  </div>
+							</td>
 							<td></td>
 						  </tr>
+						  <tr>
+						  	<td></td>
+						  	<td colspan="2">
+								<div  class="cer_table_td_title">
+								  <!-- <p style="text-align: center;	">扫码查验</p> -->
+								  <div class="cer_table_QRcode">
+									  <div class="cer_table_codetext">方式一：<br>扫码直接核验</div>
+									<img src="/student/qrcode" style="height: 90px;" />
+								  </div>
+								  <div class="cer_table_QRcode">
+									  <div class="cer_table_codetext">方式二：<br>官方小程序</div>
+									<img src="/static/images/small_program_code.png" style="height: 90px;" />
+								  </div>
+							  </div></td>
+						  	<td></td>
+						    </tr>
 
 						<!-- 区块链值 -->
 						<tr>
 							<td></td>
 						  <td colspan="2">
+							 
 							  <div  style="font-size: 12px;">
 								<div>区块高度：<%= certificate.blockNumber %></div>
 								  <div >
@@ -217,5 +225,82 @@
 		});
         
 	</script>
+
+	<script name="自定义印章">
+ 
+	   var canvas = document.getElementById("canvas");
+	   var context = canvas.getContext('2d');
+ 
+	   var text = "已存证";
+	   var companyName = "信诣学位学历认证管理系统";
+ 
+	   // 绘制印章边框
+	   var width = canvas.width / 2;
+	   var height = canvas.height / 2;
+	   context.lineWidth = 5;
+	   context.strokeStyle = "#f00";
+	   context.beginPath();
+	   context.arc(width, height, 70, 0, Math.PI * 2);//宽、高、半径
+	   context.stroke();
+ 
+	   //画五角星
+	   create5star(context,width,height,20,"#f00",0);
+ 
+		// 绘制印章名称
+		context.font = '18px 宋体';
+		context.textBaseline = 'middle';//设置文本的垂直对齐方式
+		context.textAlign = 'center'; //设置文本的水平对对齐方式
+		context.lineWidth=1;
+		context.strokeStyle = '#f00';
+		context.strokeText(text,width,height+50);
+ 
+		// 绘制印章单位  
+		context.translate(width,height);// 平移到此位置,
+		context.font = '20px 宋体';
+		var  count = companyName.length;// 字数
+		var  angle = 4*Math.PI/(3*(count - 1));// 字间角度 
+		var chars = companyName.split("");
+		var c;
+	   for (var i = 0; i < count; i++) {
+		   c = chars[i];// 需要绘制的字符   
+		   if (i == 0) {
+			   context.rotate(5 * Math.PI / 6);
+ 
+		   } else{
+			   context.rotate(angle);
+		   }
+ 
+		   context.save();
+		   context.translate(55	, 0);// 平移到此位置,此时字和x轴垂直，公司名称和最外圈的距离
+		   context.rotate(Math.PI / 2);// 旋转90度,让字平行于x轴
+		   context.strokeText(c, 0, 0);// 此点为字的中心点
+		   context.restore();
+	   }
+ 
+	   //绘制五角星
+		function create5star(context, sx, sy, radius, color, rotato) {
+			context.save();
+			context.fillStyle = color;
+			context.translate(sx, sy);//移动坐标原点
+			context.rotate(Math.PI + rotato);//旋转
+			context.beginPath();//创建路径
+			var x = Math.sin(0);
+			var y = Math.cos(0);
+			var dig = Math.PI / 5 * 4;
+			for (var i = 0; i < 5; i++) {//画五角星的五条边
+				var x = Math.sin(i * dig);
+				var y = Math.cos(i * dig);
+				context.lineTo(x * radius, y * radius);
+			}
+			context.closePath();
+			context.stroke();
+			context.fill();
+			context.restore();
+		}
+ 
+</script>
+	
+
+
 </body>
 </html>

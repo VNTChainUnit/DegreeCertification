@@ -29,9 +29,11 @@ margin-bottom: 0;
 	background-repeat: no-repeat;
 	background-size: 100% 100%; */
 	padding: 20px;
-	width: auto;
+	width: 40%;
+	float: left;
 	text-align: center;
-	height: 50px;
+	font-weight: 500;
+	height: 120px;
 }
 .certificate_generate_div{
 	width: 130px;
@@ -40,4 +42,38 @@ margin-bottom: 0;
 	border-radius: 20px;
 	height: 40px;
 	text-align: center;
+}
+.cer_table_codetext{
+	padding-bottom: 5px;
+}
+
+
+.seal-content{
+	width: 300px;
+	min-height: 60px;
+	vertical-align: bottom;
+	word-wrap: break-word;
+	position: relative;
+}
+
+.seal-result{
+	width: 140px;
+	height: 140px;
+	transform: rotate(0deg);
+	border: solid 2px green;
+	border-radius: 100%;
+	text-align: center;
+	color: green;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 60px;
+	right: 5px;
+	bottom: 0px;
+	position: absolute;
+	background-color: rgba(255,255,255,0.1)
+}
+
+.seal-result-fail{
+	border-color: red;
+	color: red;
 }
