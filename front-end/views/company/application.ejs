@@ -52,15 +52,15 @@
  				</script>
  				
                  <script type="text/html" id="showAndHideTpl">
-					<div lay-event="show" id="showLink">
-						<span>***</span>
-						<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" style="float:right;">显示</a>
-					</div>
-					<div lay-event="hide" id="hideLink" style="display: none;">
-						<span>{{d.secret}}</span>
-						<a class="layui-btn layui-btn-xs" style="float:right;">隐藏</a>
-					</div>
-				</script>
+                    <div id="showLink{{d._id}}">
+                        <span>***</span>
+                        <input type="submit" class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="show{{d._id}}" value="显示" name="{{d._id}}" style="float:right;" lay-filter="showBtn" id="showbutton{{d._id}}"/>
+                    </div>
+                    <div id="hideLink{{d._id}}" style="display: none;">
+                        <span>{{d.secret}}</span>
+                        <input type="submit" class="layui-btn layui-btn-xs" lay-event="hide{{d._id}}" value="隐藏" name="{{d._id}}" style="float:right;" lay-filter="hideBtn" id="hidebutton{{d._id}}"/>
+                    </div>
+                </script>
 
 				<script type="text/html" id="recordsTpl">
 				  // 调用记录
@@ -84,44 +84,23 @@ layui.use(['form', 'table','element'], function(){
   ,form = layui.form
   ,$ = layui.jquery;
   
-  let data1= [{
-	  // "id":"1"
-      "name": "10001扫地僧人好多个2dsdfdfegrefsap111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111odsjjjjjjjjjjjjjjjjjjjjjjjjjjwoooajdishsjkd"
-      ,"comment": "杜甫法尔范仍然同还sap111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111odsjjjjjjjjjjjjjjjjjjjjjjjjjjwoo挺划算"
-      ,"time": "xianxisap111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111odsjjjjjjjjjjjjjjjjjjjjjjjjjjwoon@layui.com"
-      ,"secret": "男"
-      ,"records": "浙江杭州"
-      ,"remainder": "人生恰似一场fdffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff修行"
-      ,"status": "1"
-	  ,"ip": "192.168.0.8"
-      ,"logins": "108"
-      ,"joinTime": "2016-10-14"
-    },
-	{
-	  // "id":"2"
-	  "name": "10002"
-	  ,"comment": "杜甫"
-	  ,"time": "xianwdewergwedqwwwwwww111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxin@layui.com"
-	  ,"secret": "男"
-	  ,"records": "浙江杭州"
-	  ,"remainder": "人生恰似一场修行答非所问德维尔发热女"
-	  ,"status": "1"
-	  ,"ip": "192.168.0.8"
-	  ,"logins": "108"
-	  ,"joinTime": "2016-10-14"
-	}]
+
   table.render({
     elem: '#APITable'
    ,url:'/company/api/application'
 	,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-    ,cellMinWidth:105
-    ,cols: [[
-      ,{title:"序号",type:'numbers',width:"30px"}
+    ,cellMinWidth:80
+    ,cols: [[ 
+        {hide:true}
+      ,{title:"序号",type:'numbers'}
 	  ,{field:"_id",title:"APPID"}
       ,{field:'name', title:'应用名称', sort: true}
       ,{field:'comment', title:'应用备注'}
-      ,{field:'createdAt', title:'创建时间',sort: true}
-      ,{field:'secret', title: '密钥',templet:'#showAndHideTpl'}
+      ,{field:'createdAt', width:190,title:'创建时间',sort: true,templet:(e)=>{
+          var date=e.createdAt
+        return new Date(date).toLocaleString();
+      }}
+      ,{field:'secret', title: '密钥',templet:'#showAndHideTpl',width:215}
       ,{field:'remainder', title:'剩余次数', sort: true,} 
       ,{field:'status', title:'状态', templet: '#switchTpl'},
 	  {title: '详情', toolbar: '#currentTableBar'}
@@ -159,7 +138,28 @@ layui.use(['form', 'table','element'], function(){
   //监听行工具事件
     table.on('tool(currentTableFilter)', function(obj){
       var data = obj.data;
-       if(obj.event === 'records'){
+      var event = obj.event;
+	  var valueShow = document.getElementById("showbutton"+data._id).name;
+	  var valueHide = document.getElementById("hidebutton"+data._id).name;
+	
+	//   console.log(document.getElementById("showbutton"+data._id));
+		if(valueShow==data._id || valueHide==data._id){
+			switch(event){
+			case "show"+data._id:
+				$("#showLink"+data._id).hide();
+		  		$("#hideLink"+data._id).show();
+				valueShow = "";
+				valueHide = "";
+				break;
+			case "hide"+data._id:
+				$("#showLink"+data._id).show();
+		  		$("#hideLink"+data._id).hide();
+				valueShow = "";
+				valueHide = "";
+				break;
+			}
+		}
+        else if(obj.event === 'records'){
 		  //弹出调用记录的折线图
 		  
 		  // 参考管理员管理公司和学校情况
