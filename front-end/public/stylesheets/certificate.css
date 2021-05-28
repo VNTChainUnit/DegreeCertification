@@ -57,23 +57,19 @@ margin-bottom: 0;
 }
 
 .seal-result{
-	width: 140px;
-	height: 140px;
+	/* width: 140px;
+	height: 140px; */
 	transform: rotate(0deg);
-	border: solid 2px green;
+	/* border: solid 2px green; */
 	border-radius: 100%;
 	text-align: center;
-	color: green;
+	/* color: green; */
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 60px;
-	right: 5px;
+	right: 25px;
 	bottom: 0px;
 	position: absolute;
 	background-color: rgba(255,255,255,0.1)
 }
 
-.seal-result-fail{
-	border-color: red;
-	color: red;
-}
