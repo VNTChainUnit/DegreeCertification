@@ -46,6 +46,7 @@
 
  				<script type="text/html" id="currentTableBar">
 					<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="records">调用记录</a>
+          <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="buy">购买</a>
  				</script>
  				 
  				  <!-- 选择是否开启 -->
@@ -86,7 +87,31 @@ layui.use(['form', 'table','element'], function(){
   ,form = layui.form
   ,$ = layui.jquery;
   
+	//用户退出
+	$(".login-out").click(function(){
+		layer.confirm("确认退出系统吗？",{icon:3, title: "提示"}, function(index){
+			//关闭询问框
+			layer.close(index);
+			//跳转
+			window.location.href = "/logout";
+		})
+	});
 
+ //修改密码
+ $("#changePasswordBtn").click(function(){
+		$.get('/changePassword',(res)=>{
+			var index = layer.open({
+      title: '修改密码',
+      type: 1,
+      shade: 0.2,
+      maxmin:true,
+      shadeClose: true,
+      area:['500px','400px'],
+      content:res
+  	});
+  });
+});
+ 
   table.render({
     elem: '#APITable'
    ,url:'/company/api/application'
@@ -105,7 +130,7 @@ layui.use(['form', 'table','element'], function(){
       ,{field:'secret', title: '密钥',templet:'#showAndHideTpl',width:215}
       ,{field:'remainder', title:'剩余次数', sort: true,} 
       ,{field:'status', title:'状态', templet: '#switchTpl'},
-	  {title: '详情', toolbar: '#currentTableBar'}
+	  {title: '操作', toolbar: '#currentTableBar' ,width:170}
     ]]
     // ,data:data1
     ,page: true
@@ -178,11 +203,50 @@ layui.use(['form', 'table','element'], function(){
 			  }
 		  })
 	  }
-      
+    else if(obj.event === 'buy'){
+		  //弹出调用记录的折线图
+		  
+		  // 参考管理员管理公司和学校情况
+		  layer.open({
+			  type: 1
+			  , title: '购买次数'
+			  , area: ['450px', '550px'] //宽高
+			  , shadeClose: false
+			  , scrollbar: false // 父页面 滚动条 禁止
+			  , content:$('#buylayer')
+			  , cancel: function () {
+				  //右上角关闭回调
+			  }
+		  })
+	  }
     });
   
   
 });
 </script>
 </body>
+<style>
+   .content-center{
+     text-align: center;
+   }
+</style>
+<div style="display: none;" id='buylayer'>
+  <div class="layui-row content-center" style="margin: 10px;">
+    <img src="/static/images/pay.jpg" width="300px" />
+  </div>
+  <div class="layui-row content-center" style="margin:8px 0px;">
+    <span style="font-size:larger;">定价</span>
+  </div>
+  <div class="layui-row content-center" style="margin:8px 0px;">
+    <div class="layui-col-md4 content-center" >
+      30元/100次
+    </div>
+    <div class="layui-col-md4 content-center">
+     200元/1000次
+    </div>
+    <div class="layui-col-md4 content-center">
+      1000元/10000次
+    </div>
+  </div>
+</div>
 </html>
