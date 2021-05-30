@@ -84,63 +84,78 @@ body{
 	margin-bottom: 20px;
 }
 .com_body_table{
-	padding-top: 40px;
+	padding-top: 10px;
+	padding-bottom: 30px;
 	/* padding-left: 50px; */
 }
 .layui-laypage .layui-laypage-curr .layui-laypage-em{
-		background-color: #1E9FFF;
-	}
-	.api_table_box{
-		margin: 0px 10px;
-		padding: 10px;
-		/* background-color: white; */
-	}
-	.api_table_title{
-		font-size: 17px;
-		padding: 5px;
-		border-bottom: 1px solid gainsboro;
-	}
+	background-color: #1E9FFF;
+}
+.api_table_box{
+	margin: 0px 10px;
+	border: 1px solid rgb(224, 224, 224);
+	padding: 10px;
+	/* background-color: white; */
+}
+.api_table_title{
+	font-size: 17px;
+	padding: 5px;
+	border-bottom: 1px solid rgb(233, 232, 232);
+}
 	
 	
 .addNav_bgc{
 /*		background-color:rgba(170,170,174,1.00);*/
-		background-color:#3887e5;
-		height: 45px;
-		margin-bottom: 20px;
-	}
-	.addNav_text{
-		height: 45px;
-		line-height: 45px;
-		text-align: left;
-		float: left;
-	}
-	.addNav_text a{
-		display: block;
-		color: white;
-		font-size: 18px;
-		width: 100px;
-	}
-	.addNav_whiteLine{
-		width: 2px;
-		height: 45px;
-		line-height: 45px;
-		color: white;
-		font-size: 21px;
-		text-align: center;
-		margin-right: 20px;
-		float: left;
-	}
+	background-color:#3887e5;
+	height: 45px;
+	margin-bottom: 20px;
+}
+.addNav_text{
+	height: 45px;
+	line-height: 45px;
+	text-align: left;
+	float: left;
+}
+.addNav_text a{
+	display: block;
+	color: white;
+	font-size: 18px;
+	width: 100px;
+}
+.addNav_whiteLine{
+	width: 2px;
+	height: 45px;
+	line-height: 45px;
+	color: white;
+	font-size: 21px;
+	text-align: center;
+	margin-right: 20px;
+	float: left;
+}
 
 
-	.com_body_image1{
-		width: 100%;
-		height: 250px;
-		line-height: 250px;
-		/* align-items: center; */
-		text-align: center;
-		margin: auto;
-		
-	}
-	.com_body_image1 img{
-		width: 400px;
-	}
+.com_body_image1{
+	height: 80px;
+	width: auto;
+	line-height: 80px;
+	text-align: right;
+	/* float: right; */
+	
+}
+.com_body_image1 img{
+	width: 150px;
+}
+.applicatin_introduce{
+	width:95%; 
+	padding-top: 40px;
+	padding-bottom: 10px;
+	margin: auto;
+	font-size: larger;
+	margin-bottom: 30px;
+}
+.applicatin_introduce a{
+	color: #1E9FFF;
+}
+.company_dcoment{
+	margin-top: 10px;
+}
