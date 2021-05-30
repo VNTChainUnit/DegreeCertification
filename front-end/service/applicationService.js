@@ -16,12 +16,16 @@ async function createSecret(){
 
 async function createApplication(companyid,name,comment){
     const secret=await createSecret()
+    let remainder=10;
+    if((await Application.findOne({company_id:companyid}))!=null){
+        remainder=0;
+    }
     let applicaton=new Application({
         name:name,
         company_id:companyid,
         comment:comment,
         secret:secret,
-        remainder:10,
+        remainder:remainder,
         status:1
     })
     applicaton.save();

@@ -167,6 +167,9 @@ layui.use(['form', 'table','element'], function(){
 			  , cancel: function () {
 				  //右上角关闭回调
 			  }
+        ,end:function(){
+          table.reload('APITable')
+        }
 		  })
 
       } 
