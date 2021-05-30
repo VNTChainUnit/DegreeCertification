@@ -54,7 +54,6 @@
             var form = layui.form,
                 layer = layui.layer,
                 table = layui.table,
-                layer=layui.layer,
                 $ = layui.$;
 
             /**
@@ -63,22 +62,20 @@
             form.render();
 
             // 当前弹出层，防止ID被覆盖
-            var parentIndex = layer.index;
+            let parentIndex = parent.layer.getFrameIndex(window.name)
 
             //监听表单提交
             form.on('submit(saveBtn)', function (data) {
-                console.log(data.field);
                 $.post('/company/api/application',data.field,(res)=>{
-                    console.log(res);
                     if(res.code==0){
                         layer.msg("添加成功！");
-                        layer.close(parentIndex);
+                        setTimeout(()=>{parent.layer.close(parentIndex);},1000)
                     }
                     else {
                         layer.alert(res.msg)
                     }
-                })
                 return false;
+                });
             });
 
         });
