@@ -62,6 +62,31 @@ function getDateStr(date){
     pad(d.getDate());
   }
 
+  function mapUncheckedCert(excelData,school){
+        const  data=excelData[0].data;
+        //从第九号行开始
+        let certlist=[];
+        data.forEach((item, index) => {
+            if (index <= 7) {
+              // 去除前8行
+              return;
+            } else {
+              certlist.push({
+                certificatenumber: item[0],
+                name: item[1],
+                studentnumber: item[2],
+                idnumber: item[3],
+                major: item[4],
+                degreetype: item[5],
+                graduationdate: item[6],
+                school:school.name,
+                school_id:school._id
+              });
+            }
+        });
+        return certlist;
+  }
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -69,5 +94,6 @@ module.exports={
     aesEncrypt:aesEncrypt,
     aesDecrypt:aesDecrypt,
     getClientIP:getClientIP,
-    getDateStr:getDateStr
+    getDateStr:getDateStr,
+    mapUncheckedCert:mapUncheckedCert
 }
