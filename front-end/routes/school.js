@@ -7,8 +7,42 @@ const student = require('../models/student');
 const blockchain = require('../service/blockchain/main')
 const certificateService=require('../service/certificateService')
 const certificateCheckService=require('../service/certificateCheckService');
+var multer  = require('multer')
+var fs = require('fs');
+const xlsx = require('node-xlsx')
+var path=require('path');
+const certificateCheckService = require('../service/certificateCheckService');
+
+//***********文件上传配置begin
+var createFolder = function(folder){
+  try{
+      fs.accessSync(folder); 
+  }catch(e){
+      fs.mkdirSync(folder);
+  }  
+};
+
+var uploadFolder = './upload/excel';
+
+createFolder(uploadFolder);
+// 通过 filename 属性定制
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, uploadFolder);    // 保存的路径，备注：需要自己创建
+  },
+  filename: function (req, file, cb) {
+      // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
+      cb(null, Date.now()+"."+"xls");  
+  }
+});
+
+var upload = multer({ storage: storage });
+//***********文件上传配置end
+
 //身份验证
 router.use('/', (req, res, next) => {
+  req.session.username="csu";
+  req.session.usertype=3;
   if (req.session.username!=null && req.session.usertype==3) {
     next()
   }
@@ -79,4 +113,20 @@ router.post('/api/certificate',async(req,res,next)=>{
   res.json(utils.restful(null,null,null))
 })
 
+<<<<<<< HEAD
+=======
+router.post('/api/uploadManyCertificate',upload.single('file'),async function(req,res,next){
+  var file = req.file;
+  let filePath=path.join(__dirname,'../upload/excel/'+file.filename)
+  let sheetList = xlsx.parse(filePath);
+  //第九行开始取数据，证书编号、姓名、学号、身份证号、专业名称、学位类别、毕业日期
+  if(sheetList[1]==null){
+    //TODO 返回错误
+  }
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  let certificateChecks = utils.mapUncheckedCert(sheetList,school);
+  certificateCheckService.addManyUncheckedCertificates(certificateChecks);
+  //TODO 返回
+})
+>>>>>>> 965e57858df36a93954b89a3a3b6ff4b6fa5e374
 module.exports = router;
