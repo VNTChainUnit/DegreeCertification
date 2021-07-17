@@ -10,7 +10,7 @@ const blockchain=require('../service/blockchain/main');
 const  applicationService=require('../service/applicationService')
 
 /**
- * 获取微信二维码（唯一）
+ * 微信登陆获取openid
  */
 router.get('/student/login/:code',async (req,res,next)=>{
     var url='https://api.weixin.qq.com/sns/jscode2session?grant_type=authorization_code&appid=';

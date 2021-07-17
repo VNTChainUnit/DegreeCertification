@@ -6,7 +6,7 @@ const studentService=require('../service/studentService')
 const blockchain=require('../service/blockchain/main')
 const certificateService=require('../service/certificateService')
 const certificateCheckService=require('../service/certificateCheckService');
-
+const WxService=require('../service/wxService');
 //身份验证
 router.use('/', (req, res, next) => {
   if (req.session.username!=null && req.session.usertype==1) {
@@ -49,6 +49,9 @@ router.post('/getCertificate',async (req,res,next)=>{
   }
 })
 
+/**
+ * 生成普通校验码
+ */
 router.get('/qrcode', async(req, res, next)=> {
   let student=await studentService.getByUsername(req.session.username)
   let text= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
@@ -60,6 +63,15 @@ router.get('/qrcode', async(req, res, next)=> {
     res.writeHead(414, {'Content-Type': 'text/html'});
     res.end('<h1>Error</h1>');
   }
+})
+
+/**
+ * 生成微信二维码
+ */
+router.get('/wxQrcode', async(req, res, next)=> {
+  // TODE: 获取加密内容，发送微信端获取
+  res.writeHead(200, {'Content-Type': 'image/png'});
+  img.pipe(res);
 })
 
 //审核证书通过
