@@ -203,14 +203,11 @@ router.get('/companyapply',(req,res,next)=>{
   res.render('companyRegister')
 })
 
+
 router.get('/check/:code',async (req,res,next)=>{
   try{
     let encryptcode =req.params['code']
-    let code=utils.aesDecrypt(encryptcode)
-    let codearr=code.split('|')
-    let idnumber=codearr[0]
-    let certificatenumber=codearr[1]
-    let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
+    let certificate = await utils.getCertificateByEncryptContent(certificate);
     if(certificate){
       res.render('certificate',{certificate,certificate})
     }

@@ -1,7 +1,7 @@
 const md5=require('md5')
 const secret="GgX5jYPe"
 const crypto = require('crypto');
-
+const Config=require('../config')
 
 function aesEncrypt(data) {
     const cipher = crypto.createCipher('aes192', secret);
@@ -62,6 +62,23 @@ function getDateStr(date){
     pad(d.getDate());
   }
 
+  //从加密信息获取证书
+  async function getCertificateByEncryptContent(content){
+    let code=aesDecrypt(content)
+    let codearr=code.split('|')
+    let idnumber=codearr[0]
+    let certificatenumber=codearr[1]
+    let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
+  }
+
+  function encryptCertificate(certificateNumber,idnumber){
+    const baseurl=Config.donainname+":3000/check/"
+    var code=idnumber+"|"+certificateNumber
+    var encryptcode=utils.aesEncrypt(code)
+    var text = baseurl+encryptcode
+    return text;
+  }
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -69,5 +86,7 @@ module.exports={
     aesEncrypt:aesEncrypt,
     aesDecrypt:aesDecrypt,
     getClientIP:getClientIP,
-    getDateStr:getDateStr
+    getDateStr:getDateStr,
+    getCertificateByEncryptContent:getCertificateByEncryptContent,
+    encryptCertificate:encryptCertificate
 }

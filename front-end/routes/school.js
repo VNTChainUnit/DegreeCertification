@@ -6,6 +6,7 @@ const studentService= require('../service/studentService');
 const student = require('../models/student');
 const blockchain = require('../service/blockchain/main')
 const certificateService=require('../service/certificateService')
+const certificateCheckService=require('../service/certificateCheckService');
 //身份验证
 router.use('/', (req, res, next) => {
   if (req.session.username!=null && req.session.usertype==3) {
@@ -69,17 +70,13 @@ router.put('/api/student',async(req,res,next)=>{
   res.json(utils.restful(0,null,"默认密码为"+defaultpassword+"<br>请提醒学生尽快修改密码！"))
 })
 
+//增加待审核的证书
 router.post('/api/certificate',async(req,res,next)=>{
   let data=req.body
   let school=await schoolService.getSchoolByUsername(req.session.username)
-  let result=await certificateService.addCertificate(school.name,data.name,data.idnumber,
+  certificateCheckService.addUncheckedCertificate(school._id,school.name,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
-  if(result){
-    
-  res.json(utils.restful(null,result,null))
-  }
-  else{
-    res.json(utils.restful(-1,null,"上传失败，请稍后再试！"))
-  }
+  res.json(utils.restful(null,null,null))
 })
+
 module.exports = router;

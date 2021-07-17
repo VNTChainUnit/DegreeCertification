@@ -9,6 +9,9 @@ const certificateService=require("../service/certificateService")
 const blockchain=require('../service/blockchain/main');
 const  applicationService=require('../service/applicationService')
 
+/**
+ * 获取微信二维码（唯一）
+ */
 router.get('/student/login/:code',async (req,res,next)=>{
     var url='https://api.weixin.qq.com/sns/jscode2session?grant_type=authorization_code&appid=';
     url=url +privateinfo.miniprogram_appid+'&secret='+privateinfo.miniprogram_secret;
@@ -29,6 +32,9 @@ router.get('/student/login/:code',async (req,res,next)=>{
     else res.json(utils.restful(0,{studentid:student._id},null))
 })
 
+/**
+ * 绑定微信账户
+ */
 router.post('/student/bind',async(req,res,next)=>{
     var data=req.body;
     if(await studentService.login(data.username,data.password)){
@@ -41,6 +47,9 @@ router.post('/student/bind',async(req,res,next)=>{
     }
 })
 
+/** 
+ * 微信端学生获取证书
+ */
 router.post('/student/getCertificate',async(req,res,next)=>{
     let student=await studentService.getById(req.body.studentid);
     let certificate=await certificateService.getCertificate(student.certificate_number,req.body.idnumber)
@@ -52,6 +61,9 @@ router.post('/student/getCertificate',async(req,res,next)=>{
   }
 })
 
+/** 
+ * 微信端核验证书
+ */
 router.post('/check/',async (req,res,next)=>{
     let data=req.body
     let checkresult=blockchain.checkCertificate(data.certificate_number,data.name,
@@ -64,6 +76,9 @@ router.post('/check/',async (req,res,next)=>{
     }
 })
 
+/**
+ * 企业登录
+ */
 router.post('/auth/login',async (req,res,next)=>{
   var data=req.body;
   const session = await applicationService.loginApplication(data.applicationid,data.secret)
@@ -75,6 +90,9 @@ router.post('/auth/login',async (req,res,next)=>{
   }
 })
 
+/**
+ * 企业api核验证书
+ */
 router.post('/auth/check',async (req,res,next)=>{
   var data=req.body;
   //check session and get application

@@ -142,59 +142,18 @@
                             <!-- 第三个界面 -->
                             <section>
                                 <div>
-                                    <div style="text-align: center;margin-top: 10px;" id="laoding_icon">
-                                        <i class=" layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
-                                           style="color: rgb(150, 150, 150);font-size:30px;font-weight:bold;background: #ffffff;padding: 10px;line-height: 60px;"></i>
-                                           <div style="font-size: 20px;color: #333;font-weight: 500;margin-top: 10px;">
-                                            上传中...
-                                        </div>
-                                    </div>
-
-                                    <div style="text-align: center;margin-top: 10px;display: none;" id="success_icon">
+                                    <div style="text-align: center;margin-top: 12%;" id="laoding_icon">
                                         <i class="layui-icon layui-circle"
-                                           style="color: white;font-size:30px;font-weight:bold;background: #3887e5;padding: 10px;line-height: 60px;">&#xe605;</i>
-                                        <div style="font-size: 20px;color: #333;font-weight: 500;margin-top: 10px;">
-                                            证书上传成功
+                                           style="color: white;font-size:40px;font-weight:bold;background: #3887e5;padding: 10px;line-height: 60px;">&#xe605;</i>
+                                        <div style="font-size: 20px;color: #333;font-weight: 500;margin-top: 30px;">
+                                            已上传，等待学生本人确认证书信息。
                                         </div>
                                     </div>
-
-                                    <div>
-                                        <form class="layui-form" style="margin: 0 auto;max-width: 600px;padding-top: 40px;" >
-                                            <div class="layui-form-item">
-                                                <label class="layui-form-label com_res_form_label">交易Hash值:</label>
-                                                <div class="layui-input-block">
-                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="hash"></div>
-                                                </div>
-                                            </div>
-                                            <div class="layui-form-item">
-                                                <label class="layui-form-label com_res_form_label">汽油费:</label>
-                                                <div class="layui-input-block">
-                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="gasoline"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="layui-form-item">
-                                                <label class="layui-form-label com_res_form_label">交易区块编号:</label>
-                                                <div class="layui-input-block">
-                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="blockNumber"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="layui-form-item">
-                                                <label class="layui-form-label com_res_form_label">交易区块Hash值:</label>
-                                                <div class="layui-input-block">
-                                                    <div class="layui-form-mid layui-word-aux com_res_form_text" id="blockHash"></div>
-                                                </div>
-                                            </div>
-
-                                          
-                                        </form>
-                                    </div>
-
                                 </div>
-                                 <!-- 再次添加按钮 -->
-                                <div style="text-align: center;margin-top: 10px;margin-bottom: 20px;">
-                                    <button class="layui-btn next"  style="background-color: #3887e5;">再次添加</button>
+                                  再次添加按钮 
+                                <div style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
+                                    <button class="layui-btn next"  style="background-color: #3887e5; margin-right: 20px;">再次添加</button>
+                                    <button class="layui-btn next"  style="background-color: #3887e5;">批量添加</button>
                                 </div>
                             </section>
 
@@ -267,28 +226,6 @@
             $("#laoding_icon").show();
             $("#success_icon").hide();
             step.next('#stepForm');
-            // var index= layer.load(1,{shade:[0.1,'#eee']})
-            $.post('/school/api/certificate',Certificate_Information,(res)=>{
-                console.log(res)
-                if(res.code==0){
-                // if(true){
-                    $("#laoding_icon").hide();
-                    $("#success_icon").show();
-                    $('#hash').html(res.data.hash);//交易hash值
-                    $('#gasoline').html(res.data.gas);//汽油费
-                    $('#blockNumber').html(res.data.blockNumber); // 交易区块编号
-                    $('#blockHash').html(res.data.blockHash);// 交易区块Hash值
-
-                    // $('#hash').html("res.data.hash");//交易hash值
-                    // $('#gasoline').html("res.data.gas");//汽油费
-                    // $('#blockNumber').html("res.data.blockNumber"); // 交易区块编号
-                    // $('#blockHash').html("res.data.blockHash");// 交易区块Hash值
-                    // layer.close(index)
-                }
-                else{
-                    layer.alert("上链失败！")
-                }
-            })
             return false;
         });
 

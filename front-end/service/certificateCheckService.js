@@ -1,6 +1,7 @@
 const CertificateCheck = require("../models/certificateCheck");
 const schoolService = require('./schoolService');
 const studentService=require('./studentService');
+const certificateService=require('./certificateService');
 /**
  * 添加一个待核验证书
  * @param {学校id} school_id 
@@ -80,7 +81,10 @@ async function listSchoolUncheckedCertificates(school_id) {
  * @param {证书id} check_id 
  */
 async function checkCertificate(check_id) {
-    return await CertificateCheck.findById(check_id);
+    let cert=await CertificateCheck.findById(check_id);
+    let res=await certificateService.addCertificate(cert.school,cert.name,cert.idnumber,cert.degreetype
+        ,cert.major,cert.graduationdate,cert.studentnumber,cert.certificatenumber)
+    return res;
 }
 
 /**
