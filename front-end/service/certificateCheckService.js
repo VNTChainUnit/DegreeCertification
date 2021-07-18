@@ -25,7 +25,8 @@ async function addUncheckedCertificate(school_id, schoolname, name, idnumber,
         graduationdate: graduationdate,
         studentnumber: studentnumber,
         certificatenumber: certificatenumber,
-        school_id: school_id
+        school_id: school_id,
+        name:name
     })
     uncheckedCert.save();
 }
@@ -106,6 +107,21 @@ function addManyUncheckedCertificates(certificatechecks) {
     CertificateCheck.insertMany(certificatechecks);
 }
 
+/**
+ * 注册时检查信息
+ * @param {姓名} name 
+ * @param {学号} studentnumber 
+ * @param {学校名称} school_name 
+ * @param {身份证号} idnumber 
+ */
+async function registerCheck(name,studentnumber,school_name,idnumber){
+    let cert=await CertificateCheck.findOne({name:name,studentnumber:studentnumber,
+        school:school_name,idnumber:idnumber})
+        if(cert){return cert.certificatenumber}
+        else return false;
+}
+
+
 module.exports = {
     addUncheckedCertificate: addUncheckedCertificate,
     getStudentUncheckCertificate: getStudentUncheckCertificate,
@@ -113,5 +129,6 @@ module.exports = {
     listSchoolUncheckedCertificates: listSchoolUncheckedCertificates,
     checkCertificate: checkCertificate,
     deleteUncheckedCertificate: deleteUncheckedCertificate,
-    addManyUncheckedCertificates: addManyUncheckedCertificates
+    addManyUncheckedCertificates: addManyUncheckedCertificates,
+    registerCheck:registerCheck
 }

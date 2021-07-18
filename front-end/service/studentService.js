@@ -3,6 +3,7 @@ const  utils=require('./utils')
 const  SmartContract=require("./blockchain/main");
 const schoolService = require("./schoolService");
 const School = require("../models/school");
+const certificateCheckService=require('./certificateCheckService')
 //返回bool
 
 async function  login(username,password ){
@@ -19,8 +20,12 @@ async function  login(username,password ){
 async function register(name,studentnumber,password,school_id,idnumber){
     //获取学校
    let school=await schoolService.getSchoolById(school_id)
-    //确认证书存在
-   let certificate_number=SmartContract.existCertificate(name,studentnumber,school.name,idnumber);
+   //首先查看待核验证书是否有这个人
+    let certificate_number=await certificateCheckService.registerCheck(name,studentnumber,school.name,idnumber);
+   if(!certificate_number){
+        //没有的话确认链上证书存在
+        certificate_number=SmartContract.existCertificate(name,studentnumber,school.name,idnumber);
+   }
    let username=school.code+"_"+studentnumber
     //如果证书不存在,直接返回
     if (!certificate_number){

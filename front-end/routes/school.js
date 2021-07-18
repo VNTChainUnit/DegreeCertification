@@ -126,7 +126,6 @@ router.post('/api/uploadManyCertificate',upload.single('file'),async function(re
   let school=await schoolService.getSchoolByUsername(req.session.username)
   let certificateChecks = utils.mapUncheckedCert(sheetList,school);
   certificateCheckService.addManyUncheckedCertificates(certificateChecks);
-  //TODO 返回
   res.json(utils.restful(null,null,"成功上传证书"+certificateChecks.length+"个。"))
 })
 module.exports = router;

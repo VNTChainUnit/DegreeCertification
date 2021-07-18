@@ -124,6 +124,7 @@ function existCertificate(name, studentnumber, school, idnumber){
     var contract = vnt.core.contract(abi).at(contractAddress);
     var res = contract.ExistCertificate.call(name, studentnumber, school, idnumber, {from:account.address});
     //解密返回值
+    if(res=="")return res;
     res=aesDecrypt(res)
     console.log(res.toString());
     return res.toString();

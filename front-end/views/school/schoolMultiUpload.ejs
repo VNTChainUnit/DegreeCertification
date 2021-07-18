@@ -67,11 +67,12 @@
             },
             onSuccess: function (file, response) {          // 文件上传成功的回调方法
 				$("#show_console").show();
+                let res=JSON.parse(response);
 				console.info("此文件上传成功：");
                 console.info(file.name);
                 console.info("此文件上传到服务器地址：");
                 console.info(response);
-                $("#show_console").append("<p>上传成功，" + response.msg + "</p>");
+                $("#show_console").append("<p>上传成功，" + res.msg + "</p>");
             },
             onFailure: function (file, response) {          // 文件上传失败的回调方法
                 $("#show_console").show();
