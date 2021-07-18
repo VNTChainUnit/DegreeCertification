@@ -83,7 +83,10 @@ async function listSchoolUncheckedCertificates(school_id) {
 async function checkCertificate(check_id) {
     let cert=await CertificateCheck.findById(check_id);
     let res=await certificateService.addCertificate(cert.school,cert.name,cert.idnumber,cert.degreetype
-        ,cert.major,cert.graduationdate,cert.studentnumber,cert.certificatenumber)
+        ,cert.major,cert.graduationdate,cert.studentnumber,cert.certificatenumber);
+    if(res){
+        deleteUncheckedCertificate(check_id);
+    }
     return res;
 }
 

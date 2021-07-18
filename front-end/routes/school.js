@@ -11,7 +11,6 @@ var multer  = require('multer')
 var fs = require('fs');
 const xlsx = require('node-xlsx')
 var path=require('path');
-const certificateCheckService = require('../service/certificateCheckService');
 
 //***********文件上传配置begin
 var createFolder = function(folder){
@@ -41,8 +40,6 @@ var upload = multer({ storage: storage });
 
 //身份验证
 router.use('/', (req, res, next) => {
-  req.session.username="csu";
-  req.session.usertype=3;
   if (req.session.username!=null && req.session.usertype==3) {
     next()
   }
@@ -64,6 +61,11 @@ router.get('/studentAccount',function(req,res,next){
 router.get('/uploadCertificate',async function(req,res,next){
   let school=await schoolService.getSchoolByUsername(req.session.username)
   res.render('school/uploadCertificate',{school:school});
+})
+
+router.get('/multiUploadCertificate',async function(req,res,next){
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  res.render('school/schoolMultiUpload',{school:school});
 })
 
 router.get('/api/student',async (req,res,next)=>{
@@ -113,8 +115,6 @@ router.post('/api/certificate',async(req,res,next)=>{
   res.json(utils.restful(null,null,null))
 })
 
-<<<<<<< HEAD
-=======
 router.post('/api/uploadManyCertificate',upload.single('file'),async function(req,res,next){
   var file = req.file;
   let filePath=path.join(__dirname,'../upload/excel/'+file.filename)
@@ -127,6 +127,6 @@ router.post('/api/uploadManyCertificate',upload.single('file'),async function(re
   let certificateChecks = utils.mapUncheckedCert(sheetList,school);
   certificateCheckService.addManyUncheckedCertificates(certificateChecks);
   //TODO 返回
+  res.json(utils.restful(null,null,"成功上传证书"+certificateChecks.length+"个。"))
 })
->>>>>>> 965e57858df36a93954b89a3a3b6ff4b6fa5e374
 module.exports = router;

@@ -104,6 +104,20 @@ function getDateStr(date){
         return certlist;
   }
 
+  function getSign(params){
+    const secret=Config.sign_secret;
+    let str = '';
+    for (const k in params) {
+      if (k=="sign" || k instanceof Array || k instanceof Object || params[k] === undefined) {
+        continue;
+      }
+      if(str!='')str+="&";
+      str+=k+"="+params[k];
+    }
+    str = encodeURI(`${ str }${ secret }`).toUpperCase();
+    return md5(str).toUpperCase();
+  }
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -114,5 +128,6 @@ module.exports={
     getDateStr:getDateStr,
     getCertificateByEncryptContent:getCertificateByEncryptContent,
     encryptCertificate:encryptCertificate,
-    mapUncheckedCert:mapUncheckedCert
+    mapUncheckedCert:mapUncheckedCert,
+    getSign:getSign
 }

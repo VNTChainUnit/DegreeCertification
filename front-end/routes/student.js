@@ -37,6 +37,17 @@ router.get('/certificate',async(req,res,next)=>{
   }
 })
 
+/**
+ * 证书确认页面路由
+ */
+router.get('/checkCertificate',async(req,res,next)=>{
+  let student=await studentService.getByUsername(req.session.username)
+  res.render('student/checkCertificate',{name:student.name});
+})
+
+/**
+ * 获取证书
+ */
 router.post('/getCertificate',async (req,res,next)=>{
   let student=await studentService.getByUsername(req.session.username)
   let certificate =await  certificateService.getCertificate(student.certificate_number,req.body.idnumber)
@@ -77,16 +88,20 @@ router.get('/wxQrcode', async(req, res, next)=> {
 //审核证书通过
 router.post('/api/checkCertificate',async(req,res,next)=>{
   let data=req.body
-  let res=certificateCheckService.checkCertificate(data.check_id);
-  res.json(utils.restful(null,res,null));
+  let ret=await certificateCheckService.checkCertificate(data.check_id);
+  res.json(utils.restful(null,ret,null));
 })
 
 //获取待核验证书
 router.get('/api/uncheckedCertificate',async(req,res,next)=>{
-  let data=req.query;
   let stu=await studentService.getByUsername(req.session.username);
-  let res=await certificateCheckService.getStudentUncheckCertificate(stu._id,stu.school_id)
-  res.json(utils.restful(null,res,null));
+  let data=await certificateCheckService.getStudentUncheckCertificate(stu._id,stu.school_id)
+  if(data){
+    res.json(utils.restful(null,data,null))
+  }
+  else{
+    res.json(utils.restful(-1,null,"没有待确认的证书！"))
+  }
 })
 
 module.exports = router;

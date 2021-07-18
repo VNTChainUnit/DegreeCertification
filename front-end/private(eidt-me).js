@@ -5,7 +5,8 @@ module.exports={
     mongodb_url:"", //set your mongodb url here
     miniprogram_appid:"",//your appid in mini-program
     miniprogram_secret:"",//your secret in mini-program,
-    redis_port:,//your redise server port
-    redis_url:""//your redis server
+    redis_port:"",//your redise server port
+    redis_url:"",//your redis server,
+    sign_secret:""//your sigin secret
 }
 //after this your should chanege this file to "private.js"

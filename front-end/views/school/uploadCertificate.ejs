@@ -150,10 +150,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                  再次添加按钮 
+                                  <!-- 再次添加按钮  -->
                                 <div style="text-align: center;margin-top: 30px;margin-bottom: 20px;">
                                     <button class="layui-btn next"  style="background-color: #3887e5; margin-right: 20px;">再次添加</button>
-                                    <button class="layui-btn next"  style="background-color: #3887e5;">批量添加</button>
+                                    <button class="layui-btn " id="multi"  style="background-color: #3887e5;">批量添加</button>
                                 </div>
                             </section>
 
@@ -176,12 +176,13 @@
 	
 	// 第一个表单的存取数据
 	var Certificate_Information = '';
-    layui.use(['form', 'step','laydate','layer'], function () {
+    layui.use(['form', 'step','laydate','layer','miniPage'], function () {
         var $ = layui.$,
             form = layui.form,
             laydate=layui.laydate,
             step = layui.step,
-            layer=layui.layer
+            layer=layui.layer,
+            miniPage=layui.miniPage
 			;
 
         /**
@@ -226,6 +227,11 @@
             $("#laoding_icon").show();
             $("#success_icon").hide();
             step.next('#stepForm');
+            $.post('/school/api/certificate',Certificate_Information,(res)=>{
+                if(res.code!=0){
+                    layer.alert("上传失败!");
+                }
+            })
             return false;
         });
 
@@ -236,6 +242,10 @@
 
         $('.next').click(function () {
             step.next('#stepForm');
+        });
+
+        $('#multi').click(function(){
+            miniPage.hashChange("/school/multiUploadCertificate");
         });
     })
 </script>

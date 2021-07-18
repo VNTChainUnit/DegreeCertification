@@ -11,7 +11,7 @@
 <!-----css路径记得改改-------------------------------------------------------------------------------------------------------->
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/head.css" />
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
-	<link href="static/layui/css/layui.css" rel="/stylesheet" type="text/css">  
+	<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css" >  
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/student.css" />
 	<link rel="stylesheet" type="text/css" href="/static/stylesheets/company.css">
 <!----------------------------------------------------------------------------------------------------------------->
@@ -49,7 +49,7 @@
 	<section class="addNavBar">
 		<div class="addNav_bgc">
 			<div class="layui-container">
-				<div class="addNav_text"><a href="/student/application">证书确认</a></div>
+				<div class="addNav_text"><a href="/student/checkCertificate">证书确认</a></div>
 				<div class="addNav_whiteLine">|</div>
 				<div class="addNav_text"><a href="/student/">证书获取</a></div>
 			</div>
@@ -123,20 +123,6 @@
 									<label class="layui-form-label stu_confirm_form_label">毕业日期:</label>
 									<div class="layui-input-block">
 										<div class="layui-form-mid layui-word-aux student_form_txhash_label stu_confirm_fontsize" id="graduation_date" name="graduation_date"></div>
-									</div>
-								</div>
-
-								<div class="layui-form-item">
-									<label class="layui-form-label stu_confirm_form_label">区块高度:</label>
-									<div class="layui-input-block">
-										<div class="layui-form-mid layui-word-aux student_form_txhash_label stu_confirm_fontsize" id="blockNumber" name="blockNumber"></div>
-									</div>
-								</div>
-
-								<div class="layui-form-item">
-									<label class="layui-form-label stu_confirm_form_label">交易Hash值:</label>
-									<div class="layui-input-block">
-										<div class="layui-form-mid layui-word-aux  student_form_txhash_label stu_confirm_fontsize"  id="txhash" name="txhash"></div>
 									</div>
 								</div>
 
@@ -271,23 +257,26 @@
 			
 			
 //---------新增js-----------------------------------------------------------------------------------------
-			
+			var certificate='';
 			//每次进入界面时需要判断是否确认上传证书
-			$("successfully_uploaded_certificate").ready(function(){
+			$("#successfully_uploaded_certificate").ready(function(){
+				console.log("hhh")
 				$.ajax({
-					url:'/school/api/student',
-					method:'PUT',
-					data:{studentnumber:data.studentnumber},
+					url:'/student/api/uncheckedCertificate',
+					method:'GET',
 					success:(res)=>{
 						//如果没有确认上传，显示确认上传界面
 						if(res.code==0){
-							$("successfully_uploaded_certificate").hide();
-							$("filloutform").show();
+							console.log(res)
+							certificate=res.data[0];
+							updateCertificate();
+							$("#successfully_uploaded_certificate").hide();
+							$("#filloutform").show();
 						}
 						//如果已成功上传，显示无需上传界面
 						else{
-							$("successfully_uploaded_certificate").show();
-							$("filloutform").hide();
+							$("#successfully_uploaded_certificate").show();
+							$("#filloutform").hide();
 						}
 					}
 				})
@@ -295,36 +284,17 @@
 			
 			
 			//显示证书信息
-			//(我感觉form初始化赋值不是这样写的，但是我搞不懂QAQ)
-			$("showCertificate").ready(function(){
-				$.ajax({
-					url:'/student/getCertificate',
-					method:'POST',
-					data:data.field,
-					success:function(res){
-						if(res.code==0){
-							let certificate=res.data
-							console.log(certificate);
-							// 将每个div中的值赋值
-							$('#serial_number').html(certificate.certificatenumber);//证书编号
-							$('#school_name').html(certificate.school);
-							$('#student_name').html(certificate.name);
-							$('#student_number').html(certificate.studentnumber);
-							$('#ID_number').html(certificate.idnumber);
-							$('#profession').html(certificate.major);
-							$('#sort').html(certificate.degreetype);//毕业年月
-							$('#graduation_date').html(certificate.graduationdate);//学位
-							$('#blockNumber').html(certificate.blockNumber);//区块高度
-							$('#txhash').html(certificate.txhash);//交易Hash值
-						}
-						else{
-							layer.alert("上传失败！"+res.msg);
-						}
-					}
-				});
-			return false;
-			});
-			
+			function updateCertificate(){
+				// 将每个div中的值赋值
+				$('#serial_number').html(certificate.certificatenumber);//证书编号
+				$('#school_name').html(certificate.school);
+				$('#student_name').html(certificate.name);
+				$('#student_number').html(certificate.studentnumber);
+				$('#ID_number').html(certificate.idnumber);
+				$('#profession').html(certificate.major);
+				$('#sort').html(certificate.degreetype);//毕业年月
+				$('#graduation_date').html(certificate.graduationdate);//学位
+			};			
 			
 			//监听提交
 		  form.on('submit(formStep)', function(data){
@@ -343,8 +313,8 @@
 					$("#confilmSuccess").show();
 					$("#filloutform").hide();
 					//获取上链成功后返回的信息
-					$.post('/school/api/certificate',Certificate_Information,(res)=>{
-						console.log(res)
+					$.post('/student/api/checkCertificate',{check_id:certificate._id},(res)=>{
+						console.log(res);
 						if(res.code==0){
 							$("#laoding_icon").hide();
 							$("#success_icon").show();
@@ -358,27 +328,6 @@
 							layer.alert("上链失败！")
 						}
 					})
-//					$.ajax({
-//						url:'/student/getCertificate',
-//						method:'POST',
-//						data:data.field,
-//						success:function(res){
-//							if(res.code==0){
-//								let certificate=res.data
-//								console.log(certificate);
-//								$("#laoding_icon").hide();
-//								$("#success_icon").show();
-//		//						// 将每个div中的值赋值
-//								$('#hash').html(res.data.hash);//交易hash值
-//								$('#gasoline').html(res.data.gas);//汽油费
-//								$('#blockNumber').html(res.data.blockNumber); // 交易区块编号
-//								$('#blockHash').html(res.data.blockHash);// 交易区块Hash值
-//							}
-//							else{
-//								layer.alert("上链失败！")
-//							}
-//						}
-//					});
 					return false;
 				},function(index){
 					//关闭询问框

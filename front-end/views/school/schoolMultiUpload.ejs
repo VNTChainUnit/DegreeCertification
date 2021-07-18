@@ -48,8 +48,7 @@
             height: "450px",                 // 宽度
             itemWidth: "140px",                 // 文件项的宽度
             itemHeight: "140px",                 // 文件项的高度
-//            url: "https://httpbin.org/post"+"/files/upload",  // 上传文件的路径
-            url: "upload.html",  // 上传文件的路径
+            url: "/school/api/uploadManyCertificate",  // 上传文件的路径
             fileType: ["xls", "xlsx"],// 上传文件的类型
             fileSize: 51200000,                // 上传文件的大小
             multiple: true,                    // 是否可以多个文件上传
@@ -72,13 +71,13 @@
                 console.info(file.name);
                 console.info("此文件上传到服务器地址：");
                 console.info(response);
-                $("#show_console").append("<p>上传成功，文件地址是：" + response + "</p>");
+                $("#show_console").append("<p>上传成功，" + response.msg + "</p>");
             },
             onFailure: function (file, response) {          // 文件上传失败的回调方法
                 $("#show_console").show();
 				console.info("此文件上传失败：");
                 console.info(file.name);
-                $("#show_console").append("<p>上传失败，失败原因为：" + response + "</p>");
+                $("#show_console").append("<p>上传失败，失败原因为：" + response.msg + "</p>");
             },
             onComplete: function (response) {           	  // 上传完成的回调方法
                 console.info("文件上传完成");
