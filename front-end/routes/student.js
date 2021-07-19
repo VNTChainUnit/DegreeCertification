@@ -95,8 +95,8 @@ router.post('/api/checkCertificate',async(req,res,next)=>{
 //获取待核验证书
 router.get('/api/uncheckedCertificate',async(req,res,next)=>{
   let stu=await studentService.getByUsername(req.session.username);
-  let data=await certificateCheckService.getStudentUncheckCertificate(stu._id,stu.school_id)
-  if(data){
+  let data=await certificateCheckService.getStudentUncheckCertificate(stu)
+  if(data&&data.length!=0){
     res.json(utils.restful(null,data,null))
   }
   else{
