@@ -7,26 +7,123 @@
     }
     span{
         font-weight: bold;
-        font-size: larger;
     }
     span::after{
         content: "  ";
     }
+	.certificate_all {
+		font-size: large;
+		width: 1000px;
+		height: 800px;
+	}
+	.certificate_infodiv {
+		
+/*		padding-top: 290px;*/
+		padding-left: 140px;
+		padding-right: 130px;
+		width:100%;
+    	height:100%;
+		background-repeat:no-repeat;
+    	background-size:cover;
+		background-size: 100% 100%;
+    	background-image: url(/static/images/cetificate.jpg);
+	}
+	.certificate_title {
+		font-size: 50px;
+		font-weight: 600;
+		text-align: center;
+		text-decoration: none;
+	}
+	.certificate_infodiv1{
+		padding-top: 220px;
+	}
+	.info_text{
+		line-height: 60px;
+		text-indent: 60px;
+	}
+	.info_dateandnum{
+    	width: 100%;		
+		padding-top: 45px;
+	}
+	.info_num{
+    float: left;
+    font-size: smaller;
+	}
+	.info_date{
+    float: right;
+    font-size: smaller;
+	}
+	.info_foot{
+    margin-top: 10px;
+    text-align: center;
+    font-size: 13px;
+	}
+	.info_blockchain{
+    margin-top: 40px;
+    font-size: smaller;
+    text-indent: 35px;
+}
+	.seal-content{
+	width: 400px;
+	min-height: 60px;
+	vertical-align: bottom;
+	word-wrap: break-word;
+	position: relative;
+}
+
+.seal-result{
+	width: 240px;
+	height: 140px;
+	transform: rotate(0deg);
+	left: 950px;
+	bottom: 0px;
+	position: absolute;
+	background-color: rgba(255,255,255,0.1)
+}
 </style>
 </head>
 <body>
         <p>经信诣学位学历认证管理系统认证，结果如下：</p>
-<div style="font-size: large;border-style: solid;margin: 5px;padding: 10px;">
-    <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span><%= certificate.name %></span>在<%= certificate.graduationdate %>月完成了
-        <span><%= certificate.school %></span>的学业计划，现已毕业，已获得
-        <span><%= certificate.major %></span>专业的
-        <span><%= certificate.degreetype %></span>学位证书，该证书编号为<%= certificate.certificatenumber%>。
-    </p>
+<div class="certificate_all">
+	<div class="certificate_infodiv">
+		<div class="certificate_infodiv1">
+			<div class="certificate_title">
+			<p>学&nbsp;&nbsp;&nbsp;士&nbsp;&nbsp;&nbsp;学&nbsp;&nbsp;&nbsp;位&nbsp;&nbsp;&nbsp;证&nbsp;&nbsp;&nbsp;书</p>
+		</div>
+		
+			<div class="info_text">
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;<%= certificate.name %></span>,&nbsp;在
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;<%= certificate.school %> &nbsp;&nbsp;&nbsp;&nbsp;</span>的
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;<%= certificate.major %>&nbsp;&nbsp;&nbsp;&nbsp;</span>专业完成了
+				<span><%= certificate.degreetype %></span>的学习计划，业已毕业，经审核符合《中华人民共和国学位条例》的规定，授予学士学位。
+			</div>
+			<div class="info_dateandnum">
+				</div>
+					<div class="seal-result seal-result-fail ">
+						<img src="/static/images/seal.png" style="width: 150px;"/>
+					</div>
+				<div class="info_num">
+					证书编号：<span style="font-weight: 600;"><%= certificate.certificatenumber%></span>
+				</div>
+				<div class="info_date">
+					毕业日期：<%= certificate.graduationdate %>
+			</div>
+			
+		
+			
+			<p class="info_blockchain">
+            	此证书现已存于VNT Chain区块链中，区块高度为 <%= certificate.blockNumber %>，交易Hash值为 <%= certificate.txhash %>
+        	</p>
+				
+				
+			
+			<div class="info_foot">
+				(普通高等教育毕业生)
+			</div>
+		</div>
+		</div>
+    
 </div>
-        <p>
-            此证书现已存于VNT Chain区块链中，区块高度为 <%= certificate.blockNumber %>，交易Hash值为 <%= certificate.txhash %>
-        </p>
+        
 </body>
 </html>
