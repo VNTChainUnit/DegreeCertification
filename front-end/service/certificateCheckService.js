@@ -36,9 +36,8 @@ async function addUncheckedCertificate(school_id, schoolname, name, idnumber,
  * @param {学生id} student_id 
  * @param {学校id} school_id 
  */
-async function getStudentUncheckCertificate(student_id,school_id) {
-    const student=await studentService.getById(student_id)
-    return await CertificateCheck.find({school_id:school_id,studentnumber:student.studentnumber});
+async function getStudentUncheckCertificate(stu) {
+    return await CertificateCheck.find({school_id:stu.school_id,studentnumber:stu.studentnumber});
 }
 
 /**
@@ -96,7 +95,11 @@ async function checkCertificate(check_id) {
  * @param {证书id} check_id 
  */
 function deleteUncheckedCertificate(check_id) {
-    CertificateCheck.deleteOne({_id:check_id});
+    CertificateCheck.deleteOne({_id:check_id},(err,doc)=>{
+        if(err){
+            console.log(err)
+        }
+    });
 }
 
 /**
