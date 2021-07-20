@@ -2,6 +2,7 @@ const EncryptContent=require('../models/encryptContent');
 const PrivateInfo=require('../private');
 const Request=require("request-promise");
 const Redis=require('./redisService');
+const utils=require('./utils')
 /**
  * 加密内容放数据库
  * @param {加密的长内容} encryptContent 
@@ -18,6 +19,7 @@ function addEncryptContent(encryptContent){
 
 async function getEncryptContent(id){
     let obj=await EncryptContent.findById(id);
+    if(obj)return false;
     return obj.content;
 }
 
@@ -57,7 +59,8 @@ async function getAccessToken(){
 /**
  * 获取带参二维码
  */
-async function getWxQRCode(content){
+async function getWxQRCode(origincontent){
+    let contentid=addEncryptContent(origincontent);
     let access_token=getAccessToken();
     var url='https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN';
     url+="&js_code="+req.params.code;
@@ -66,7 +69,7 @@ async function getWxQRCode(content){
         uri: url,
         body:{
             "access_token":access_token,
-            "scene":"k="+content,
+            "scene":"k="+contentid,
             "page":"pages/verificationinformation/verificationinformation"
         }
       };
@@ -82,7 +85,12 @@ async function getWxQRCode(content){
     }
 }
 
+function checkSign(params,sign){
+    return utils.getSign()==sign
+}
+
 module.exports={
     getEncryptContent:getEncryptContent,
-    getWxQRCode:getWxQRCode
+    getWxQRCode:getWxQRCode,
+    checkSign:checkSign
 }

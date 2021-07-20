@@ -204,6 +204,9 @@ router.get('/companyapply',(req,res,next)=>{
 })
 
 
+/**
+ * 普通扫码核验证书
+ */
 router.get('/check/:code',async (req,res,next)=>{
   try{
     let encryptcode =req.params['code']

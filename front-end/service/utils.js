@@ -72,11 +72,9 @@ function getDateStr(date){
   }
 
   function encryptCertificate(certificateNumber,idnumber){
-    const baseurl=Config.donainname+":3000/check/"
     var code=idnumber+"|"+certificateNumber
     var encryptcode=utils.aesEncrypt(code)
-    var text = baseurl+encryptcode
-    return text;
+    return encryptcode;
   }
   
   function mapUncheckedCert(excelData,school){

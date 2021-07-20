@@ -8,7 +8,7 @@ const wxaccountService=require("../service/wxaccountService")
 const certificateService=require("../service/certificateService")
 const blockchain=require('../service/blockchain/main');
 const  applicationService=require('../service/applicationService')
-
+const wxService=require('../service/wxService')
 /**
  * 微信登陆获取openid
  */
@@ -74,6 +74,22 @@ router.post('/check/',async (req,res,next)=>{
     else{
       res.json(utils.restful(-1,null,"证书不正确"))
     }
+})
+
+/** 
+ * 微信端根据加密内容核验获取证书
+ */
+ router.post('/wx/check/content',async (req,res,next)=>{
+  let params={content:req.body.content};
+  if(wxService.checkSign(params,req,body.sign)){
+    let encryptContent=await wxService.getEncryptContent(req.content);
+    if(encryptContent){
+    let cert=await utils.getCertificateByEncryptContent(encryptContent);
+       res.json(utils.restful(0,null,null))
+    }
+    else res.json(utils.restful(-1,null,"参数有误"))
+  }
+    else res.json(utils.restful(-1,null,"签名错误"))
 })
 
 /**

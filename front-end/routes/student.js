@@ -6,7 +6,8 @@ const studentService=require('../service/studentService')
 const blockchain=require('../service/blockchain/main')
 const certificateService=require('../service/certificateService')
 const certificateCheckService=require('../service/certificateCheckService');
-const WxService=require('../service/wxService');
+const Config=require('../config')
+const wxService=require('../service/wxService');
 //身份验证
 router.use('/', (req, res, next) => {
   if (req.session.username!=null && req.session.usertype==1) {
@@ -65,7 +66,8 @@ router.post('/getCertificate',async (req,res,next)=>{
  */
 router.get('/qrcode', async(req, res, next)=> {
   let student=await studentService.getByUsername(req.session.username)
-  let text= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
+  let code= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
+  const text=Config.donainname+":3000/check/"+code;
   try {
     var img = qr.image(text,{size :10});
     res.writeHead(200, {'Content-Type': 'image/png'});
@@ -80,9 +82,18 @@ router.get('/qrcode', async(req, res, next)=> {
  * 生成微信二维码
  */
 router.get('/wxQrcode', async(req, res, next)=> {
-  // TODE: 获取加密内容，发送微信端获取
-  res.writeHead(200, {'Content-Type': 'image/png'});
-  img.pipe(res);
+  let student=await studentService.getByUsername(req.session.username)
+  let origincontent= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
+  let buffer=wxService.getWxQRCode(origincontent)
+  if(buffer){
+    res.writeHead(200, {'Content-Type': 'image/png'});
+    res.write( buffer );
+    res.end();
+  }
+  else{
+    res.writeHead(414, {'Content-Type': 'text/html'});
+    res.end('<h1>Error</h1>');
+  }
 })
 
 //审核证书通过
