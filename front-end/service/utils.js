@@ -73,7 +73,7 @@ function getDateStr(date){
 
   function encryptCertificate(certificateNumber,idnumber){
     var code=idnumber+"|"+certificateNumber
-    var encryptcode=utils.aesEncrypt(code)
+    var encryptcode=aesEncrypt(code)
     return encryptcode;
   }
   
@@ -116,6 +116,25 @@ function getDateStr(date){
     return md5(str).toUpperCase();
   }
 
+//检查一个str是否是json字符串
+function isJSON(str) {
+  if (typeof str == 'string') {
+      try {
+          var obj=JSON.parse(str);
+          if(typeof obj == 'object' && obj ){
+              return true;
+          }else{
+              return false;
+          }
+
+      } catch(e) {
+          console.log('error：'+str+'!!!'+e);
+          return false;
+      }
+  }
+  console.log('It is not a string!')
+}
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -127,5 +146,6 @@ module.exports={
     getCertificateByEncryptContent:getCertificateByEncryptContent,
     encryptCertificate:encryptCertificate,
     mapUncheckedCert:mapUncheckedCert,
-    getSign:getSign
+    getSign:getSign,
+    isJSON:isJSON
 }

@@ -3,6 +3,7 @@ const PrivateInfo=require('../private');
 const Request=require("request-promise");
 const Redis=require('./redisService');
 const utils=require('./utils')
+const mongoose = require('mongoose');
 /**
  * 加密内容放数据库
  * @param {加密的长内容} encryptContent 
@@ -44,7 +45,7 @@ async function wxAccessToken(){
  * 获取accesstoken
  */
 async function getAccessToken(){
-    let access_token = Redis.get("access_token");
+    let access_token = await Redis.get("access_token");
     if(access_token!=null){
         return access_token;
     }
@@ -61,32 +62,46 @@ async function getAccessToken(){
  */
 async function getWxQRCode(origincontent){
     let contentid=addEncryptContent(origincontent);
-    let access_token=getAccessToken();
-    var url='https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN';
-    url+="&js_code="+req.params.code;
+    let access_token=await getAccessToken();
+    var url='https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token='+access_token;
+    let bodyJson={
+        "scene":"k="+contentid,
+        "page":"pages/verificationinformation/verificationinformation"
+    }
+    let bodyContent=JSON.stringify(bodyJson)
     let options = {
         method: 'POST',
         uri: url,
-        body:{
-            "access_token":access_token,
-            "scene":"k="+contentid,
-            "page":"pages/verificationinformation/verificationinformation"
-        }
+        headers: {
+            "content-type": "application/json",
+            'Content-Length':bodyContent.length
+        },
+        body:bodyContent
       };
     var wxret=await Request(options)
-    if(Buffer.isBuffer(wxret)){
-        let origin_buffer=wxret;
+    console.log(typeof(wxret));
+    console.log("wxret.length is "+wxret.length)
+    if(wxret.length>1000){
+        let origin_buffer=Buffer.from(wxret);
         return origin_buffer;
     }
     else{
-        wxret=JSON.parse(wxret);
-        console.log("二维码请求失败"+wxret.errcode+errcode.errmsg);
-        return null;
+        if(utils.isJSON(wxret)){
+            let wxretJson=JSON.parse(wxret);
+            console.log("二维码请求失败"+wxretJson.errcode+wxretJson.errmsg);
+            return null;
+        }
     }
+    return null;
 }
 
 function checkSign(params,sign){
     return utils.getSign()==sign
+}
+
+function test(){
+    console.log("hh");
+    wxAccessToken().then(e=>console.log(e))
 }
 
 module.exports={

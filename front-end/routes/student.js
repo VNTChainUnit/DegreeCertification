@@ -84,7 +84,7 @@ router.get('/qrcode', async(req, res, next)=> {
 router.get('/wxQrcode', async(req, res, next)=> {
   let student=await studentService.getByUsername(req.session.username)
   let origincontent= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
-  let buffer=wxService.getWxQRCode(origincontent)
+  let buffer=await wxService.getWxQRCode(origincontent)
   if(buffer){
     res.writeHead(200, {'Content-Type': 'image/png'});
     res.write( buffer );

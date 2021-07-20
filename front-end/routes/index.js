@@ -223,5 +223,23 @@ router.get('/check/:code',async (req,res,next)=>{
   }
 })
 
+/**
+ * 测试微信图片生成
+ */
+const wxService=require('../service/wxService')
+ router.get('/test/wxchatPic',async (req,res,next)=>{
+  let student=await studentService.getByUsername("csu_xh202")
+  let origincontent= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
+  let buffer=wxService.getWxQRCode(origincontent)
+  if(buffer){
+    res.writeHead(200, {'Content-Type': 'image/png'});
+    res.write( buffer );
+    res.end();
+  }
+  else{
+    res.writeHead(414, {'Content-Type': 'text/html'});
+    res.end('<h1>Error</h1>');
+  }
+})
 
 module.exports = router;
