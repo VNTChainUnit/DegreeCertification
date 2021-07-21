@@ -1,21 +1,39 @@
 const EncryptContent=require('../models/encryptContent');
 const PrivateInfo=require('../private');
 const Request=require("request-promise");
+const request=require('request')
 const Redis=require('./redisService');
 const utils=require('./utils')
 const mongoose = require('mongoose');
+const fs=require('fs')
 /**
  * 加密内容放数据库
  * @param {加密的长内容} encryptContent 
  */
-function addEncryptContent(encryptContent){
-    let id=new mongoose.Types.ObjectId;
-    let obj=new EncryptContent({
-        _id:id,
-        content:encryptContent
+async function addEncryptContent(encryptContent){
+    //先查是否有了，有的话直接返回
+    let encr = await EncryptContent.findOne({content:encryptContent})
+    if(encr){
+        return encr._id;
+    }
+    else{
+        let id=new mongoose.Types.ObjectId;
+        let obj=new EncryptContent({
+            _id:id,
+            content:encryptContent
+        })
+        obj.save()
+        return id;  
+    }
+    
+}
+
+function saveFileName(contentid,filename){
+    EncryptContent.updateOne({_id:contentid},{filename:filename},(err,doc)=>{
+        if(err){
+            console.log(err)
+        }
     })
-    obj.save()
-    return id;
 }
 
 async function getEncryptContent(id){
@@ -52,16 +70,16 @@ async function getAccessToken(){
     else{
         let wxret = await wxAccessToken();
         await Redis.set("access_token",wxret.access_token);
-        Redis.expire("access_token",wxret.expires_in);
+        Redis.expire("access_token",wxret.expires_in-10);
         return wxret.access_token;
     }
 }
 
 /**
- * 获取带参二维码
+ * 获取带参二维码,放入本地
  */
-async function getWxQRCode(origincontent){
-    let contentid=addEncryptContent(origincontent);
+async function saveWxQrcode(origincontent){
+    let contentid=await addEncryptContent(origincontent);
     let access_token=await getAccessToken();
     var url='https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token='+access_token;
     let bodyJson={
@@ -78,34 +96,44 @@ async function getWxQRCode(origincontent){
         },
         body:bodyContent
       };
-    var wxret=await Request(options)
-    console.log(typeof(wxret));
-    console.log("wxret.length is "+wxret.length)
-    if(wxret.length>1000){
-        let origin_buffer=Buffer.from(wxret);
-        return origin_buffer;
-    }
-    else{
-        if(utils.isJSON(wxret)){
-            let wxretJson=JSON.parse(wxret);
-            console.log("二维码请求失败"+wxretJson.errcode+wxretJson.errmsg);
-            return null;
+    let filename=Date.now()+".png";
+    let writeStream = fs.createWriteStream("./picture/"+filename);
+    let reqt = request(url,options)
+    reqt.pipe(writeStream);
+    reqt.on('end', function() {
+        writeStream.end();
+        let fileStr=fs.readFileSync("./picture/"+filename).toString("utf-8")
+        if(fileStr.length<1000){
+            if(utils.isJSON(fileStr)){
+                return null;
+            }
         }
-    }
-    return null;
+        saveFileName(contentid,filename);
+    });
+    console.log("返回了");
+    return filename;
 }
 
 function checkSign(params,sign){
     return utils.getSign()==sign
 }
 
-function test(){
-    console.log("hh");
-    wxAccessToken().then(e=>console.log(e))
+/**
+ * 
+ * @param {加密内容} content 
+ * @returns 已经保存的图片名，如果没有保存为空
+ */
+async function getWxQrcodeFilenameByContent(content){
+    let encr = await EncryptContent.findOne({content:encryptContent})
+    if(encr){
+        return encr.filename;
+    }
+    else return null;
 }
 
 module.exports={
     getEncryptContent:getEncryptContent,
-    getWxQRCode:getWxQRCode,
-    checkSign:checkSign
+    saveWxQrcode:saveWxQrcode,
+    checkSign:checkSign,
+    getWxQrcodeFilenameByContent:getWxQrcodeFilenameByContent
 }

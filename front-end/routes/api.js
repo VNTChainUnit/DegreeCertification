@@ -85,7 +85,7 @@ router.post('/check/',async (req,res,next)=>{
     let encryptContent=await wxService.getEncryptContent(req.content);
     if(encryptContent){
     let cert=await utils.getCertificateByEncryptContent(encryptContent);
-       res.json(utils.restful(0,null,null))
+       res.json(utils.restful(0,cert,null))
     }
     else res.json(utils.restful(-1,null,"参数有误"))
   }

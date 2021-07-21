@@ -2,6 +2,9 @@ const CertificateCheck = require("../models/certificateCheck");
 const schoolService = require('./schoolService');
 const studentService=require('./studentService');
 const certificateService=require('./certificateService');
+const utils=require('./utils');
+const wxService = require("./wxService");
+
 /**
  * 添加一个待核验证书
  * @param {学校id} school_id 
@@ -85,7 +88,11 @@ async function checkCertificate(check_id) {
     let res=await certificateService.addCertificate(cert.school,cert.name,cert.idnumber,cert.degreetype
         ,cert.major,cert.graduationdate,cert.studentnumber,cert.certificatenumber);
     if(res){
+        //上传成功，删除已有的待核验证书
         deleteUncheckedCertificate(check_id);
+        //同时添加wxqrcode
+        let encryptContent= utils.encryptCertificate(cert.certificatenumber,cert.idnumber)
+        wxService.saveWxQrcode(encryptContent);
     }
     return res;
 }

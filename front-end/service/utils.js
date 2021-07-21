@@ -2,7 +2,7 @@ const md5=require('md5')
 const secret="GgX5jYPe"
 const crypto = require('crypto');
 const Config=require('../config')
-
+const certificateService=require('./certificateService');
 function aesEncrypt(data) {
     const cipher = crypto.createCipher('aes192', secret);
     var crypted = cipher.update(data, 'utf8', 'hex');
@@ -69,6 +69,7 @@ function getDateStr(date){
     let idnumber=codearr[0]
     let certificatenumber=codearr[1]
     let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
+    return certificate;
   }
 
   function encryptCertificate(certificateNumber,idnumber){
@@ -135,6 +136,10 @@ function isJSON(str) {
   console.log('It is not a string!')
 }
 
+function picfilenameToUrl(filename){
+  return Config.donainname+":3000/pic/"+filename;
+}
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -147,5 +152,6 @@ module.exports={
     encryptCertificate:encryptCertificate,
     mapUncheckedCert:mapUncheckedCert,
     getSign:getSign,
-    isJSON:isJSON
+    isJSON:isJSON,
+    picfilenameToUrl:picfilenameToUrl
 }

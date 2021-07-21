@@ -31,6 +31,8 @@ app.use(cookieParser());
 app.use('/test', testRouter);
 
 
+app.use("/pic",express.static(path.join(__dirname, 'picture')));
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));

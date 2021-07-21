@@ -79,21 +79,17 @@ router.get('/qrcode', async(req, res, next)=> {
 })
 
 /**
- * 生成微信二维码
+ * 获取微信二维码地址
  */
 router.get('/wxQrcode', async(req, res, next)=> {
   let student=await studentService.getByUsername(req.session.username)
-  let origincontent= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
-  let buffer=await wxService.getWxQRCode(origincontent)
-  if(buffer){
-    res.writeHead(200, {'Content-Type': 'image/png'});
-    res.write( buffer );
-    res.end();
+  let encryptContent= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
+  let filename=await wxService.getWxQrcodeFilenameByContent(encryptContent);
+  if(filename){
+    let url=utils.picfilenameToUrl(filename);
+    res.json(utils.restful(null,{url:url},null))
   }
-  else{
-    res.writeHead(414, {'Content-Type': 'text/html'});
-    res.end('<h1>Error</h1>');
-  }
+  else res.json(utils.restful(-1,null,"二维码生成失败！"));
 })
 
 //审核证书通过
