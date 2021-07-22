@@ -124,7 +124,7 @@ function checkSign(params,sign){
  * @returns 已经保存的图片名，如果没有保存为空
  */
 async function getWxQrcodeFilenameByContent(content){
-    let encr = await EncryptContent.findOne({content:encryptContent})
+    let encr = await EncryptContent.findOne({content:content})
     if(encr){
         return encr.filename;
     }

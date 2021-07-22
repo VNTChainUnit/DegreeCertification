@@ -81,7 +81,7 @@ router.get('/qrcode', async(req, res, next)=> {
 /**
  * 获取微信二维码地址
  */
-router.get('/wxQrcode', async(req, res, next)=> {
+router.get('/api/wxQrcode', async(req, res, next)=> {
   let student=await studentService.getByUsername(req.session.username)
   let encryptContent= utils.encryptCertificate(student.certificate_number,req.session.idnumber)
   let filename=await wxService.getWxQrcodeFilenameByContent(encryptContent);

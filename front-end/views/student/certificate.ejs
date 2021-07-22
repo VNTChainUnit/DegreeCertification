@@ -115,7 +115,7 @@
 								  </div>
 								  <div class="cer_table_QRcode">
 									  <div class="cer_table_codetext">方式二：<br>官方小程序</div>
-									<img src="/static/images/small_program_code.png" style="height: 90px;" />
+									<img src="" style="height: 90px;" id="wxqrcode" />
 								  </div>
 							  </div></td>
 						  	<td></td>
@@ -209,7 +209,17 @@
                 });
              })
         })
-		  
+		
+		$.get('/student/api/wxQrcode',(res)=>{
+			if(res.code==0){
+				console.log(res)
+				$("#wxqrcode").attr('src',res.data.url);
+			}
+			else{
+				layer.alert(res.msg)
+			} 
+		})
+
 		  //用户退出
 		  	$(".login-out").click(function(){
 		  		layer.confirm("确认退出系统吗？",{
