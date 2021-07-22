@@ -38,8 +38,8 @@ function saveFileName(contentid,filename){
 
 async function getEncryptContent(id){
     let obj=await EncryptContent.findById(id);
-    if(obj)return false;
-    return obj.content;
+    if(obj)return obj.content;
+    else return null;
 }
 
 /**

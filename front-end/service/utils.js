@@ -2,7 +2,7 @@ const md5=require('md5')
 const secret="GgX5jYPe"
 const crypto = require('crypto');
 const Config=require('../config')
-const certificateService=require('./certificateService');
+
 function aesEncrypt(data) {
     const cipher = crypto.createCipher('aes192', secret);
     var crypted = cipher.update(data, 'utf8', 'hex');
@@ -60,16 +60,6 @@ function getDateStr(date){
     return d.getFullYear()+dash+
     pad(d.getMonth()+1)+dash+
     pad(d.getDate());
-  }
-
-  //从加密信息获取证书
-  async function getCertificateByEncryptContent(content){
-    let code=aesDecrypt(content)
-    let codearr=code.split('|')
-    let idnumber=codearr[0]
-    let certificatenumber=codearr[1]
-    let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
-    return certificate;
   }
 
   function encryptCertificate(certificateNumber,idnumber){
@@ -148,7 +138,6 @@ module.exports={
     aesDecrypt:aesDecrypt,
     getClientIP:getClientIP,
     getDateStr:getDateStr,
-    getCertificateByEncryptContent:getCertificateByEncryptContent,
     encryptCertificate:encryptCertificate,
     mapUncheckedCert:mapUncheckedCert,
     getSign:getSign,
