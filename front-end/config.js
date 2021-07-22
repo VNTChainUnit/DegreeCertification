@@ -16,5 +16,6 @@ module.exports={
 	databaseUrl:databaseUrl,
 	emailConfig:emailConfig,
 	donainname:donainname,
-	redisConfig:redisConfig
+	redisConfig:redisConfig,
+	sign_secret:privateinfo.sign_secret
 }

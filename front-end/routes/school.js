@@ -6,6 +6,38 @@ const studentService= require('../service/studentService');
 const student = require('../models/student');
 const blockchain = require('../service/blockchain/main')
 const certificateService=require('../service/certificateService')
+const certificateCheckService=require('../service/certificateCheckService');
+var multer  = require('multer')
+var fs = require('fs');
+const xlsx = require('node-xlsx')
+var path=require('path');
+
+//***********文件上传配置begin
+var createFolder = function(folder){
+  try{
+      fs.accessSync(folder); 
+  }catch(e){
+      fs.mkdirSync(folder);
+  }  
+};
+
+var uploadFolder = './upload/excel';
+
+createFolder(uploadFolder);
+// 通过 filename 属性定制
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, uploadFolder);    // 保存的路径，备注：需要自己创建
+  },
+  filename: function (req, file, cb) {
+      // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
+      cb(null, Date.now()+"."+"xls");  
+  }
+});
+
+var upload = multer({ storage: storage });
+//***********文件上传配置end
+
 //身份验证
 router.use('/', (req, res, next) => {
   if (req.session.username!=null && req.session.usertype==3) {
@@ -29,6 +61,11 @@ router.get('/studentAccount',function(req,res,next){
 router.get('/uploadCertificate',async function(req,res,next){
   let school=await schoolService.getSchoolByUsername(req.session.username)
   res.render('school/uploadCertificate',{school:school});
+})
+
+router.get('/multiUploadCertificate',async function(req,res,next){
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  res.render('school/schoolMultiUpload',{school:school});
 })
 
 router.get('/api/student',async (req,res,next)=>{
@@ -69,17 +106,26 @@ router.put('/api/student',async(req,res,next)=>{
   res.json(utils.restful(0,null,"默认密码为"+defaultpassword+"<br>请提醒学生尽快修改密码！"))
 })
 
+//增加待审核的证书
 router.post('/api/certificate',async(req,res,next)=>{
   let data=req.body
   let school=await schoolService.getSchoolByUsername(req.session.username)
-  let result=await certificateService.addCertificate(school.name,data.name,data.idnumber,
+  certificateCheckService.addUncheckedCertificate(school._id,school.name,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
-  if(result){
-    
-  res.json(utils.restful(null,result,null))
+  res.json(utils.restful(null,null,null))
+})
+
+router.post('/api/uploadManyCertificate',upload.single('file'),async function(req,res,next){
+  var file = req.file;
+  let filePath=path.join(__dirname,'../upload/excel/'+file.filename)
+  let sheetList = xlsx.parse(filePath);
+  //第九行开始取数据，证书编号、姓名、学号、身份证号、专业名称、学位类别、毕业日期
+  if(sheetList[1]==null){
+    //TODO 返回错误
   }
-  else{
-    res.json(utils.restful(-1,null,"上传失败，请稍后再试！"))
-  }
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  let certificateChecks = utils.mapUncheckedCert(sheetList,school);
+  certificateCheckService.addManyUncheckedCertificates(certificateChecks);
+  res.json(utils.restful(null,null,"成功上传证书"+certificateChecks.length+"个。"))
 })
 module.exports = router;

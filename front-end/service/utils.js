@@ -1,7 +1,7 @@
 const md5=require('md5')
 const secret="GgX5jYPe"
 const crypto = require('crypto');
-
+const Config=require('../config')
 
 function aesEncrypt(data) {
     const cipher = crypto.createCipher('aes192', secret);
@@ -62,6 +62,74 @@ function getDateStr(date){
     pad(d.getDate());
   }
 
+  function encryptCertificate(certificateNumber,idnumber){
+    var code=idnumber+"|"+certificateNumber
+    var encryptcode=aesEncrypt(code)
+    return encryptcode;
+  }
+  
+  function mapUncheckedCert(excelData,school){
+        const  data=excelData[0].data;
+        //从第九号行开始
+        let certlist=[];
+        data.forEach((item, index) => {
+            if (index <= 7) {
+              // 去除前8行
+              return;
+            } else {
+              certlist.push({
+                certificatenumber: item[0],
+                name: item[1],
+                studentnumber: item[2],
+                idnumber: item[3],
+                major: item[4],
+                degreetype: item[5],
+                graduationdate: item[6],
+                school:school.name,
+                school_id:school._id
+              });
+            }
+        });
+        return certlist;
+  }
+
+  function getSign(params){
+    const secret=Config.sign_secret;
+    let str = '';
+    for (const k in params) {
+      if (k=="sign" || k instanceof Array || k instanceof Object || params[k] === undefined) {
+        continue;
+      }
+      if(str!='')str+="&";
+      str+=k+"="+params[k];
+    }
+    str = encodeURI(`${ str }${ secret }`).toUpperCase();
+    return md5(str).toUpperCase();
+  }
+
+//检查一个str是否是json字符串
+function isJSON(str) {
+  if (typeof str == 'string') {
+      try {
+          var obj=JSON.parse(str);
+          if(typeof obj == 'object' && obj ){
+              return true;
+          }else{
+              return false;
+          }
+
+      } catch(e) {
+          console.log('error：'+str+'!!!'+e);
+          return false;
+      }
+  }
+  console.log('It is not a string!')
+}
+
+function picfilenameToUrl(filename){
+  return Config.donainname+":3000/pic/"+filename;
+}
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -69,5 +137,10 @@ module.exports={
     aesEncrypt:aesEncrypt,
     aesDecrypt:aesDecrypt,
     getClientIP:getClientIP,
-    getDateStr:getDateStr
+    getDateStr:getDateStr,
+    encryptCertificate:encryptCertificate,
+    mapUncheckedCert:mapUncheckedCert,
+    getSign:getSign,
+    isJSON:isJSON,
+    picfilenameToUrl:picfilenameToUrl
 }

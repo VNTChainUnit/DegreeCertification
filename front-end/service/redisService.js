@@ -31,6 +31,12 @@ Redis.get = async(key)=>{
     return await text(key);
 };
  
+/**
+ * 
+ * @param {键} key 
+ * @param {过期时间：秒} time 
+ * @returns 
+ */
 Redis.expire = function(key, time) {
     return client.expire(key, time);
 };

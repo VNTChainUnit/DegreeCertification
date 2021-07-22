@@ -203,14 +203,14 @@ router.get('/companyapply',(req,res,next)=>{
   res.render('companyRegister')
 })
 
+
+/**
+ * 普通扫码核验证书
+ */
 router.get('/check/:code',async (req,res,next)=>{
   try{
     let encryptcode =req.params['code']
-    let code=utils.aesDecrypt(encryptcode)
-    let codearr=code.split('|')
-    let idnumber=codearr[0]
-    let certificatenumber=codearr[1]
-    let certificate=await certificateService.getCertificate(certificatenumber,idnumber)
+    let certificate = await certificateService.getCertificateByEncryptContent(encryptcode);
     if(certificate){
       res.render('certificate',{certificate,certificate})
     }
@@ -222,6 +222,5 @@ router.get('/check/:code',async (req,res,next)=>{
     res.send("二维码已被篡改！")
   }
 })
-
 
 module.exports = router;
