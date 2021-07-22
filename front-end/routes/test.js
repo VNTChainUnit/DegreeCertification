@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const wxService= require('../service/wxService')
-const certificateService=require('../service/certificateService')
 const utils=require('../service/utils')
 const  Student=require("../models/student")
 
@@ -30,16 +29,13 @@ router.get("/wxQrcode",async (req,res,next)=>{
   }
 })
 
-router.get("/check",async (req,res,next)=>{
-  //60f7cf6a61a4006634e26e4f
-    let content=req.query.content
-    let encryptContent=await wxService.getEncryptContent(content);
-    if(encryptContent){
-    let cert=await certificateService.getCertificateByEncryptContent(encryptContent);
-       res.json(utils.restful(0,cert,null))
-    }
-    else res.json(utils.restful(-1,null,"参数有误"))
-})
 
+router.post("/checkSign",async (req,res,next)=>{
+  let params={content:req.body.content};
+  if(wxService.checkSign(params,req.body.sign)){
+    res.json(utils.restful(null,null,null))
+  }
+  else res.json(utils.restful(-1,null,null))
+})
 
 module.exports=router

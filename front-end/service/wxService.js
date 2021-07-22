@@ -115,7 +115,7 @@ async function saveWxQrcode(origincontent){
 }
 
 function checkSign(params,sign){
-    return utils.getSign()==sign
+    return utils.getSign(params)==sign
 }
 
 /**

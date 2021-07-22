@@ -81,7 +81,7 @@ router.post('/check/',async (req,res,next)=>{
  */
  router.post('/wx/check/content',async (req,res,next)=>{
   let params={content:req.body.content};
-  if(wxService.checkSign(params,req,body.sign)){
+  if(wxService.checkSign(params,req.body.sign)){
     let encryptContent=await wxService.getEncryptContent(req.content);
     if(encryptContent){
     let cert=await certificateService.getCertificateByEncryptContent(encryptContent);
