@@ -106,8 +106,8 @@ async function getTransaction(transactionhash){
 //获取证书信息
 function getCertificate(certificateNumber, idnumber){
     //加密参数
-    certificateNumber = aesEncrypt(certificateNumber)
-    idnumber = aesEncrypt(idnumber)
+    certificateNumber =aesEncrypt(certificateNumber)
+    idnumber =aesEncrypt(idnumber)
     var contract = vnt.core.contract(abi).at(contractAddress);
     var res = contract.GetCertificate.call(certificateNumber,idnumber,{from:account.address});
     //返回原始的，之后再解密

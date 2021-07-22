@@ -27,7 +27,7 @@ async function addCertificate(schoolname,name,idnumber,
 }
 
 async function getCertificate(certificatenumber,idnumber){
-    let certificateres = blockchain.getCertificate(certificatenumber,idnumber)
+    let certificateres = await blockchain.getCertificate(certificatenumber,idnumber)
     if(certificateres){
         let dataarr=certificateres.split("|")
         //对每个字段解密
@@ -53,7 +53,18 @@ async function getCertificate(certificatenumber,idnumber){
     else return false;
 }
 
+  //从加密信息获取证书
+  async function getCertificateByEncryptContent(content){
+    let code=utils.aesDecrypt(content)
+    let codearr=code.split('|')
+    let idnumber=codearr[0]
+    let certificatenumber=codearr[1]
+    let certificate=await getCertificate(certificatenumber,idnumber)
+    return certificate;
+  }
+
 module.exports={
     addCertificate:addCertificate,
-    getCertificate:getCertificate
+    getCertificate:getCertificate,
+    getCertificateByEncryptContent:getCertificateByEncryptContent
 }

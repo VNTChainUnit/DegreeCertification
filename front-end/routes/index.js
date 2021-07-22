@@ -210,7 +210,7 @@ router.get('/companyapply',(req,res,next)=>{
 router.get('/check/:code',async (req,res,next)=>{
   try{
     let encryptcode =req.params['code']
-    let certificate = await utils.getCertificateByEncryptContent(certificate);
+    let certificate = await certificateService.getCertificateByEncryptContent(certificate);
     if(certificate){
       res.render('certificate',{certificate,certificate})
     }
