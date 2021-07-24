@@ -1,0 +1,142 @@
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">学生学号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="studentnumber" autocomplete="off" class="layui-input" >
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">学生姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">修改</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'table','miniPage','element'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            miniPage = layui.miniPage;
+        let data1=[
+            {
+                _id:1,
+                name:"fay",
+                studentnumber:"201833333333",
+                certificatenumber:"1111111111111111",
+				idnumber:"123000000000000000",
+				degreetype:"本科",
+				major:"软件工程",
+				graduationdate:"2021-07"
+            }
+        ]
+        table.render({
+            elem: '#currentTableId',
+            // url:'/school/api/student',
+            data:data1,
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['exports', 'print'],
+            cols: [[
+                {field: '_id', hide:true},
+				{type:"numbers",title:"序号"},
+                {field: 'name',width:260, title: '姓名'},
+                {field: 'studentnumber', title: '学号'},
+                {field: 'certificatenumber',  title: '证书编号'},
+                {field: 'idnumber',  title: '身份证号'},
+                {field: 'degreetype',  title: '学位'},
+                {field: 'major',  title: '专业'},
+                {field: 'graduationdate',  title: '毕业年月'},
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            ]],
+            text: {
+                none: '学生未注册或证书未上传' 
+            },
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            skin: 'line'
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) { 
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    name: data.field.name,
+                    studentnumber:data.field.studentnumber
+                }
+            }, 'data');
+            return false;
+        });
+
+
+        table.on('tool(currentTableFilter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+				//TODO  修改
+                layer.open({
+				  type: 2
+				  , title: '修改证书'
+				  , area: ['700px', '400px'] //宽高
+				  , shadeClose: false
+				  , scrollbar: false // 父页面 滚动条 禁止
+				  , content: ['/school/editUncheckedCertificate?checkid='+data._id,'no']
+				  , cancel: function () {
+					  //右上角关闭回调
+					}
+				,end:function(){
+				  table.reload('currentTableId')
+				}
+                })
+            } else if (obj.event === 'delete') {
+                layer.confirm('确认要删除'+data.name+"的账户吗?<br>删除后学生只能重新注册账户", function (index) {
+                    $.ajax({
+                        url:'/school/api/uncheckedCertificate',
+                        method:'DELETE',
+                        data:{checkid:data._id},
+                        success:(res)=>{
+                            if(res.code==0){
+                                obj.del();
+                                layer.msg("删除成功！")
+                            }
+                            else{
+                                layer.msg("删除失败！"+res.msg)
+                            }
+                            layer.close(index);
+                        }
+                    })
+                });
+            }
+        });
+
+    });
+</script>
