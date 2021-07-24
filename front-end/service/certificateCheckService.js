@@ -44,14 +44,14 @@ async function getStudentUncheckCertificate(stu) {
 
 /**
  * 获取学生未核验证书
- * @param {学号} studetnnumber 
+ * @param {学号} studentnumber 
  * @param {姓名} name 
  * @param {学校id} school_id 
  */
- async function getStudentUncheckCertificate(studetnnumber,name,school_id) {
+ async function getStudentUncheckCertificateFilter(studentnumber,name,school_id) {
      let filter={school_id:school_id}
-     if(studetnnumber){
-         filter.studetnnumber=studetnnumber
+     if(studentnumber){
+         filter.studentnumber=studentnumber
      }
      if(name){
          filter.name=name;

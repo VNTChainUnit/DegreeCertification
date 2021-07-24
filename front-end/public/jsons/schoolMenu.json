@@ -28,6 +28,12 @@
             "target": "_self"
           },
           {
+            "title": "待核验证书管理",
+            "href": "/school/uncheckedCertificate",
+            "icon": "fa fa-gears",
+            "target": "_self"
+          },
+          {
             "title": "学生账户管理",
             "href": "/school/studentAccount",
             "icon": "fa fa-gears",

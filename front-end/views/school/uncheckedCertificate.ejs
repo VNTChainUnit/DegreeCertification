@@ -44,6 +44,7 @@
             form = layui.form,
             table = layui.table,
             miniPage = layui.miniPage;
+
         let data1=[
             {
                 _id:1,
@@ -58,8 +59,8 @@
         ]
         table.render({
             elem: '#currentTableId',
-            // url:'/school/api/student',
-            data:data1,
+            url:'/school/api/uncheckedCertificate',
+            // data:data1,
             toolbar: '#toolbarDemo',
             defaultToolbar: ['exports', 'print'],
             cols: [[
@@ -75,7 +76,7 @@
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
             text: {
-                none: '学生未注册或证书未上传' 
+                none: '未找到待核验证书' 
             },
             limits: [10, 15, 20, 25, 50, 100],
             limit: 15,
@@ -102,23 +103,24 @@
         table.on('tool(currentTableFilter)', function (obj) {
             var data = obj.data;
             if (obj.event === 'edit') {
-				//TODO  修改
-                layer.open({
-				  type: 2
-				  , title: '修改证书'
-				  , area: ['700px', '400px'] //宽高
-				  , shadeClose: false
-				  , scrollbar: false // 父页面 滚动条 禁止
-				  , content: ['/school/editUncheckedCertificate?checkid='+data._id,'no']
-				  , cancel: function () {
-					  //右上角关闭回调
-					}
-				,end:function(){
-				  table.reload('currentTableId')
-				}
-                })
+                var content = miniPage.getHrefContent('/school/updateUncheckedCertificate?checkid='+data._id);
+                var openWH = miniPage.getOpenWidthHeight();
+				var index = layer.open({
+                    title: '修改证书',
+                    type: 1,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: [openWH[0] + 'px', openWH[1] + 'px'],
+                    offset: [openWH[2] + 'px', openWH[3] + 'px'],
+                    content: content,
+                    end:()=>{table.reload('currentTableId')}
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
             } else if (obj.event === 'delete') {
-                layer.confirm('确认要删除'+data.name+"的账户吗?<br>删除后学生只能重新注册账户", function (index) {
+                layer.confirm('确认要删除'+data.name+"的证书吗?", function (index) {
                     $.ajax({
                         url:'/school/api/uncheckedCertificate',
                         method:'DELETE',

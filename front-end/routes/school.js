@@ -82,7 +82,7 @@ router.get('/updateUncheckedCertificate',async function(req,res,next){
     res.render('school/updateUncheckedCertificate',{school:school,certificate:certificate});
   }
   else{
-    res.redirect('/uncheckedCertificate')
+    res.redirect('/school/uncheckedCertificate')
   }
 })
 
@@ -155,12 +155,12 @@ router.get('/api/uncheckedCertificate',async (req,res,next)=>{
   //判断是否是条件查询
   let ret;
   if(data.name || data.studentnumber){
-    ret = await certificateCheckService.getStudentUncheckCertificateFilter(data.name,data.studentnumber,school._id)
+    ret = await certificateCheckService.getStudentUncheckCertificateFilter(data.studentnumber,data.name,school._id)
   }
   else{
     ret=await certificateCheckService.listSchoolUncheckedCertificates(school._id);
   }
-  res.json(utils.restful(null,student,null))
+  res.json(utils.restful(null,ret,null))
 })
 
 //删除未待核验证书
