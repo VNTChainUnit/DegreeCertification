@@ -68,6 +68,24 @@ router.get('/multiUploadCertificate',async function(req,res,next){
   res.render('school/schoolMultiUpload',{school:school});
 })
 
+//学校管理未核验证书
+router.get('/uncheckedCertificate',async function(req,res,next){
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  res.render('school/uncheckedCertificate',{school:school});
+})
+
+//学校修改证书
+router.get('/updateUncheckedCertificate',async function(req,res,next){
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  let certificate = await certificateCheckService.getById(req.query.checkid);
+  if(certificate){
+    res.render('school/updateUncheckedCertificate',{school:school,certificate:certificate});
+  }
+  else{
+    res.redirect('/uncheckedCertificate')
+  }
+})
+
 router.get('/api/student',async (req,res,next)=>{
   let data=req.query
   //先拿到学校
@@ -128,4 +146,37 @@ router.post('/api/uploadManyCertificate',upload.single('file'),async function(re
   certificateCheckService.addManyUncheckedCertificates(certificateChecks);
   res.json(utils.restful(null,null,"成功上传证书"+certificateChecks.length+"个。"))
 })
+
+//搜索查询
+router.get('/api/uncheckedCertificate',async (req,res,next)=>{
+  let data=req.query
+  //先拿到学校
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  //判断是否是条件查询
+  let ret;
+  if(data.name || data.studentnumber){
+    ret = await certificateCheckService.getStudentUncheckCertificateFilter(data.name,data.studentnumber,school._id)
+  }
+  else{
+    ret=await certificateCheckService.listSchoolUncheckedCertificates(school._id);
+  }
+  res.json(utils.restful(null,student,null))
+})
+
+//删除未待核验证书
+router.delete('/api/uncheckedCertificate',(req,res,next)=>{
+  let id=req.body.checkid;
+  certificateCheckService.deleteUncheckedCertificate(id);
+  res.json(utils.restful(null,null,null));
+})
+
+//修改待核验证书
+router.put('/api/uncheckedCertificate',(req,res,next)=>{
+  let data=req.body
+  certificateCheckService.editStudentUncheckCertificate(data._id,data.name,data.idnumber,
+    data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
+  res.json(utils.restful(null,null,null))
+})
+
+
 module.exports = router;

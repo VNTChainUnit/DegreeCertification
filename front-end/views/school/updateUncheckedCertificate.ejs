@@ -1,0 +1,110 @@
+<div class="layuimini-main">
+
+    <div class="layui-form layuimini-form">
+        <input type="hidden" name='_id' value='<%= certificate._id%>'>
+		
+        <div class="layui-form-item">
+            <label class="layui-form-label required">姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入姓名" value="<%= certificate.name%>" class="layui-input">
+                
+            </div>
+        </div>
+		
+        <div class="layui-form-item">
+            <label class="layui-form-label required" >学号</label>
+            <div class="layui-input-block">
+                <input type="text" name="studentnumber" placeholder="请输入学号" value="<%= certificate.studentnumber%>" class="layui-input" required>
+            </div>
+        </div>
+		
+       <div class="layui-form-item">
+           <label class="layui-form-label required" >证书编号</label>
+           <div class="layui-input-block">
+               <input type="text" name="certificatenumber" placeholder="请输入证书编号" value="<%= certificate.certificatenumber%>" class="layui-input" required>
+           </div>
+       </div>
+	   
+	   <div class="layui-form-item">
+            <label class="layui-form-label required" >身份证号</label>
+            <div class="layui-input-block">
+                <input type="text" name="idnumber" placeholder="请输入身份证号" value="<%= certificate.idnumber%>" class="layui-input" required>
+            </div>
+        </div>
+		<div class="layui-form-item">
+            <label class="layui-form-label required" >学位</label>
+            <div class="layui-input-block">
+                <select lay-verify="required" name="degreetype">
+					<option value="学士" selected>学士</option>
+					<option value="硕士">硕士</option>
+					<option value="博士">博士</option>
+				</select>
+            </div>
+        </div>
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label required" >专业</label>
+			<div class="layui-input-block">
+				<input type="text" name="major" placeholder="请输入专业" value="<%= certificate.major%>" class="layui-input" required>
+			</div>
+		</div>
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label required" >毕业年月</label>
+			<div class="layui-input-block">
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" id="laydateid" name="graduationdate" placeholder="请选择毕业年月" lay-verify="required" value="<%= certificate.graduationdate%>">
+				</div>
+			</div>
+		</div>
+		
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+		
+    </div>
+</div>
+<script>
+    layui.use(['form', 'table','laydate'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            laydate=layui.laydate,
+            table = layui.table,
+            $ = layui.$;
+
+        /**
+         * 初始化表单，要加上，不然刷新部分组件可能会不加载
+         */
+        form.render();
+		
+		laydate.render({
+            elem: '#laydateid' //指定元素,
+            ,type: 'month'
+        });
+		
+        // 当前弹出层，防止ID被覆盖
+        var parentIndex = layer.index;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.ajax({
+                url:'/school/api/uncheckedCertificate',
+                method:'put',
+                data:data.field,
+                success:(res)=>{
+                    if(res.code==0){
+                        layer.msg("修改成功！")
+                        layer.close(parentIndex);
+                    }
+                    else{
+                        layer.msg("修改失败！"+res.msg)
+                    }
+                }
+            })
+            return false;
+        });
+
+    });
+</script>

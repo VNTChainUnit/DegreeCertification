@@ -36,11 +36,27 @@ async function addUncheckedCertificate(school_id, schoolname, name, idnumber,
 
 /**
  * 获取学生未核验证书
- * @param {学生id} student_id 
- * @param {学校id} school_id 
+ * @param stu 学生
  */
 async function getStudentUncheckCertificate(stu) {
     return await CertificateCheck.find({school_id:stu.school_id,studentnumber:stu.studentnumber});
+}
+
+/**
+ * 获取学生未核验证书
+ * @param {学号} studetnnumber 
+ * @param {姓名} name 
+ * @param {学校id} school_id 
+ */
+ async function getStudentUncheckCertificate(studetnnumber,name,school_id) {
+     let filter={school_id:school_id}
+     if(studetnnumber){
+         filter.studetnnumber=studetnnumber
+     }
+     if(name){
+         filter.name=name;
+     }
+    return await CertificateCheck.find(filter);
 }
 
 /**
@@ -55,11 +71,10 @@ async function getStudentUncheckCertificate(stu) {
  * @param {学号} studentnumber 
  * @param {证书编号} certificatenumber 
  */
-async function editStudentUncheckCertificate(check_id, schoolname, name, idnumber,
+async function editStudentUncheckCertificate(check_id, name, idnumber,
     degreetype, major, graduationdate, studentnumber, certificatenumber) {
         let uncheckedCert=await CertificateCheck.findById(check_id);
         if(!uncheckedCert)return false;
-        uncheckedCert.school=schoolname;
         uncheckedCert.name=name;
         uncheckedCert.idnumber=idnumber;
         uncheckedCert.degreetype=degreetype;
@@ -77,6 +92,15 @@ async function editStudentUncheckCertificate(check_id, schoolname, name, idnumbe
  */
 async function listSchoolUncheckedCertificates(school_id) {
     return await CertificateCheck.find({school_id:school_id});
+}
+
+/**
+ * 根据证书id获取未核验证书
+ * @param {证书id} check_id 
+ */
+ async function getById(check_id) {
+    let cert=await CertificateCheck.findById(check_id);
+    return cert;
 }
 
 /**
@@ -137,8 +161,10 @@ module.exports = {
     getStudentUncheckCertificate: getStudentUncheckCertificate,
     editStudentUncheckCertificate: editStudentUncheckCertificate,
     listSchoolUncheckedCertificates: listSchoolUncheckedCertificates,
+    getStudentUncheckCertificateFilter:getStudentUncheckCertificateFilter,
     checkCertificate: checkCertificate,
     deleteUncheckedCertificate: deleteUncheckedCertificate,
     addManyUncheckedCertificates: addManyUncheckedCertificates,
-    registerCheck:registerCheck
+    registerCheck:registerCheck,
+    getById:getById
 }
