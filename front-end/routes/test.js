@@ -1,41 +1,23 @@
 var express = require('express');
 var router = express.Router();
-const wxService= require('../service/wxService')
+const blockchain=require('../service/blockchain/main')
 const utils=require('../service/utils')
-const  Student=require("../models/student")
-
-let studentService={}
-studentService.getByUsername=async function(username){
-    return await Student.findOne({username:username})
-}
-
-router.get("/wxQrcode",async (req,res,next)=>{
-    let student=await studentService.getByUsername("csu_xh202")
-  let origincontent= utils.encryptCertificate(student.certificate_number,"202")
-  let buffer=await wxService.getWxQRCode(origincontent)
-  // if(buffer){
-  //   res.writeHead(200, {'Content-Type': 'image/png'});
-  //   res.write( buffer );
-  //   res.end();
-  // }
-  if(buffer){
-    res.writeHead(200, {'Content-Type': 'image/jpeg' });
-    res.write( buffer );
-    res.end();
-  }
-  else{
-    res.writeHead(414, {'Content-Type': 'text/html'});
-    res.end('<h1>Error</h1>');
-  }
+const wxService =require('../service/wxService')
+router.get("/getcertificate",async (req,res,next)=>{
+  let ret = await blockchain.getCertificate("zsbh202","202")
+  res.send(ret);
+  res.end();
 })
 
+router.get("/addcertificate",async (req,res,next)=>{
+  blockchain.addCertificate('测试大学',"xm","199","本科","major","2021-07","xh199","zsbh199")
+})
 
-router.post("/checkSign",async (req,res,next)=>{
-  let params={content:req.body.content};
-  if(wxService.checkSign(params,req.body.sign)){
-    res.json(utils.restful(null,null,null))
-  }
-  else res.json(utils.restful(-1,null,null))
+router.get("/addWxQrCode",async(req,res,next)=>{
+  let certificatenumber="103384202106152390"
+  let idnumber="110425200002282330"
+  let encryptContent= utils.encryptCertificate(certificatenumber,idnumber)
+  wxService.saveWxQrcode(encryptContent);
 })
 
 module.exports=router

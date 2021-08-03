@@ -1,7 +1,7 @@
 const md5=require('md5')
-const secret="GgX5jYPe"
-const crypto = require('crypto');
 const Config=require('../config')
+const crypto = require('crypto');
+const secret=Config.appSecret
 
 function aesEncrypt(data) {
     const cipher = crypto.createCipher('aes192', secret);
