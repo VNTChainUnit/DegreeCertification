@@ -4,7 +4,7 @@
   "description": "deploy the degree.c contract",
   "main": "deploy-degree.js",
   "scripts": {
-    "start": "node deploy-degree",
+    "start": "node deploy-degree > result",
     "test":  "node ./testSmartContract/test"
   },
   "author": "fay",

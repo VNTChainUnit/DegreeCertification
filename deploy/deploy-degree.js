@@ -2,14 +2,14 @@ var fs = require('fs');
 var Vnt = require("vnt")
 var vntkit = require("vnt-kit")
 var Tx = require("ethereumjs-tx")
-
+var config = require("./config")
 // 设置连接的节点
 var vnt = new Vnt();
 vnt.setProvider(new vnt.providers.HttpProvider("http://47.111.100.232:8880"));
 // 解锁用户
-var ksDir = "/home/lemon/Project/vntchain/test/"
-var kFile1 = "UTC--2021-02-05T23-22-11.465260418Z--46a1a94e8a2572621020428fea1485f854c27b6c"
-var pass1 = ""
+var ksDir = config.accountDir
+var kFile1 = config.accountFile
+var pass1 = config.accountPwd
 
 function openAccount(file, passwd) {
     var content = fs.readFileSync(file).toString("utf-8")
@@ -23,8 +23,8 @@ try{
 }
 
 // 准备代码和abi
-var codeFile = "/home/lemon/Project/vntchain/DegreeCertification/contract/output/Degree.compress"
-var abiFile = "/home/lemon/Project/vntchain/DegreeCertification/contract/output/Degree.abi"
+var codeFile = "../contract/output/Degree.compress"
+var abiFile = "../contract/output/Degree.abi"
 var wasmabi = fs.readFileSync(abiFile)
 //将abi数据解析成json结构
 var abi = JSON.parse(wasmabi.toString("utf-8"))

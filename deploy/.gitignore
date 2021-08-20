@@ -1,6 +1,3 @@
 node_modules/
 deploy-degree-private.js
-ret321.txt
-ret322.txt
-ret3.29final.txt
-ret331.txt
+*.txt
