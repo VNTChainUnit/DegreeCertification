@@ -15,10 +15,10 @@
 ## 运行说明
 
 - 下载/clone源码
-- deploy文件夹下修改账户为你账户，执行npm instal，拿到的交易地址放在service/Blockchain/common.js
+- deploy文件夹下部署智能合约，拿到合约地址
+- 修改private.js config.js service/blockchain/owneraccount
 - 执行 npm install
-- 配置数据库 app.js
-- npm start 启动 默认3000端口号
+- npm start 启动 默认3001端口号
 
 
 
