@@ -12,6 +12,7 @@ const redisConfig={
 	port:privateinfo.redis_port,
 	password:privateinfo.redis_pass
 }
+// 二维码编码、图片使用
 const donainname="https://xinyi.laoluoli.com"
 module.exports={
 	databaseUrl:databaseUrl,

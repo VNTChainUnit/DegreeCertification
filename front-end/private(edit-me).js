@@ -8,7 +8,7 @@ module.exports={
     redis_port:"",//your redise server port
     redis_url:"",//your redis server,
     redis_pass:"",//your redis password
-    sign_secret:"",//your sigin secret,
+    sign_secret:"",//your sigin secret(wx api),
     secret:""// your app secret
 }
 //after this your should chanege this file to "private.js"

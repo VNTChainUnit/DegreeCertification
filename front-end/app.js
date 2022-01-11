@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const bodyParser=require('body-parser');
 const session = require('express-session');
-
+const secret = require('./private').secret
 var indexRouter = require('./routes/index');
 var studentRouter = require('./routes/student');
 var companyRouter = require('./routes/company');
@@ -17,7 +17,7 @@ var app = express();
 app.set('env', 'production');
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(session({
-  secret : 'gouyixia', // sign
+  secret : secret,
   resave : true,
   saveUninitialized: false, // 
   cookie : {
