@@ -7,6 +7,7 @@ module.exports={
     miniprogram_secret:"",//your secret in mini-program,
     redis_port:"",//your redise server port
     redis_url:"",//your redis server,
+    redis_pass:"",//your redis password
     sign_secret:"",//your sigin secret,
     secret:""// your app secret
 }

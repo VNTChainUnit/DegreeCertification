@@ -8,8 +8,9 @@ const emailConfig={
 	webname:"信诣团队"
 }
 const redisConfig={
-	url:privateinfo.redis_url,
-	port:privateinfo.redis_port
+	host:privateinfo.redis_url,
+	port:privateinfo.redis_port,
+	password:privateinfo.redis_pass
 }
 const donainname="https://xinyi.laoluoli.com"
 module.exports={
