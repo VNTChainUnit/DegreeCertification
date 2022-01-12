@@ -5,3 +5,5 @@ service/blockchain/owneraccount
 https/
 routes/test.js
 package-lock.json
+upload/excel/*.xls
+public/downloads/check/*.xlsx

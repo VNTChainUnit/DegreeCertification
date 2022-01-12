@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/static/stylesheets/bottom.css" />
 <link href="/static/layui/css/layui.css" rel="stylesheet" type="text/css">
 <link href="/static/stylesheets/company.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/static/layuimini/lib/jq-module/zyupload/zyupload-1.0.0.min.css">
 </head>
 
 <body>
@@ -25,11 +26,42 @@
 	
 	<section class="company-search">
 		<div class="layui-container com_body">
-			<div class="layui-row com_body_row">
+			<!--批量查询页-->
+			<div class="layui-row com_body_row" id="multiple_check" style="display: none;">
+				<div class="layui-col-mid9">
+					<div style="text-align: center; padding: 30px 30px;" >
+						<button class="layui-btn  layui-bg-gray" id="single_check_button" style="width: 60%;">切换单次查询</button>
+						<div class="layui-form-item" style="margin-top: 30px;">
+							<label class="com_body_label">证书批量验证</label>
+						</div>
+					</div>
+					<div class="layui-container">
+						<div class="layui-main" style="margin-top: 30px;">
+							<!-- zyupload模板 -->
+							<div id="zyupload" class="zyupload">
+								<div>
+									<span style="font-size:17px; color: gray;">模板下载链接请点击次按钮：</span>
+									<!-- 点击按钮下载模板 -->
+									<button id="downloadLink" class="layui-btn layui-btn-normal" style="background: none repeat scroll 0 0 #00B7EE;">下载模板</button>
+								</div>
+							</div>
+							<!-- 显示console -->
+							<div style="border:1px solid #ccc; width: 650px; margin: 0 auto; color: red; padding: 15px;" id="show_console"></div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<!--单次查询页-->
+			<div class="layui-row com_body_row" id="single_check">
 				
 				<br>
-				<form action="" class="layui-form com_body_form">
+				<form method="POST" class="layui-form com_body_form" onsubmit='return false';>
 					<div class="layui-col-md7">
+
+						<div  style="text-align: center;">
+							<button class="layui-btn layui-btn-fluid layui-bg-gray" id="multiple_check_button" >切换批量查询</button>
+						</div>
+						<br>
 						<div class="layui-form-item">
 							<label class="com_body_label">证书验证</label>
 						</div>
@@ -89,12 +121,12 @@
 						<br>
 
 						<div class="company_seach_label_div">
-								<p id="search-true" class="com_body_search_true">查询成功，证书无误！</p>
-								<p id="search-false" class="com_body_search_false">查询失败，证书信息不正确！</p>
+								<p id="search-true" class="com_body_search_true">核验成功，证书无误！</p>
+								<p id="search-false" class="com_body_search_false">核验失败，证书信息不正确！</p>
 						</div>
 
 						<div class="layui-form-item" style="text-align: center;">
-							<button class="layui-btn com_body_search" lay-submit lay-filter="companySearch">点击查询</button>
+							<button type="button" class="layui-btn com_body_search" lay-submit lay-filter="companySearch">点击查询</button>
 						</div>
 					</div>
 					<div class="layui-col-md5 com_body_image">
@@ -110,6 +142,8 @@
 	<%-include("../foot.ejs")%>
 
 <script src="/static/layui/layui.js"></script>
+<script type="text/javascript" src="/static/layuimini/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="/static/layuimini/lib/jq-module/zyupload/zyupload-1.0.0.min.js"></script>
 <script>
 //Demo
 layui.use(['form','element','laydate'], function(){
@@ -138,6 +172,19 @@ layui.use(['form','element','laydate'], function(){
 		})
 	
 })
+
+	// 监听切换
+	$('#single_check_button').click(function(){
+		console.log('hhh');
+		$('#multiple_check').hide();
+		$('#single_check').show();
+	})
+
+	$('#multiple_check_button').click(function(){
+		$('#single_check').hide();
+		$('#multiple_check').show();
+	})
+
   //监听提交
   form.on('submit(companySearch)', function(data){
 	  var index=layer.load(0, {shade:0.2,time: 10*1000})
@@ -180,5 +227,70 @@ layui.use(['form','element','laydate'], function(){
 });
 
 </script>
+<!--文件上传-->
+<script type="text/javascript">
+    $(function () {
+		$("#show_console").hide();
+        // 初始化插件
+        $("#zyupload").zyUpload({
+            width: "700px",                 // 宽度
+            height: "450px",                 // 宽度
+            itemWidth: "140px",                 // 文件项的宽度
+            itemHeight: "140px",                 // 文件项的高度
+            url: "/company/api/uploadCheckMultipleCertificate",  // 上传文件的路径
+            fileType: ["xls", "xlsx"],// 上传文件的类型
+            fileSize: 51200000,                // 上传文件的大小
+            multiple: true,                    // 是否可以多个文件上传
+            dragDrop: true,                    // 是否可以拖动上传文件
+            tailor: true,                    // 是否可以裁剪图片
+            del: true,                    // 是否可以删除文件
+            finishDel: false,  				  // 是否在上传文件完成后删除预览
+            /* 外部获得的回调接口 */
+            onSelect: function (selectFiles, allFiles) {    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
+                console.info("当前选择了以下文件：");
+                console.info(selectFiles);
+            },
+            onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
+                console.info("当前删除了此文件：");
+                console.info(file.name);
+            },
+            onSuccess: function (file, response) {          // 文件上传成功的回调方法
+				$("#show_console").show();
+                let res=JSON.parse(response);
+				console.info("此文件上传成功：");
+                console.info(file.name);
+                console.info("此文件上传到服务器地址：");
+                console.info(response);
+				if(res.code==0){
+					let url = res.data.url;
+					window.open(url);
+					$("#show_console").append("<p>批量核验成功，如果没有弹窗，请点击<a href='"+url+"'>链接查看</a></p>");
+				}
+				else{
+					$("#show_console").append("<p>处理失败，" + res.msg + "</p>");
+				}
+                
+            },
+            onFailure: function (file, response) {          // 文件上传失败的回调方法
+                $("#show_console").show();
+				console.info("此文件上传失败：");
+                console.info(file.name);
+                $("#show_console").append("<p>上传失败，失败原因为：" + response.msg + "</p>");
+            },
+            onComplete: function (response) {           	  // 上传完成的回调方法
+                console.info("文件上传完成");
+                console.info(response);
+            }
+        });
+
+    });
+	
+	//点击按钮下载excel模板
+	$("#downloadLink").click(function(){
+		//测试链接
+		window.open("/static/templates/check_template.xls");
+	})
+</script>
+
 </body>
 </html>

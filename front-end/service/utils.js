@@ -1,9 +1,14 @@
 const md5=require('md5')
 const Config=require('../config')
 const crypto = require('crypto');
+const xlsx = require('node-xlsx')
+const fs = require('fs');
 const secret=Config.appSecret
 
 function aesEncrypt(data) {
+    if(data == null ){
+      return "";
+    }
     const cipher = crypto.createCipher('aes192', secret);
     var crypted = cipher.update(data, 'utf8', 'hex');
     crypted += cipher.final('hex');
@@ -11,6 +16,9 @@ function aesEncrypt(data) {
 }
  
 function aesDecrypt(encrypted) {
+  if(encrypted == null ){
+    return "";
+  }
     const decipher = crypto.createDecipher('aes192', secret);
     var decrypted = decipher.update(encrypted, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
@@ -93,6 +101,31 @@ function getDateStr(date){
         return certlist;
   }
 
+  /**
+   * excel导出
+   * @param {写入数据} data 
+   * @param {路径} filepath 
+   * @param {sheet名}} sheetname 
+   * @returns 处理结果
+   */
+  function excelExport(data, filepath, sheetname){
+    if(!sheetname){
+      sheetname = 'sheet1';
+    }
+    if(!filepath){
+      return false;
+    }
+    let buffer = xlsx.build([{name: sheetname, data: data}]);
+    try {
+      fs.writeFileSync(filepath,buffer,{'flag':'w'});
+    }
+    catch(e) {
+      console.log('excel文件导出失败!'+e.msg);
+      return false;
+    }
+    return true;
+  }
+
   function getSign(params){
     const secret=Config.sign_secret;
     let str = '';
@@ -142,5 +175,6 @@ module.exports={
     mapUncheckedCert:mapUncheckedCert,
     getSign:getSign,
     isJSON:isJSON,
-    picfilenameToUrl:picfilenameToUrl
+    picfilenameToUrl:picfilenameToUrl,
+    excelExport:excelExport
 }
