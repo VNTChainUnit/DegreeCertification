@@ -18,7 +18,16 @@ async function getSchoolByName(name){
 }
 
 async function getSchoolById(id){
-    return await School.findById(id)
+    if(!id){
+        return null;
+    }
+    try{
+        return await School.findById(id)
+    }
+    catch(e){
+        console.log(e);
+        return null;
+    }
 }
 
 function addStudent(school_id,student_id){

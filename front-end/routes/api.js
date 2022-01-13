@@ -9,6 +9,7 @@ const certificateService=require("../service/certificateService")
 const blockchain=require('../service/blockchain/main');
 const  applicationService=require('../service/applicationService')
 const wxService=require('../service/wxService')
+const apiService = require('../service/apiService');
 /**
  * 微信登陆获取openid
  */
@@ -133,6 +134,29 @@ router.post('/auth/check',async (req,res,next)=>{
   }
   else{
       res.json(utils.restful(40001,null,"Auth failed,please login again."))
+  }
+})
+
+/**
+ * 公共api接口
+ * body里参数有：action、appid、secret、业务参数
+ */
+router.post('/v1/public',async (req,res,next)=>{
+  let data = req.body;
+  let action = data.action;
+  let appid = data.appid;
+  let secret = data.secret;
+  if(action && appid && secret){
+    if(action =='upload'){
+      let resultBody = await apiService.handleUploadAction(data);
+      res.json(resultBody);
+    }
+    else{
+      res.json(utils.restful(21001,null,'Identity parameter error.'))
+    }
+  }
+  else {
+    res.json(utils.restful(20001,null,"Identity parameter missing."))
   }
 })
 
