@@ -3,7 +3,8 @@ const Config=require('../config')
 const crypto = require('crypto');
 const xlsx = require('node-xlsx')
 const fs = require('fs');
-const secret=Config.appSecret
+const string_random = require('string-random');
+const secret=Config.appSecret;
 
 function aesEncrypt(data) {
     if(data == null ){
@@ -163,6 +164,47 @@ function picfilenameToUrl(filename){
   return Config.donainname+":3000/pic/"+filename;
 }
 
+/**
+ * 获取随机字符串
+ * @param {字符串长度 默认8} length 
+ * @param {包含字母} contains 
+ * @returns 指定长度字符串
+ */
+function getRandomStr(length,contains){
+  if(!length){
+    length = 8;
+  }
+  if(!contains){
+    return string_random(length,{specials:false});
+  }
+  else{
+    return string_random(length,{letters:contains,specials:false});
+  }
+}
+
+function isStrBlank(str){
+  if(str && str!==''){
+    return false;
+  }
+  return true;
+}
+
+function isAnyStrBlank(str1, ...strs){
+  if(isStrBlank(str1)){
+    return true;
+  }
+  let flag = false;
+  strs.forEach((value,index)=>{
+    if(flag){
+      return;
+    }
+    else{
+      flag=isStrBlank(value);
+    }
+  });
+  return flag;
+}
+
 module.exports={
     generateSafePassword:generateSafePassword,
     restful:restful,
@@ -176,5 +218,7 @@ module.exports={
     getSign:getSign,
     isJSON:isJSON,
     picfilenameToUrl:picfilenameToUrl,
-    excelExport:excelExport
+    excelExport:excelExport,
+    getRandomStr:getRandomStr,
+    isAnyStrBlank:isAnyStrBlank
 }

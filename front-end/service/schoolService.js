@@ -51,7 +51,8 @@ function createSchool(name,code,username,password){
         name:name,
         code:code,
         username:username,
-        password:utils.generateSafePassword(password)
+        password:utils.generateSafePassword(password),
+        appSecret:utils.getRandomStr(16)
     })
     school.save()
 }
