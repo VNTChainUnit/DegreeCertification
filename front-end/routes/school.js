@@ -128,7 +128,7 @@ router.put('/api/student',async(req,res,next)=>{
 router.post('/api/certificate',async(req,res,next)=>{
   let data=req.body
   let school=await schoolService.getSchoolByUsername(req.session.username)
-  certificateCheckService.addUncheckedCertificate(school._id,school.name,data.name,data.idnumber,
+  certificateCheckService.addUncheckedCertificate(school._id,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
   res.json(utils.restful(null,null,null))
 })
