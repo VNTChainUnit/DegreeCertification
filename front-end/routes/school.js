@@ -68,6 +68,11 @@ router.get('/multiUploadCertificate',async function(req,res,next){
   res.render('school/schoolMultiUpload',{school:school});
 })
 
+router.get('/apiIndex',async function(req,res,next){
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  res.render('school/apiIndex',{school:school});
+})
+
 //学校管理未核验证书
 router.get('/uncheckedCertificate',async function(req,res,next){
   let school=await schoolService.getSchoolByUsername(req.session.username)
