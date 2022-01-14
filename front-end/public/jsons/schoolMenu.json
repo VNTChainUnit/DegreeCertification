@@ -38,6 +38,12 @@
             "href": "/school/studentAccount",
             "icon": "fa fa-gears",
             "target": "_self"
+          },
+          {
+            "title": "第三方API调用",
+            "href": "/school/apiIndex",
+            "icon": "fa fa-gears",
+            "target": "_self"
           }
         ]
       }

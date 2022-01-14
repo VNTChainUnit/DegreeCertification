@@ -1,0 +1,56 @@
+<style>
+    .font_lable{
+        font-size: large;
+    }
+    .font_content{
+        font-size: medium;
+    }
+    .fieldset_title{
+        font-size: x-large;
+    }
+</style>
+<div class="layuimini-container layuimini-page-anim">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset">
+            <legend class="fieldset_title">调用凭证</legend>
+            <div style="margin-bottom: 20px;">
+               根据接您要对接的高校信息系统（如教务系统），将appid、secret和API文档交予系统开发商。
+               <div style="font-weight: bold;">
+                除此之外，请不要将appid和secret交给任何人。
+                </div>
+            </div>
+            
+            <div class="font_lable">
+                <label>您的appid是：</label>
+                <span class="font_content">
+                    <%= school._id%>
+                </span>
+            </div>
+            <div class="font_lable">
+                <label>您的secret是：</label>
+                <span class="font_content">
+                    <%= school.appSecret%>
+                </span>
+            </div>
+        <br>
+
+    </fieldset>
+        <fieldset class="table-search-fieldset">
+            <legend class="fieldset_title">证书上传</legend>
+                <div class="font_lable">
+                    <label>API地址：</label>
+                    <span class="font_content">
+                        <a href="https://www.kancloud.cn/genjilemon/xinyi/2286996" style="color:blue;" target="_blank">看云文档 </a>
+                    </span>
+                </div>
+                
+        </fieldset>
+
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'miniPage'], function () {
+
+    });
+</script>

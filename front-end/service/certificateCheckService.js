@@ -8,7 +8,6 @@ const wxService = require("./wxService");
 /**
  * 添加一个待核验证书
  * @param {学校id} school_id 
- * @param {学校名称} schoolname 
  * @param { 学生姓名} name 
  * @param {身份证号} idnumber 
  * @param {学位} degreetype 
@@ -17,7 +16,7 @@ const wxService = require("./wxService");
  * @param {学号} studentnumber 
  * @param {证书编号} certificatenumber 
  */
-async function addUncheckedCertificate(school_id, schoolname, name, idnumber,
+async function addUncheckedCertificate(school_id, name, idnumber,
     degreetype, major, graduationdate, studentnumber, certificatenumber) {
     const school = await schoolService.getSchoolById(school_id);
     let uncheckedCert = CertificateCheck({

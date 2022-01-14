@@ -18,7 +18,16 @@ async function getSchoolByName(name){
 }
 
 async function getSchoolById(id){
-    return await School.findById(id)
+    if(!id){
+        return null;
+    }
+    try{
+        return await School.findById(id)
+    }
+    catch(e){
+        console.log(e);
+        return null;
+    }
 }
 
 function addStudent(school_id,student_id){
@@ -51,7 +60,8 @@ function createSchool(name,code,username,password){
         name:name,
         code:code,
         username:username,
-        password:utils.generateSafePassword(password)
+        password:utils.generateSafePassword(password),
+        appSecret:utils.getRandomStr(16)
     })
     school.save()
 }

@@ -10,7 +10,9 @@ const SchoolSchema = new Schema({
         username: {type: String},
         password: {type: String},
         //学生ids
-        student_ids: [Schema.Types.ObjectId]
+        student_ids: [Schema.Types.ObjectId],
+        //账户密码
+        appSecret: {type: String}
     },
     {timestamps: true}
 );

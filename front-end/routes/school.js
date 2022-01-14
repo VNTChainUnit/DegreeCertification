@@ -68,6 +68,11 @@ router.get('/multiUploadCertificate',async function(req,res,next){
   res.render('school/schoolMultiUpload',{school:school});
 })
 
+router.get('/apiIndex',async function(req,res,next){
+  let school=await schoolService.getSchoolByUsername(req.session.username)
+  res.render('school/apiIndex',{school:school});
+})
+
 //学校管理未核验证书
 router.get('/uncheckedCertificate',async function(req,res,next){
   let school=await schoolService.getSchoolByUsername(req.session.username)
@@ -128,7 +133,7 @@ router.put('/api/student',async(req,res,next)=>{
 router.post('/api/certificate',async(req,res,next)=>{
   let data=req.body
   let school=await schoolService.getSchoolByUsername(req.session.username)
-  certificateCheckService.addUncheckedCertificate(school._id,school.name,data.name,data.idnumber,
+  certificateCheckService.addUncheckedCertificate(school._id,data.name,data.idnumber,
     data.degreetype,data.major,data.graduationdate,data.studentnumber,data.certificatenumber)
   res.json(utils.restful(null,null,null))
 })
