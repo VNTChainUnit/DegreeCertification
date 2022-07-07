@@ -31,8 +31,8 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "string-random": "^0.1.3",
-    "vnt": "https://gitee.com/laoluoli/vnt.js.git",
-    "vnt-kit": "https://gitee.com/laoluoli/vnt-kit.js.git"
+    "vnt": "git+https://git@gitee.com/laoluoli/vnt.js",
+    "vnt-kit": "git+https://git@gitee.com/laoluoli/vnt-kit.js"
   },
   "devDependencies": {}
 }

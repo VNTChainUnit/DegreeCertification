@@ -6,7 +6,7 @@
 
 ## 运行条件
 
-- Node.js v8.11.2
+- Node.js v8.11.2 最新版使用14.20.0测试无误
 - Express v4.0+
 - MongoDB v4.4.4+
 - 最好在linux部署,windows请尝试改变vnt.js和vnt-kit.js的仓库地址
